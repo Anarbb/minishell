@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/10 13:46:20 by aarbaoui         ###   ########.fr       */
+/*   Created: 2023/02/10 13:39:20 by aarbaoui          #+#    #+#             */
+/*   Updated: 2023/02/10 13:41:21 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void    find_path(t_shell *shell, char **env)
+char *ft_strndup(const char *s1, size_t n)
 {
-	char	*binPath;
+    char *s2;
+    size_t i;
 
-	while (ft_strncmp(*env, "PATH=", 5) != 0)
-		env++;
-	binPath = (*env + 5);
-	shell->path = ft_split(binPath, ':');
-}
-
-void    init_shell(t_shell *shell, char **env)
-{
-    shell->cmd = NULL;
-    shell->type = 0;
-    find_path(shell, env);
+    i = 0;
+    s2 = (char *)malloc(sizeof(char) * (n + 1));
+    if (s2 == NULL)
+        return (NULL);
+    while (i < n)
+    {
+        s2[i] = s1[i];
+        i++;
+    }
+    s2[i] = '\0';
+    return (s2);
 }

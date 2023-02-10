@@ -26,6 +26,7 @@ SRCS        :=      minishell.c \
                           src/libft/ft_memcmp.c \
                           src/libft/ft_memcpy.c \
                           src/libft/ft_memmove.c \
+						  src/libft/ft_strndup.c \
                           src/libft/ft_memset.c \
                           src/libft/ft_putchar_fd.c \
                           src/libft/ft_putendl_fd.c \
@@ -47,6 +48,7 @@ SRCS        :=      minishell.c \
                           src/libft/ft_substr.c \
                           src/libft/ft_tolower.c \
                           src/libft/ft_toupper.c \
+						  src/parsing/init.c \
                           
 OBJS        := $(SRCS:.c=.o)
 
