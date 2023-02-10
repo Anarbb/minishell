@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/10 13:38:15 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:21:36 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@
 # define DOUBLE_QUOTE	128 
 # define DOLAR 			255
 
+
 typedef struct	s_token
 {
     char			*content;
@@ -61,11 +62,11 @@ typedef struct  s_shell
 	char	**cmd;
 	int	    type;
 	char	**path;
-	t_token	token;
+	t_token	*token;
 }   t_shell;
 
 
 void    init_shell(t_shell *shell, char **env);
-void    find_path(t_shell *shell, char **env);
+int		find_path(t_shell *shell, char **env);
 
 # endif
