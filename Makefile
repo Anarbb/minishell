@@ -21,6 +21,7 @@ SRCS        :=      minishell.c \
                           src/libft/ft_lstmap.c \
                           src/libft/ft_lstnew.c \
                           src/libft/ft_lstsize.c \
+						  src/libft/ft_strcmp.c \
                           src/libft/ft_memchr.c \
                           src/libft/ft_memcmp.c \
                           src/libft/ft_memcpy.c \
