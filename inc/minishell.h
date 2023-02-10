@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/10 11:43:51 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/10 12:38:32 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@
 #include <term.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
+#include "libft.h"
 # endif
