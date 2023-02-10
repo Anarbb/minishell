@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/10 19:35:20 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/10 19:38:05 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,11 @@ typedef struct  s_shell
 	t_token	*token;
 }   t_shell;
 
-
+// parsing.init
 void    init_shell(t_shell *shell, char **env);
 int		find_path(t_shell *shell, char **env);
+// uttils
 char	*get_env(char **env, char *name);
+// builtins
 void    ms_cd(t_shell *shell);
 # endif
