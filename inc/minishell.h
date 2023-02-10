@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/10 14:21:36 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/10 19:35:20 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,16 @@ typedef struct  s_shell
 {
 	char	**cmd;
 	int	    type;
+	char	**env;
 	char	**path;
+	char	*line;
+	char	*cwd;
 	t_token	*token;
 }   t_shell;
 
 
 void    init_shell(t_shell *shell, char **env);
 int		find_path(t_shell *shell, char **env);
-
+char	*get_env(char **env, char *name);
+void    ms_cd(t_shell *shell);
 # endif

@@ -1,6 +1,6 @@
 NAME        := minishell
 CC        := cc
-FLAGS    := -Wall -Wextra -Werror -I inc
+FLAGS    := -Wall -Wextra -Werror -I inc -g
 
 SRCS        :=      minishell.c \
                           src/libft/ft_atoi.c \
@@ -49,6 +49,8 @@ SRCS        :=      minishell.c \
                           src/libft/ft_tolower.c \
                           src/libft/ft_toupper.c \
 						  src/parsing/init.c \
+						  src/builtin/cd.c \
+						  src/utils/get_env.c \
                           
 OBJS        := $(SRCS:.c=.o)
 
