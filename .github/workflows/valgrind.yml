@@ -1,0 +1,20 @@
+name: valgrind
+on: [push]
+jobs:
+  valgrind:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install valgrind
+      run: sudo apt-get install -y valgrind
+    - name: Install dependencies
+      run: sudo apt-get install -y libjson-c-dev
+    - name: Build
+      run: make
+    - name: Test
+      run: valgrind --leak-check=full ./test
+    - name: Upload valgrind log
+      uses: actions/upload-artifact@v2
+      with:
+        name: valgrind-log
+        path: valgrind.log
