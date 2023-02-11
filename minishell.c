@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/10 19:34:58 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/11 15:10:54 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,22 @@ int main(int ac, char **av, char **env)
 	t_shell	*shell;
 
 	shell = ft_calloc(1, sizeof(t_shell));
+	init_shell(shell, env);
 	while (1)
 	{
-		shell->env = env;
-		printf(GREEN "minishell[" CYAN "%s" GREEN "]~>" RESET, getcwd(NULL, 0));
+		shell->cwd = getcwd(NULL, 0);
+		printf(GREEN "minishell[" CYAN "%s" GREEN "]~>" RESET, shell->cwd);
 		line = readline(" ");
 		if (!line)
 			break ;
-		init_shell(shell, env);
 		shell->cmd = ft_split(line, ' ');
 		if (ft_strcmp(shell->cmd[0], "cd") == 0)
-			ms_cd(shell, NULL);
+			ms_cd(shell);
 		if (ft_strlen(line) != 0)
 			add_history(line);
 		free(line);
+		free(shell->cmd);
+		free(shell->cwd);
 	}
 	return (0);
 }

@@ -51,6 +51,7 @@ SRCS        :=      minishell.c \
 						  src/parsing/init.c \
 						  src/builtin/cd.c \
 						  src/utils/get_env.c \
+                          src/utils/set_env.c \
                           
 OBJS        := $(SRCS:.c=.o)
 

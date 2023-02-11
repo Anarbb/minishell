@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/10 14:48:28 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/11 15:11:13 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,22 @@
 
 int find_path(t_shell *shell, char **env)
 {
-	char	*binPath;
-    int     i;
+	char *path;
 
-    if (!env)
-        return (0);
-    if (shell->path)
+    path = get_env(env, "PATH");
+    if (path == NULL)
     {
-        i = 0;
-        while (shell->path[i])
-        {
-            free(shell->path[i]);
-            i++;
-        }
-        free(shell->path);
-    }
-	while (ft_strncmp(*env, "PATH=", 5) != 0)
-		env++;
-	binPath = (*env + 5);
-	shell->path = ft_split(binPath, ':');
-    if (!shell->path)
+        ft_putstr_fd("minishell: PATH not found", 2);
         return (0);
+    }
+    shell->path = ft_split(path, ':');
+    free(path);
     return (1);
 }
 
 void    init_shell(t_shell *shell, char **env)
 {
-    shell->cmd = NULL;
-    shell->type = 0;
+    shell->env = env;
     if (!find_path(shell, env))
         exit(0);
 }
