@@ -3,29 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/11 17:59:24 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/11 18:33:37 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <signal.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <dirent.h>
-#include <termios.h>
-#include <curses.h>
-#include <term.h>
+# include <libc.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft.h"
