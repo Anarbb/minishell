@@ -13,8 +13,12 @@ jobs:
       run: make
     - name: Test
       run: valgrind --leak-check=full --show-leak-kinds=all ./minishell
-    - name: Upload valgrind log
+      id: valgrind
+    - name: Save valgrind log
       uses: actions/upload-artifact@v3
       with:
         name: valgrind-log
         path: valgrind.log
+    - name: Check for leaks
+      if: steps.valgrind.outputs.exit-code != 0
+      run: exit 1
