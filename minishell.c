@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/11 16:14:33 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:59:51 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,6 @@ int main(int ac, char **av, char **env)
 		if (!line)
 			break ;
 		shell->cmd = ft_split(line, ' ');
-		if (ft_strcmp(shell->cmd[0], "cd") == 0)
-			ms_cd(shell);
-		else if (ft_strcmp(shell->cmd[0], "echo") == 0)
-			ft_echo(shell->cmd);
-		if (ft_strlen(line) != 0)
-			add_history(line);
 		free(line);
 		free(shell->cmd);
 		free(shell->cwd);

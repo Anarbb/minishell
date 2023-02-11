@@ -6,14 +6,13 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/11 16:10:24 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/11 18:01:11 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-void    ms_cd(t_shell *shell)
+void    ft_cd(t_shell *shell)
 {
     char *oldpwd;
     char *pwd;
