@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/11 19:04:19 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/11 20:27:48 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@
 # define SINGLE_QUOTE 	64 
 # define DOUBLE_QUOTE	128 
 # define DOLAR 			255
-# define EXIT_SUCCESS 	0
-# define EXIT_FAILURE 	1
+# define SUCCESS	0
+# define FAILURE	1
 
 typedef struct	s_token
 {
@@ -65,5 +65,6 @@ char	*get_env(char **env, char *name);
 void    set_env(t_shell *shell, char *name, char *value);
 // builtins
 void    ft_cd(t_shell *shell);
-void    ft_echo(char **args);
+int		echo_cmd(t_shell *shell);
+int 	export_cmd(t_shell *shell);
 # endif
