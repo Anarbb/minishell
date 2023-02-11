@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/11 14:18:08 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:10:24 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void    ms_cd(t_shell *shell)
     if (!shell->cmd[1] || ft_strcmp(shell->cmd[1], "~") == 0)
         chdir(get_env(shell->env, "HOME"));
     else if (ft_strcmp(shell->cmd[1], "-") == 0)
+    {
+        printf("%s\n", get_env(shell->env, "OLDPWD"));   
         chdir(get_env(shell->env, "OLDPWD"));
+    }
     else if (chdir(shell->cmd[1]) == -1)
     {
         ft_putstr_fd("cd: no such file or directory: ", 2);

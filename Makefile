@@ -50,6 +50,7 @@ SRCS        :=      minishell.c \
                           src/libft/ft_toupper.c \
 						  src/parsing/init.c \
 						  src/builtin/cd.c \
+                          src/builtin/echo.c \
 						  src/utils/get_env.c \
                           src/utils/set_env.c \
                           
