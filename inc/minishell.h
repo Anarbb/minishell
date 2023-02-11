@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/11 18:33:37 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/11 19:04:19 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@
 # define SINGLE_QUOTE 	64 
 # define DOUBLE_QUOTE	128 
 # define DOLAR 			255
-
+# define EXIT_SUCCESS 	0
+# define EXIT_FAILURE 	1
 
 typedef struct	s_token
 {
