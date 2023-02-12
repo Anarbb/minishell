@@ -41,7 +41,5 @@ int main(int ac, char **av, char **env)
 		free(shell->cmd);
 		free(shell->cwd);
 	}
-	while (1);
-
 	return (0);
 }
