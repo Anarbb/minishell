@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/11 20:27:48 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/12 11:07:20 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct  s_shell
 void    init_shell(t_shell *shell, char **env);
 int		find_path(t_shell *shell, char **env);
 // uttils
+int		is_option(char *str);
 char	*get_env(char **env, char *name);
 void    set_env(t_shell *shell, char *name, char *value);
 // builtins

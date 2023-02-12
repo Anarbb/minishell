@@ -54,6 +54,7 @@ SRCS        :=      minishell.c \
 						  src/utils/get_env.c \
                           src/utils/set_env.c \
                           src/builtin/export.c \
+                          src/utils/is_option.c \
                           
 OBJS        := $(SRCS:.c=.o)
 
@@ -69,7 +70,7 @@ BLUE		:= \033[1;34m
 CYAN 		:= \033[1;36m
 RM		    := rm -f
 
-${NAME}:	${OBJS}
+${NAME}:	${OBJS} inc/minishell.h
 			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
 			${CC} ${FLAGS} -o ${NAME} ${OBJS} -lreadline
 			@echo "$(GREEN)$(NAME) created[0m ✔️"

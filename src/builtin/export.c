@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:14 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/11 21:50:22 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/12 11:08:26 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,43 @@ void	exported_env(t_shell *shell)
 		printf("declare -x %s\n",shell->env[i++]);
 }
 
-int	check_value(char *cmd, int pos)
-{
-	while(cmd[pos] != '\0')
-	{
-		if (cmd[pos])
-	}
-}
-
-int	check_var(char	*cmd, int *plus)
+int	check_var(char *cmd, int *plus)
 {
 	int	i;
 
 	i = 0;
-	while(cmd[i] != "=")
+	if (ft_isalpha(cmd[0]) || cmd[0] == '_')
 	{
-		if(!(ft_isalnum(cmd[i]) && ft_isalpha(cmd[0])))
-			return (-1);
-		i++;
+		while (cmd[i] != '=' && cmd[i])
+		{
+			if (cmd[i] == '+' && cmd[i + 1] == '=')
+				*plus = 1;
+			else if (!(ft_isalnum(cmd[i]) || ft_isalpha(cmd[0])))
+				return (-1);
+			i++;
+		}
+		if (cmd[i] == '=')
+			return (2);
+		return (1);	
 	}
-	if (cmd[i] == "=")
+	return (-1);
+}
+
+void	declare_env(t_shell	*shell, char *cmd, int plus, int mode)
+{
+	(void)plus;
+	(void)mode;
+	char	**key;
+
+	key = ft_split(cmd, '=');
+	if (mode == 2)
 	{
-		if (cmd[i - 1] == "+")
-			*plus = 1;
-		return (2);
+		if (plus == 0)
+			set_env(shell, key[0], key[1]);
+		// else
+		// 	add_env();
 	}
-	return (1);	
+
 }
 
 int export_cmd(t_shell *shell)
@@ -54,7 +65,6 @@ int export_cmd(t_shell *shell)
 	int		i;
 	int		res;
 	int		plus;
-	char	**exp;
 
 	i = 1;
 	res = 0;
@@ -66,15 +76,19 @@ int export_cmd(t_shell *shell)
 	}
 	else
 	{
-		exp = ft_split(shell->cmd[i], '=');
+		if (is_option(shell->cmd[i]))
+			return (printf("minishell : export %s invalid option\n",shell->cmd[i]));
 		while (shell->cmd[i])
 		{
 			if ((res = check_var(shell->cmd[i], &plus)))
 			{
-				// if()
+				if (res == 2)
+					declare_env(shell, shell->cmd[i], plus, res);
+				else if (res == 1)
+					declare_env(shell, shell->cmd[i], plus, res);
 			}
 			i++;
 		}
 	}
-	return(SUCCESS);
+	return(FAILURE);
 }
