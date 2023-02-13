@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/13 15:46:39 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/13 22:35:57 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define BOLD       	"\033[1m"
 # define UNDERLINE  	"\033[4m"
 # define BLINK      	"\033[5m"
+# define CLEAR_LINE		"\033[A\033[K"
 # define EMPTY 			1
 # define WORD 			2
 # define REDIRECTION	4
@@ -93,4 +94,5 @@ int		echo_cmd(t_shell *shell);
 int 	export_cmd(t_shell *shell);
 //Signals
 void	init_signals(void);
+void	control_d(char	*line);
 #endif
