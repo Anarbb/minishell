@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/10 12:51:14 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/13 15:49:08 by lsabik           ###   ########.fr       */
+/*   Created: 2023/02/12 16:00:54 by lsabik            #+#    #+#             */
+/*   Updated: 2023/02/13 14:01:25 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int ft_strcmp(const char *s1, const char *s2)
+void	sig_handler(int signum)
 {
-    int i;
-
-    i = 0;
-    if (s1 == NULL || s2 == NULL)
-        return (1);
-    while (s1[i] && s2[i] && s1[i] == s2[i])
-        i++;
-    return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	if(signum == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+void	init_signals(void)
+{
+	rl_catch_signals = 0;
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 }

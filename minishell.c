@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/11 20:30:30 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/13 15:49:44 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,21 @@ int main(int ac, char **av, char **env)
 	init_shell(shell, env);
 	while (1337)
 	{
+		init_signals();
 		shell->cwd = getcwd(NULL, 0);
-		printf(GREEN "minishell[" CYAN "%s" GREEN "]~>" RESET, shell->cwd);
-		line = readline(" ");
+		line = readline("\033[1;32mminishell[^,^]~>\033[0m");
 		if (!line)
-			break ;
-		if (!*line)
-			continue;
+		{
+			ft_putstr_fd("exit", 1);
+			exit(EXIT_SUCCESS);
+		}
 		shell->cmd = ft_split(line, ' ');
-		if(ft_strcmp(shell->cmd[0], "echo") == 0)
-			echo_cmd(shell);
-		if(ft_strcmp(shell->cmd[0], "cd") == 0)
-			ft_cd(shell);
 		if(ft_strcmp(shell->cmd[0], "export") == 0)
 			export_cmd(shell);
 		free(line);
 		free(shell->cmd);
 		free(shell->cwd);
 	}
-	return (0);
+	clear_history();
+	return (SUCCESS);
 }

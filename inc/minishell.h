@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/12 11:07:20 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/13 15:46:39 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include <term.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "libft.h"
+
 # include "libft.h"
 
 # define RESET			"\033[0m"
@@ -58,6 +60,13 @@ typedef struct	s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_env
+{
+	char	*var;
+	char	*value;
+}	t_env;
+
+
 typedef struct  s_shell
 {
 	char	**cmd;
@@ -66,6 +75,7 @@ typedef struct  s_shell
 	char	**path;
 	char	*line;
 	char	*cwd;
+	t_env	*evn;
 	t_token	*token;
 }   t_shell;
 
@@ -75,9 +85,12 @@ int		find_path(t_shell *shell, char **env);
 // uttils
 int		is_option(char *str);
 char	*get_env(char **env, char *name);
+void    add_env(t_shell *shell, char *name, char *value);
 void    set_env(t_shell *shell, char *name, char *value);
 // builtins
 void    ft_cd(t_shell *shell);
 int		echo_cmd(t_shell *shell);
 int 	export_cmd(t_shell *shell);
-# endif
+//Signals
+void	init_signals(void);
+#endif

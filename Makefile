@@ -1,7 +1,10 @@
 NAME        := minishell
 CC        := cc
 FLAGS    := -Wall -Wextra -Werror -I inc -g
-
+LDFLAGS="-L/Users/lsabik/.brew/opt/readline/lib"
+CPPFLAGS="-I/Users/lsabik/.brew/opt/readline/include"
+INCLUDESS        =  ${CPPFLAGS}
+LIBRARIESS        = ${LDFLAGS} -lreadline
 SRCS        :=      minishell.c \
                           src/libft/ft_atoi.c \
                           src/libft/ft_bzero.c \
@@ -55,11 +58,13 @@ SRCS        :=      minishell.c \
                           src/utils/set_env.c \
                           src/builtin/export.c \
                           src/utils/is_option.c \
+                          src/parsing/signals.c \
+                          src/utils/add_env.c \
                           
 OBJS        := $(SRCS:.c=.o)
 
 .c.o:
-	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
+	${CC} ${FLAGS} ${INCLUDESS} -c $< -o ${<:.c=.o}
 
 
 CLR_RMV		:= \033[0m
@@ -72,7 +77,7 @@ RM		    := rm -f
 
 ${NAME}:	${OBJS} inc/minishell.h
 			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
-			${CC} ${FLAGS} -o ${NAME} ${OBJS} -lreadline
+			${CC} ${FLAGS} ${LIBRARIESS} -o ${NAME} ${OBJS} -lreadline
 			@echo "$(GREEN)$(NAME) created[0m ✔️"
 
 all:		${NAME}

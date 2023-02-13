@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   add_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/10 12:51:14 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/13 15:49:08 by lsabik           ###   ########.fr       */
+/*   Created: 2023/02/12 11:26:01 by lsabik            #+#    #+#             */
+/*   Updated: 2023/02/13 14:05:04 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int ft_strcmp(const char *s1, const char *s2)
+void    add_env(t_shell *shell, char *name, char *value)
 {
-    int i;
+	int i;
+	int len;
+	char *tmp;
 
-    i = 0;
-    if (s1 == NULL || s2 == NULL)
-        return (1);
-    while (s1[i] && s2[i] && s1[i] == s2[i])
-        i++;
-    return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	i = 0;
+	(void)value;
+	len = ft_strlen(name);
+	while (shell->env[i])
+	{
+		if (ft_strcmp(shell->env[i], name) == 0)
+		{
+				tmp = ft_strjoin(shell->env[i], value);
+				free(tmp);
+				return ;
+		}
+		i++;
+	}
 }

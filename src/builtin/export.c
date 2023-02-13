@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:14 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/12 11:08:26 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/13 15:44:42 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,14 @@ void	declare_env(t_shell	*shell, char *cmd, int plus, int mode)
 	(void)mode;
 	char	**key;
 
-	key = ft_split(cmd, '=');
+	key = ft_split(cmd, '+');
 	if (mode == 2)
 	{
+		printf("%s,%s,%d\n",key[0],key[1],plus);
 		if (plus == 0)
 			set_env(shell, key[0], key[1]);
-		// else
-		// 	add_env();
+		else if(plus == 1)
+			add_env(shell, key[0],key[1]);
 	}
 
 }
@@ -90,5 +91,6 @@ int export_cmd(t_shell *shell)
 			i++;
 		}
 	}
+	
 	return(FAILURE);
 }
