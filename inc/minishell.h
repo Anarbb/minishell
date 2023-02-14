@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/14 16:30:37 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:09:59 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define BLINK      	"\033[5m"
 # define CLEAR_LINE		"\033[A\033[K"
 # define EMPTY 			1
-# define WORD 			2
+# define CMD 			2
 # define REDIRECTION	4
 # define PIPE 			8
 # define AND 			16
@@ -57,6 +57,8 @@
 # define HEREDOC		16384
 # define DQUOTE			32768
 # define SQUOTE			65536
+# define QUOTE			131072
+# define REDIR			262144
 # define SUCCESS	0
 # define FAILURE	1
 
@@ -89,8 +91,8 @@ typedef struct  s_shell
 void    init_shell(t_shell *shell, char **env);
 int		find_path(t_shell *shell, char **env);
 // parsing.lexer
-// int		ft_lexer(t_shell *shell);
-void	*parse_ops(t_shell *shell);
+void	ft_lexer(t_shell *shell);
+void	parse_ops(t_shell *shell);
 // uttils
 int		is_arg(char *str);
 char	*get_env(char **env, char *name);
@@ -98,6 +100,7 @@ void    add_env(t_shell *shell, char *name, char *value);
 void    set_env(t_shell *shell, char *name, char *value);
 t_token *token_new(char *cmd, int type);
 void    token_add_back(t_token *shell, t_token *new);
+void    free_all(t_shell *shell);
 // builtins
 void    ft_cd(t_shell *shell);
 int		echo_cmd(t_shell *shell);

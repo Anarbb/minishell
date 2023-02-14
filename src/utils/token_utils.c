@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:33:10 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/14 15:37:26 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/14 16:50:36 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ t_token *token_new(char *cmd, int type)
 void    token_add_back(t_token *tokens, t_token *new)
 {
     t_token *ptr;
-
+    
+    if (!tokens)
+    {
+        tokens = new;
+        return ;
+    }
     ptr = tokens;
     while (ptr->next)
         ptr = ptr->next;

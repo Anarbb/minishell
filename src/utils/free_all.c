@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/10 12:51:14 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/14 16:43:28 by aarbaoui         ###   ########.fr       */
+/*   Created: 2023/02/14 17:08:43 by aarbaoui          #+#    #+#             */
+/*   Updated: 2023/02/14 17:10:28 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int ft_strcmp(const char *s1, const char *s2)
+void    free_all(t_shell *shell)
 {
     int i;
 
     i = 0;
-    if (s1 == NULL || s2 == NULL)
-        return (0);
-    while (s1[i] && s2[i] && s1[i] == s2[i])
+    i = 0;
+    while (shell->cmd[i])
+    {
+        free(shell->cmd[i]);
         i++;
-    return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+    }
+    free(shell->cmd);
+    free(shell->line);
+    while (shell->token)
+    {
+        free(shell->token->content);
+        free(shell->token);
+        shell->token = shell->token->next;
+    }
 }

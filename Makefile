@@ -61,6 +61,7 @@ SRCS        :=      minishell.c \
                         src/parsing/lexer.c \
                         src/parsing/signals.c \
                         src/utils/token_utils.c \
+                        src/utils/free_all.c \
                           
 OBJS        := $(SRCS:.c=.o)
 
