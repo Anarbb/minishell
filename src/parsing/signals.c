@@ -28,7 +28,7 @@ void	control_d(char	*line)
 	{
 		// Move cursor up and clear line
 		ft_putstr_fd(CLEAR_LINE, 1);
-  		ft_putstr_fd(GREEN"mminishell[^,^]~>"RESET" exit", 1);
+  		ft_putstr_fd(GREEN"\nminishell[^,^]~>"RESET" exit\n", 1);
 		exit(EXIT_SUCCESS);
 	}
 }
