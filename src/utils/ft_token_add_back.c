@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   ft_token_add_back.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/13 12:00:14 by aarbaoui         ###   ########.fr       */
+/*   Created: 2023/02/13 17:06:15 by aarbaoui          #+#    #+#             */
+/*   Updated: 2023/02/13 17:06:27 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int find_path(t_shell *shell, char **env)
+void	ft_token_add_back(t_token **alst, t_token *new)
 {
-	char *path;
+    t_token *tmp;
 
-    path = get_env(env, "PATH");
-    if (path == NULL)
+    if (alst && new)
     {
-        ft_putstr_fd("minishell: PATH not found", 2);
-        return (0);
+        if (*alst == NULL)
+            *alst = new;
+        else
+        {
+            tmp = *alst;
+            while (tmp->next)
+                tmp = tmp->next;
+            tmp->next = new;
+        }
     }
-    shell->path = ft_split(path, ':');
-    free(path);
-    return (1);
-}
-
-void    init_shell(t_shell *shell, char **env)
-{
-    shell->env = env;
-    if (!find_path(shell, env))
-        exit(0);
 }

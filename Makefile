@@ -1,10 +1,17 @@
 NAME        := minishell
 CC        := cc
-FLAGS    := -Wall -Wextra -Werror -I inc -g
-LDFLAGS="-L/Users/lsabik/.brew/opt/readline/lib"
-CPPFLAGS="-I/Users/lsabik/.brew/opt/readline/include"
+FLAGS    := -Wall -Wextra -Werror -I inc -g -D TEST_LEXER=1000
+
+ifeq ($(USER), lsabik)
+	LDFLAGS="-L/Users/lsabik/.brew/opt/readline/lib"
+	CPPFLAGS="-I/Users/lsabik/.brew/opt/readline/include"
+else
+	LDFLAGS="-L/usr/lib"
+    CPPFLAGS="-I/usr/include"
+endif
 INCLUDESS        =  ${CPPFLAGS}
 LIBRARIESS        = ${LDFLAGS} -lreadline
+
 SRCS        :=      minishell.c \
                           src/libft/ft_atoi.c \
                           src/libft/ft_bzero.c \
@@ -58,8 +65,10 @@ SRCS        :=      minishell.c \
                           src/utils/set_env.c \
                           src/builtin/export.c \
                           src/utils/is_option.c \
-                          src/parsing/signals.c \
                           src/utils/add_env.c \
+                          src/parsing/lexer.c \
+                          src/utils/ft_token_add_back.c \
+                        #   src/parsing/signals.c \
                           
 OBJS        := $(SRCS:.c=.o)
 

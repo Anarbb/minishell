@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/13 22:37:20 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/14 11:22:33 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+#ifdef TEST_LEXER
+int main(int argc, char **argv)
+{
+	(void)argc;
+	(void)argv;
+	t_shell *shell;
+	shell = ft_calloc(1, sizeof(t_shell));
+	shell->line = "ls -l | grep a > out.txt";
+	ft_lexer(shell);
+	while (shell->token)
+	{
+		printf("token: %s, type: %d\n", shell->token->content, shell->token->type);
+		shell->token = shell->token->next;
+	}
+	return (SUCCESS);
+}
+# else
 
 int main(int ac, char **av, char **env)
 {
@@ -23,7 +41,7 @@ int main(int ac, char **av, char **env)
 	init_shell(shell, env);
 	while (1337)
 	{
-		init_signals();
+		// init_signals();
 		shell->cwd = getcwd(NULL, 0);
 		line = readline(GREEN"mminishell[^,^]~>"RESET);
 		control_d(line);
@@ -37,3 +55,4 @@ int main(int ac, char **av, char **env)
 	clear_history();
 	return (SUCCESS);
 }
+#endif

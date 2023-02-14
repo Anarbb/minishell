@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2023/02/13 22:35:57 by lsabik           ###   ########.fr       */
+=======
+/*   Updated: 2023/02/13 17:06:38 by aarbaoui         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +54,10 @@
 # define PARENTHESIS 	32
 # define SINGLE_QUOTE 	64 
 # define DOUBLE_QUOTE	128 
-# define DOLAR 			255
+# define DOLAR 			256
+# define PARENTHESE_OPEN 512
+# define PARENTHESE_CLOSE 1024
+
 # define SUCCESS	0
 # define FAILURE	1
 
@@ -83,11 +90,14 @@ typedef struct  s_shell
 // parsing.init
 void    init_shell(t_shell *shell, char **env);
 int		find_path(t_shell *shell, char **env);
+// parsing.lexer
+int		ft_lexer(t_shell *shell);
 // uttils
 int		is_option(char *str);
 char	*get_env(char **env, char *name);
 void    add_env(t_shell *shell, char *name, char *value);
 void    set_env(t_shell *shell, char *name, char *value);
+void	ft_token_add_back(t_token **alst, t_token *new);
 // builtins
 void    ft_cd(t_shell *shell);
 int		echo_cmd(t_shell *shell);
