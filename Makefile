@@ -6,9 +6,10 @@ ifeq ($(USER), lsabik)
 	LDFLAGS="-L/Users/lsabik/.brew/opt/readline/lib"
 	CPPFLAGS="-I/Users/lsabik/.brew/opt/readline/include"
 else
-	LDFLAGS="-L/usr/lib"
-    CPPFLAGS="-I/usr/include"
+	LDFLAGS="-L/Users/aarbaoui/goinfre/.brew/opt/readline/lib"
+    CPPFLAGS="-I/Users/aarbaoui/goinfre/.brew/opt/readline/include"
 endif
+
 INCLUDESS        =  ${CPPFLAGS}
 LIBRARIESS        = ${LDFLAGS} -lreadline
 
