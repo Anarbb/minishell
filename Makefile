@@ -1,6 +1,6 @@
 NAME        := minishell
 CC        := cc
-FLAGS    := -Wall -Wextra -Werror -I inc -g -D TEST_LEXER=1000
+FLAGS    := -Wall -Wextra -Werror -I inc -g
 
 ifeq ($(USER), lsabik)
 	LDFLAGS="-L/Users/lsabik/.brew/opt/readline/lib"
@@ -31,12 +31,12 @@ SRCS        :=      minishell.c \
                           src/libft/ft_lstmap.c \
                           src/libft/ft_lstnew.c \
                           src/libft/ft_lstsize.c \
-						  src/libft/ft_strcmp.c \
+						              src/libft/ft_strcmp.c \
                           src/libft/ft_memchr.c \
                           src/libft/ft_memcmp.c \
                           src/libft/ft_memcpy.c \
                           src/libft/ft_memmove.c \
-						  src/libft/ft_strndup.c \
+						              src/libft/ft_strndup.c \
                           src/libft/ft_memset.c \
                           src/libft/ft_putchar_fd.c \
                           src/libft/ft_putendl_fd.c \
@@ -58,17 +58,17 @@ SRCS        :=      minishell.c \
                           src/libft/ft_substr.c \
                           src/libft/ft_tolower.c \
                           src/libft/ft_toupper.c \
-						  src/parsing/init.c \
-						  src/builtin/cd.c \
+						              src/parsing/init.c \
+						              src/builtin/cd.c \
                           src/builtin/echo.c \
-						  src/utils/get_env.c \
+						              src/utils/get_env.c \
                           src/utils/set_env.c \
                           src/builtin/export.c \
                           src/utils/is_option.c \
                           src/utils/add_env.c \
                           src/parsing/lexer.c \
                           src/utils/ft_token_add_back.c \
-                        #   src/parsing/signals.c \
+                          src/parsing/signals.c \
                           
 OBJS        := $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/14 11:22:33 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:13:50 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int main(int ac, char **av, char **env)
 	char *line;
 	t_shell	*shell;
 
-	shell = ft_calloc(1, sizeof(t_shell));
+	shell = (shell *)ft_calloc(1, sizeof(t_shell));
 	init_shell(shell, env);
 	while (1337)
 	{

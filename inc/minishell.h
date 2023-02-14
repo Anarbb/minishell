@@ -6,11 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2023/02/13 22:35:57 by lsabik           ###   ########.fr       */
-=======
-/*   Updated: 2023/02/13 17:06:38 by aarbaoui         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2023/02/14 13:23:56 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
