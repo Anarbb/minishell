@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/14 17:09:59 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:57:50 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define CLEAR_LINE		"\033[A\033[K"
 # define EMPTY 			1
 # define CMD 			2
-# define REDIRECTION	4
+# define REDIR			4
 # define PIPE 			8
 # define AND 			16
 # define PARENTHESIS 	32
@@ -58,7 +58,6 @@
 # define DQUOTE			32768
 # define SQUOTE			65536
 # define QUOTE			131072
-# define REDIR			262144
 # define SUCCESS	0
 # define FAILURE	1
 
@@ -93,7 +92,7 @@ int		find_path(t_shell *shell, char **env);
 // parsing.lexer
 void	ft_lexer(t_shell *shell);
 void	parse_ops(t_shell *shell);
-// uttils
+// utils
 int		is_arg(char *str);
 char	*get_env(char **env, char *name);
 void    add_env(t_shell *shell, char *name, char *value);
@@ -108,4 +107,6 @@ int 	export_cmd(t_shell *shell);
 //Signals
 void	init_signals(void);
 void	control_d(char	*line);
+//Syntax.analyser
+int validate_syntax(t_token *token);
 #endif

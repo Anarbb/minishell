@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/14 17:01:10 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/14 21:34:04 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	parse_ops(t_shell *shell)
 		else
 			token_add_back(shell->token, token_new(ft_strdup(shell->cmd[i]), type));
 		i++;
-		free(shell->cmd[i - 1]);
 	}
 }
 
@@ -48,4 +47,6 @@ void	ft_lexer(t_shell *shell)
 	control_d(shell->line);
 	shell->cmd = ft_split(shell->line, ' ');
 	parse_ops(shell);
+	if (validate_syntax(shell->token))
+		printf("khdam\n") ;
 }
