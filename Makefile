@@ -1,6 +1,6 @@
 NAME        := minishell
 CC        := cc
-FLAGS    := -Wall -Wextra -Werror -I inc -g -D TEST_LEXER=1
+FLAGS    := -Wall -Wextra -Werror -I inc -g
 
 ifeq ($(USER), lsabik)
 	LDFLAGS="-L/Users/lsabik/.brew/opt/readline/lib"

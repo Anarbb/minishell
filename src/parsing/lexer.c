@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/14 15:56:32 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/14 16:31:15 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@ void	*parse_ops(t_shell *shell)
 	return (shell->token);
 }
 
-void	*ft_lexer(t_shell *shell)
-{
-	int	i;
+// void	*ft_lexer(t_shell *shell)
+// {
+// 	int	i;
 	
-	i = 0;
-	shell->token = NULL;
-	shell->cmd = ft_split(shell->line, ' ');
-	tokens = parse_ops(shell);
-	while (shell->cmd[i])
-	{
-		shell->token = token_new(shell->cmd[i], CMD);
-		i++;
-	}
-	return (shell->token);
-}
+// 	i = 0;
+// 	shell->token = NULL;
+// 	shell->cmd = ft_split(shell->line, ' ');
+// 	tokens = parse_ops(shell);
+// 	while (shell->cmd[i])
+// 	{
+// 		shell->token = token_new(shell->cmd[i], CMD);
+// 		i++;
+// 	}
+// 	return (shell->token);
+// }
