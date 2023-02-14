@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/14 16:16:04 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/14 16:30:37 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,15 @@
 # define PARENTHESIS 	32
 # define SINGLE_QUOTE 	64 
 # define DOUBLE_QUOTE	128 
-# define DOLAR 			256
+# define DOLLAR 		256
 # define PARENTHESE_OPEN 512
 # define PARENTHESE_CLOSE 1024
-
+# define REDIR_OUT		2048
+# define REDIR_IN		4096
+# define REDIR_APPEND	8192
+# define HEREDOC		16384
+# define DQUOTE			32768
+# define SQUOTE			65536
 # define SUCCESS	0
 # define FAILURE	1
 
@@ -67,7 +72,6 @@ typedef struct s_env
 	char	*var;
 	char	*value;
 }	t_env;
-
 
 typedef struct  s_shell
 {
@@ -85,7 +89,8 @@ typedef struct  s_shell
 void    init_shell(t_shell *shell, char **env);
 int		find_path(t_shell *shell, char **env);
 // parsing.lexer
-int		ft_lexer(t_shell *shell);
+// int		ft_lexer(t_shell *shell);
+void	*parse_ops(t_shell *shell);
 // uttils
 int		is_arg(char *str);
 char	*get_env(char **env, char *name);

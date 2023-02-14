@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/14 15:24:38 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:53:03 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,17 @@ int main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-	t_shell *shell;
+	char *line;
+	// test the function parse_ops
+	t_shell	*shell;
 	shell = ft_calloc(1, sizeof(t_shell));
-	shell->line = "ls -l | grep a > out.txt";
-	ft_lexer(shell);
-	while (shell->token)
+	while (1337)
 	{
-		printf("token: %s, type: %d\n", shell->token->content, shell->token->type);
-		shell->token = shell->token->next;
+		line = readline(GREEN"minishell[^,^]~>"RESET);
+		shell->line = line;
+		shell->token = parse_ops(shell);
+		printf("token->content: %s", shell->token->content);
+		free(line);
 	}
 	return (SUCCESS);
 }

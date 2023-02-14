@@ -1,3 +1,0 @@
-arg=qdq
-
-echo
