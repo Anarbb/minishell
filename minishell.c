@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/14 15:15:27 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:24:38 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int main(int ac, char **av, char **env)
 	init_shell(shell, env);
 	while (1337)
 	{
-		// init_signals();
+		init_signals();
 		shell->cwd = getcwd(NULL, 0);
-		line = readline(GREEN"mminishell[^,^]~>"RESET);
+		line = readline(GREEN"minishell[^,^]~>"RESET);
 		control_d(line);
 		shell->cmd = ft_split(line, ' ');
 		if(ft_strcmp(shell->cmd[0], "export") == 0)

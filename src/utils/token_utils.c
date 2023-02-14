@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 14:44:58 by aarbaoui          #+#    #+#             */
-/*   Updated: 2022/10/16 18:46:01 by aarbaoui         ###   ########.fr       */
+/*   Created: 2023/02/14 15:33:10 by aarbaoui          #+#    #+#             */
+/*   Updated: 2023/02/14 15:37:26 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void*))
+t_token *token_new(char *cmd, int type)
 {
-	t_list	*ptr;
-	t_list	*next;
+    t_token *new;
 
-	if (!del || !lst)
-		return ;
-	ptr = *lst;
-	while (ptr)
-	{
-		next = ptr->next;
-		del(ptr->content);
-		free(ptr);
-		ptr = next;
-	}
-	*lst = NULL;
+    new = malloc(sizeof(t_token));
+    if (!new)
+        return (NULL);
+    new->content = cmd;
+    new->type = type;
+    new->next = NULL;
+    return (new);
+}
+
+void    token_add_back(t_token *tokens, t_token *new)
+{
+    t_token *ptr;
+
+    ptr = tokens;
+    while (ptr->next)
+        ptr = ptr->next;
+    ptr->next = new;
 }

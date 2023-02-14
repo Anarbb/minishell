@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/14 13:23:56 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:36:59 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@
 # include <term.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "libft.h"
-
 # include "libft.h"
 
 # define RESET			"\033[0m"
@@ -93,7 +91,8 @@ int		is_option(char *str);
 char	*get_env(char **env, char *name);
 void    add_env(t_shell *shell, char *name, char *value);
 void    set_env(t_shell *shell, char *name, char *value);
-void	ft_token_add_back(t_token **alst, t_token *new);
+t_token *token_new(char *cmd, int type);
+void    token_add_back(t_token *shell, t_token *new);
 // builtins
 void    ft_cd(t_shell *shell);
 int		echo_cmd(t_shell *shell);

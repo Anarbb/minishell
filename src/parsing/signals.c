@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 16:00:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/13 22:37:01 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/14 15:24:18 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ void	control_d(char	*line)
 {
 	if (!line)
 	{
-		// Move cursor up and clear line
 		ft_putstr_fd(CLEAR_LINE, 1);
-  		ft_putstr_fd(GREEN"\nminishell[^,^]~>"RESET" exit\n", 1);
+  		ft_putstr_fd(GREEN"minishell[^,^]~>"RESET" exit\n", 1);
 		exit(EXIT_SUCCESS);
 	}
 }
