@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/14 15:36:59 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/14 16:16:04 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int		find_path(t_shell *shell, char **env);
 // parsing.lexer
 int		ft_lexer(t_shell *shell);
 // uttils
-int		is_option(char *str);
+int		is_arg(char *str);
 char	*get_env(char **env, char *name);
 void    add_env(t_shell *shell, char *name, char *value);
 void    set_env(t_shell *shell, char *name, char *value);

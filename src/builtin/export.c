@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:14 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/13 15:44:42 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/14 16:16:04 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int export_cmd(t_shell *shell)
 	}
 	else
 	{
-		if (is_option(shell->cmd[i]))
+		if (is_arg(shell->cmd[i]))
 			return (printf("minishell : export %s invalid option\n",shell->cmd[i]));
 		while (shell->cmd[i])
 		{

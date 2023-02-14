@@ -56,7 +56,7 @@ SRCS        :=      minishell.c \
 						src/utils/get_env.c \
                         src/utils/set_env.c \
                         src/builtin/export.c \
-                        src/utils/is_option.c \
+                        src/utils/is_arg.c \
                         src/utils/add_env.c \
                         src/parsing/lexer.c \
                         src/parsing/signals.c \
