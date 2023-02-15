@@ -63,6 +63,7 @@ SRCS        :=      minishell.c \
                         src/utils/token_utils.c \
                         src/utils/free_all.c \
                         src/syntax_analyser/syntax.c \
+                        src/exec/init.c \
                           
 OBJS        := $(SRCS:.c=.o)
 

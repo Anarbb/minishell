@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/15 17:14:17 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:55:44 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,6 @@ void	init_signals(void);
 void	control_d(char	*line);
 //Syntax.analyser
 int 	validate_syntax(t_token *token);
+//Execution
+char	*find_exec(t_shell *shell, char *cmd);
 #endif
