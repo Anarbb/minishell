@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:33:10 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/14 16:50:36 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:04:12 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_token *token_new(char *cmd, int type)
     return (new);
 }
 
-void    token_add_back(t_token *tokens, t_token *new)
+void    token_add_b(t_token *tokens, t_token *new)
 {
     t_token *ptr;
     

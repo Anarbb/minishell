@@ -1,13 +1,13 @@
 NAME        := minishell
 CC        := cc
 FLAGS    := -Wall -Wextra -Werror -I inc -g
-
-ifeq ($(USER), lsabik)
+HEADERS    := inc/minishell.h inc/libft.h
+ifeq ($(USER), aarbaoui)
+	LDFLAGS="-L/Volumes/Untitled/opt/readline/lib"
+    CPPFLAGS="-I/Volumes/Untitled/opt/readline/include"
+else ifeq ($(USER), lsabik)
 	LDFLAGS="-L/Users/lsabik/.brew/opt/readline/lib"
 	CPPFLAGS="-I/Users/lsabik/.brew/opt/readline/include"
-else
-	LDFLAGS="-L/Users/aarbaoui/goinfre/.brew/opt/readline/lib"
-    CPPFLAGS="-I/Users/aarbaoui/goinfre/.brew/opt/readline/include"
 endif
 
 INCLUDESS        =  ${CPPFLAGS}
@@ -66,7 +66,8 @@ SRCS        :=      minishell.c \
                           
 OBJS        := $(SRCS:.c=.o)
 
-.c.o:
+
+%.o : %.c ${HEADERS}
 	${CC} ${FLAGS} ${INCLUDESS} -c $< -o ${<:.c=.o}
 
 
@@ -78,7 +79,7 @@ BLUE		:= \033[1;34m
 CYAN 		:= \033[1;36m
 RM		    := rm -f
 
-${NAME}:	${OBJS} inc/minishell.h
+${NAME}:	${OBJS} 
 			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
 			${CC} ${FLAGS} ${LIBRARIESS} -o ${NAME} ${OBJS} -lreadline
 			@echo "$(GREEN)$(NAME) created[0m ✔️"
