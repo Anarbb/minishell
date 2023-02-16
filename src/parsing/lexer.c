@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/16 10:44:32 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/16 20:21:10 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int ft_lexer(t_shell *shell)
 {
 	char **operators;
 
-	operators = ft_split("| < << >> >\" \'", ' ');
+	operators = ft_split("| < << >> > \" \'", ' ');
 	control_d(shell->line);
 	if (shell->line && *shell->line)
 	{

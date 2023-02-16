@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/16 10:51:18 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/16 21:47:34 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	exec_cmd(t_shell *shell, char *path)
 	if (path == NULL)
 		path = shell->cmd[0];
 	if (ft_strcmp(shell->cmd[0], "exit") == 0)
-		exit(0);
+		exit_cmd(shell);
 	else if (ft_strcmp(shell->cmd[0], "cd") == 0)
 		ft_cd(shell);
 	else
@@ -60,7 +60,7 @@ void	exec_cmd(t_shell *shell, char *path)
 			{
 				ft_putstr_fd("minishell: command not found: ", 2);
 				ft_putendl_fd(shell->cmd[0], 2);
-				exit(0);
+				exit(EXIT_FAILURE);
 			}
 		}
 		else
