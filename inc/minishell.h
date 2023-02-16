@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/16 19:48:03 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/16 20:05:09 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@
 # define DQUOTE			32768
 # define SQUOTE			65536
 # define QUOTE			131072
+# define WC				262144
 # define SUCCESS	0
 # define FAILURE	1
 
