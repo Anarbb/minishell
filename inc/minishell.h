@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/16 10:48:16 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/16 19:48:03 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,7 @@ int 	validate_syntax(t_token *token);
 //Execution
 char	*find_exec(t_shell *shell, char *cmd);
 void	exec_cmd(t_shell *shell, char *path);
+//Expander
+void    expand_tokens(t_shell *shell);
+
 #endif

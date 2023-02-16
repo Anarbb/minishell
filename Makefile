@@ -64,6 +64,7 @@ SRCS        :=      minishell.c \
                         src/utils/free_all.c \
                         src/syntax_analyser/syntax.c \
                         src/exec/init.c \
+                        # src/expander/init.c \
                           
 OBJS        := $(SRCS:.c=.o)
 

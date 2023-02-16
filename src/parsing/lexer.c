@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/16 10:44:32 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/16 19:55:40 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int ft_lexer(t_shell *shell)
 {
 	char **operators;
 
-	operators = ft_split("| < << >> >\" \'", ' ');
+	operators = ft_split("| < << >> > \" \'", ' ');
 	control_d(shell->line);
 	if (shell->line && *shell->line)
 	{
