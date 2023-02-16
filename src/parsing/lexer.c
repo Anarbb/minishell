@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/16 20:21:10 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/16 21:52:08 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void parse_ops(t_shell *shell, char **operators)
 	int type;
 	int *types;
 
-	types = (int[9]){PIPE, REDIR_OUT, APPEND_OUT,
-					 REDIR_IN, APPEND_IN, DOLLAR, SQUOTE, DQUOTE, 0};
+	types = (int[10]){PIPE, REDIR_OUT, APPEND_OUT,
+					 REDIR_IN, APPEND_IN, DOLLAR, SQUOTE, DQUOTE, WC, 0};
 	i = -1;
 	while (shell->cmd && shell->cmd[++i])
 	{
@@ -45,7 +45,7 @@ int ft_lexer(t_shell *shell)
 {
 	char **operators;
 
-	operators = ft_split("| < << >> > \" \'", ' ');
+	operators = ft_split("| < << >> > \" \' *", ' ');
 	control_d(shell->line);
 	if (shell->line && *shell->line)
 	{

@@ -6,7 +6,11 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/02/16 21:48:53 by lsabik           ###   ########.fr       */
+=======
+/*   Updated: 2023/02/16 20:05:09 by aarbaoui         ###   ########.fr       */
+>>>>>>> b2639f13bca9ef141ad4cf1f87d5145237aa5cb5
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +51,7 @@
 # define REDIR_IN 		16
 # define SQUOTE		 	32
 # define DQUOTE 		64 
-# define WILDCARD		128 
+# define WC				128 
 # define DOLLAR 		256
 # define APPEND_OUT		512
 # define APPEND_IN		1024
@@ -107,4 +111,7 @@ int		is_redirection(int type);
 //Execution
 char	*find_exec(t_shell *shell, char *cmd);
 void	exec_cmd(t_shell *shell, char *path);
+//Expander
+void    expand_tokens(t_shell *shell);
+
 #endif
