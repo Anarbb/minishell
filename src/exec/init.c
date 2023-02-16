@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/15 18:28:39 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/16 10:51:18 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,33 @@ char *find_exec(t_shell *shell, char *cmd)
 		closedir(dirp);
 	}
 	return (NULL);
+}
+
+void	exec_cmd(t_shell *shell, char *path)
+{
+	pid_t pid;
+	int status;
+
+	// hadi tr9i3a to run local executables pls dont use :D
+	if (path == NULL)
+		path = shell->cmd[0];
+	if (ft_strcmp(shell->cmd[0], "exit") == 0)
+		exit(0);
+	else if (ft_strcmp(shell->cmd[0], "cd") == 0)
+		ft_cd(shell);
+	else
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			if (execve(path, &shell->cmd[0], shell->env) == -1)
+			{
+				ft_putstr_fd("minishell: command not found: ", 2);
+				ft_putendl_fd(shell->cmd[0], 2);
+				exit(0);
+			}
+		}
+		else
+			waitpid(pid, &status, 0);
+	}
 }

@@ -6,21 +6,21 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/15 17:04:06 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/16 10:44:32 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parse_ops(t_shell *shell, char **operators)
+void parse_ops(t_shell *shell, char **operators)
 {
 	int i;
 	int j;
 	int type;
 	int *types;
-	
+
 	types = (int[9]){PIPE, REDIR_OUT, APPEND_OUT,
-		 REDIR_IN, APPEND_IN, DOLLAR, SQUOTE, DQUOTE, 0};
+					 REDIR_IN, APPEND_IN, DOLLAR, SQUOTE, DQUOTE, 0};
 	i = -1;
 	while (shell->cmd && shell->cmd[++i])
 	{
@@ -41,17 +41,20 @@ void	parse_ops(t_shell *shell, char **operators)
 	}
 }
 
-int	ft_lexer(t_shell *shell)
+int ft_lexer(t_shell *shell)
 {
 	char **operators;
 
 	operators = ft_split("| < << >> >\" \'", ' ');
 	control_d(shell->line);
 	if (shell->line && *shell->line)
+	{
 		add_history(shell->line);
-	shell->cmd = ft_split(shell->line, ' ');
-	parse_ops(shell, operators);
-	if (!validate_syntax(shell->token))
-		return (FAILURE);
-	return (SUCCESS);
+		shell->cmd = ft_split(shell->line, ' ');
+		parse_ops(shell, operators);
+		if (validate_syntax(shell->token))
+			return (FAILURE);
+		return (SUCCESS);
+	}
+	return (FAILURE);
 }
