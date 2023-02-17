@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:08:43 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/17 14:37:59 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/17 14:45:15 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	free_tokens(t_token **tokens)
 	while (ptr)
 	{
 		next = ptr->next;
-		free(ptr->content);
 		free(ptr);
 		ptr = next;
 	}
@@ -42,5 +41,7 @@ void    free_all(t_shell *shell)
             free(shell->cmd[i]);
         free(shell->cmd);
     }
+	free(shell->cwd);
+	free(shell->line);
     free_tokens(&shell->token);
 }
