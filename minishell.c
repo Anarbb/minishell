@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/17 11:22:49 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/17 13:15:02 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ int main(int ac, char **av, char **env)
 		shell->cwd = getcwd(NULL, 0);
 		shell->line = readline(GREEN "minishell[^,^]~> " RESET);
 		if (ft_lexer(shell) == SUCCESS)
+		{
 			exec_cmd(shell, find_exec(shell, shell->cmd[0]));
+			free_all(shell, 1);
+		}
+		else
+			free_all(shell, 1);
 	}
 	clear_history();
 	return (SUCCESS);

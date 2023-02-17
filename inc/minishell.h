@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/17 11:22:03 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/17 13:12:00 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,13 @@ void    add_env(t_shell *shell, char *name, char *value);
 void    set_env(t_shell *shell, char *name, char *value);
 t_token *token_new(char *cmd, int type);
 void    token_add_b(t_token *tokens, t_token *new);
-void    free_all(t_shell *shell);
+void    free_all(t_shell *shell, int tokens);
+void    free_tokens(t_token *token);
 // builtins
 void    ft_cd(t_shell *shell);
 int		echo_cmd(t_shell *shell);
 int 	export_cmd(t_shell *shell);
-int		exit_cmd(t_shell *shell);
+int		exit_cmd(t_shell *shell, char *code);
 //Signals
 void	init_signals(void);
 void	control_d(char	*line);

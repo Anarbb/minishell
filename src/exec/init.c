@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/16 21:47:34 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/17 12:03:58 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	exec_cmd(t_shell *shell, char *path)
 	if (path == NULL)
 		path = shell->cmd[0];
 	if (ft_strcmp(shell->cmd[0], "exit") == 0)
-		exit_cmd(shell);
+		exit_cmd(shell, shell->cmd[1]);
 	else if (ft_strcmp(shell->cmd[0], "cd") == 0)
 		ft_cd(shell);
 	else

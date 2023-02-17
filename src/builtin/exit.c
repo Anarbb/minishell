@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 21:01:34 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/16 21:49:42 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/17 12:03:14 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell.h"
 
-int	exit_cmd(t_shell *shell)
+int	exit_cmd(t_shell *shell, char *code)
 {
     (void)shell;
     printf("exit\n");
-    return (EXIT_SUCCESS);
+    exit(ft_atoi(code));
 }
-
