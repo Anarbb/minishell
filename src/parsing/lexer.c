@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/17 11:20:58 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/17 13:23:42 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void parse_ops(t_shell *shell, char *operators)
 	int i;
 	int j;
 	int type;
-	int *types;
 
 	types = (int[10]){PIPE, REDIR_OUT, APPEND_OUT,
 					 REDIR_IN, APPEND_IN, DOLLAR, SQUOTE, DQUOTE, WC, 0};
