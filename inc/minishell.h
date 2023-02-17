@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/17 13:12:00 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/17 14:40:40 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct  s_shell
 {
 	char	**cmd;
 	int	    type;
+	int		exit_status;
 	char	**env;
 	char	**path;
 	char	*line;
@@ -113,5 +114,5 @@ char	*find_exec(t_shell *shell, char *cmd);
 void	exec_cmd(t_shell *shell, char *path);
 //Expander
 void    expand_tokens(t_shell *shell);
-
+char	*expander(t_shell *shell, char *str);
 #endif

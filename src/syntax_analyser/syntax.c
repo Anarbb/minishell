@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/17 11:20:35 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:09:56 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	redir_err(t_token *token)
 {
     if (!(token->next))
 		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", STDERR_FILENO);
-	else if (token->next->type != CMD || token->next->type == CMD)
+	else if (token->next->type != CMD && token->next->type != DOLLAR)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR_FILENO);
 		ft_putstr_fd(token->next->content, STDERR_FILENO);
