@@ -6,29 +6,40 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:08:43 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/14 17:10:28 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/17 13:18:38 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    free_all(t_shell *shell)
+void    free_tokens(t_token *token)
+{
+    t_token *tmp;
+
+    while (token)
+    {
+        tmp = token;
+        token = token->next;
+        if (tmp->content)
+           tmp->content = "";
+        tmp->type = 0;
+    }
+}
+
+
+void    free_all(t_shell *shell, int tokens)
 {
     int i;
 
-    i = 0;
-    i = 0;
-    while (shell->cmd[i])
+    i = -1;
+    if (shell->cmd)
     {
-        free(shell->cmd[i]);
-        i++;
+        while (shell->cmd[++i])
+            free(shell->cmd[i]);
+        free(shell->cmd);
     }
-    free(shell->cmd);
-    free(shell->line);
-    while (shell->token)
+    if (tokens)
     {
-        free(shell->token->content);
-        free(shell->token);
-        shell->token = shell->token->next;
+        free_tokens(shell->token);
     }
 }
