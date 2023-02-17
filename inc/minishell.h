@@ -3,10 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/02/17 11:12:01 by aarbaoui         ###   ########.fr       */
+=======
+<<<<<<< HEAD
+/*   Updated: 2023/02/16 21:48:53 by lsabik           ###   ########.fr       */
+=======
+/*   Updated: 2023/02/16 20:05:09 by aarbaoui         ###   ########.fr       */
+>>>>>>> b2639f13bca9ef141ad4cf1f87d5145237aa5cb5
+>>>>>>> a938318f8a640fccd2cbaaa37920f8e5b5a7cb9f
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +50,15 @@
 # define CLEAR_LINE		"\033[A\033[K"
 # define EMPTY 			1
 # define CMD 			2
-# define REDIR			4
-# define PIPE 			8
-# define AND 			16
-# define PARENTHESIS 	32
-# define SINGLE_QUOTE 	64 
-# define DOUBLE_QUOTE	128 
+# define PIPE 			4
+# define REDIR_OUT		8
+# define REDIR_IN 		16
+# define SQUOTE		 	32
+# define DQUOTE 		64 
+# define WC				128 
 # define DOLLAR 		256
-# define PARENTHESE_OPEN 512
-# define PARENTHESE_CLOSE 1024
-# define REDIR_OUT		2048
-# define REDIR_IN		4096
-# define APPEND_OUT		8192
-# define APPEND_IN		16384
-# define DQUOTE			32768
-# define SQUOTE			65536
-# define QUOTE			131072
-# define WC				262144
+# define APPEND_OUT		512
+# define APPEND_IN		1024
 # define SUCCESS	0
 # define FAILURE	1
 
@@ -108,11 +108,13 @@ void    free_all(t_shell *shell);
 void    ft_cd(t_shell *shell);
 int		echo_cmd(t_shell *shell);
 int 	export_cmd(t_shell *shell);
+int		exit_cmd(t_shell *shell);
 //Signals
 void	init_signals(void);
 void	control_d(char	*line);
 //Syntax.analyser
 int 	validate_syntax(t_token *token);
+int		is_redirection(int type);
 //Execution
 char	*find_exec(t_shell *shell, char *cmd);
 void	exec_cmd(t_shell *shell, char *path);
