@@ -6,28 +6,32 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:08:43 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/17 13:18:38 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/17 14:37:59 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    free_tokens(t_token *token)
+void	free_tokens(t_token **tokens)
 {
-    t_token *tmp;
+	t_token	*ptr;
+	t_token	*next;
 
-    while (token)
-    {
-        tmp = token;
-        token = token->next;
-        if (tmp->content)
-           tmp->content = "";
-        tmp->type = 0;
-    }
+	if (!tokens)
+		return ;
+	ptr = *tokens;
+	while (ptr)
+	{
+		next = ptr->next;
+		free(ptr->content);
+		free(ptr);
+		ptr = next;
+	}
+	*tokens = NULL;
 }
 
 
-void    free_all(t_shell *shell, int tokens)
+void    free_all(t_shell *shell)
 {
     int i;
 
@@ -38,8 +42,5 @@ void    free_all(t_shell *shell, int tokens)
             free(shell->cmd[i]);
         free(shell->cmd);
     }
-    if (tokens)
-    {
-        free_tokens(shell->token);
-    }
+    free_tokens(&shell->token);
 }
