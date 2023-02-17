@@ -6,13 +6,13 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/16 20:05:16 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/17 11:18:41 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void parse_ops(t_shell *shell, char **operators)
+void parse_ops(t_shell *shell, char *operators)
 {
 	int i;
 	int j;
@@ -26,13 +26,12 @@ void parse_ops(t_shell *shell, char **operators)
 	{
 		type = CMD;
 		j = -1;
-		while (operators[++j])
+		if (is_cmd(shell->cmd[i]))
+			type = CMD;
+		else if (j == -1)
 		{
-			if (ft_strcmp(shell->cmd[i], operators[j]) == 0)
-			{
-				type = types[j];
-				break;
-			}
+			split_by_ops(shell, shell->cmd[i], operators);
+			continue ;
 		}
 		if (!shell->token)
 			shell->token = token_new(ft_strdup(shell->cmd[i]), type);
@@ -41,17 +40,52 @@ void parse_ops(t_shell *shell, char **operators)
 	}
 }
 
+void split_by_ops(t_shell *shell, char *cmd, char *ops)
+{
+    int i = 0;
+	
+    while (cmd[i])
+    {
+        if (ft_strchr(ops, cmd[i]))
+        {
+            if (cmd[i] == '<' && cmd[i + 1] == '<')
+			{
+                add_token(shell, "<<", APPEND_IN);
+				i++;
+			}
+			else if (cmd[i] == '>' && cmd[i + 1] == '>')
+			{
+				add_token(shell, ">>", APPEND_OUT);
+				i++;
+			}
+			else if (cmd[i] == '>')
+                add_token(shell, ">", REDIR_OUT);
+            else if (cmd[i] == '<')
+                add_token(shell, "<", REDIR_IN);
+            else if (cmd[i] == '|')
+                add_token(shell, "|", PIPE);
+			else if (cmd[i] == '\'')
+				add_token(shell, "\'", SQUOTE);
+			else if (cmd[i] == '\"')
+				add_token(shell, "\"", DQUOTE);
+			else if (cmd[i] == '*')
+				add_token(shell, "*", WC);
+			else if (cmd[i] == '$')
+				add_token(shell, "$", DOLLAR);
+        }
+        i++;
+    }
+}
+
+
 int ft_lexer(t_shell *shell)
 {
-	char **operators;
-
-	operators = ft_split("| < << >> > \" \' *", ' ');
 	control_d(shell->line);
 	if (shell->line && *shell->line)
 	{
 		add_history(shell->line);
 		shell->cmd = ft_split(shell->line, ' ');
-		parse_ops(shell, operators);
+		parse_ops(shell, "| < << >> > \" \' *");
 		if (validate_syntax(shell->token))
 			return (FAILURE);
 		return (SUCCESS);

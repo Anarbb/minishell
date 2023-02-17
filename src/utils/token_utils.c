@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:33:10 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/15 17:04:12 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/17 11:18:19 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,23 @@ void    token_add_b(t_token *tokens, t_token *new)
     while (ptr->next)
         ptr = ptr->next;
     ptr->next = new;
+}
+
+void	add_token(t_shell *shell, char *str, int type)
+{
+	if (!shell->token)
+		shell->token = token_new(str, type);
+	else
+		token_add_b(shell->token, token_new(str, type));
+}
+
+int	is_cmd(char *cmd)
+{
+	while (!ft_isspace(*cmd) && *cmd)
+	{
+		if (ft_strchr("| < << >> > \" \' *", *cmd))
+			return (0);
+		cmd++;
+	}
+	return (1);
 }

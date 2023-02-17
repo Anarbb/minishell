@@ -25,6 +25,7 @@ SRCS        :=      minishell.c \
                         src/libft/ft_itoa.c \
 						src/libft/ft_strcmp.c \
                         src/libft/ft_memchr.c \
+                        src/libft/ft_isspace.c \
                         src/libft/ft_memcmp.c \
                         src/libft/ft_memcpy.c \
                         src/libft/ft_memmove.c \

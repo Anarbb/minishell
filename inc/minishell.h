@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/16 20:05:09 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/17 11:12:01 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ void    init_shell(t_shell *shell, char **env);
 int		find_path(t_shell *shell, char **env);
 // parsing.lexer
 int		ft_lexer(t_shell *shell);
-void	parse_ops(t_shell *shell, char **operators);
+void split_by_ops(t_shell *shell, char *cmd, char *ops);
+void	parse_ops(t_shell *shell, char *operators);
+void	add_token(t_shell *shell, char *str, int type);
+int		is_cmd(char *cmd);
 // utils
 int		is_arg(char *str);
 char	*get_env(char **env, char *name);
