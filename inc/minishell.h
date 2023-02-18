@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/18 15:20:41 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/18 21:31:34 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void    init_shell(t_shell *shell, char **env);
 int		find_path(t_shell *shell, char **env);
 // parsing.lexer
 int		ft_lexer(t_shell *shell);
-void split_by_ops(t_shell *shell, char *cmd, char *ops);
-void	parse_ops(t_shell *shell, char *operators);
+void split_by_ops(t_shell *shell, char *cmd);
+void	parse_ops(t_shell *shell);
 void	add_token(t_shell *shell, char *str, int type);
 int		is_cmd(char *cmd);
 // utils
@@ -113,7 +113,10 @@ int		is_redirection(int type);
 char	*find_exec(t_shell *shell, char *cmd);
 void	exec_cmd(t_shell *shell, char *path);
 //Expander
-char	*expander(t_shell *shell, char *str);
+char	*expander(t_shell *shell, t_token *token);
 char	*delet_squotes(char *str);
 char	*delet_dquotes(char *str);
+char	*ft_join(char *tmp, char *value);
+
+int is_cmd_c(char c);
 #endif

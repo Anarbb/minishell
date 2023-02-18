@@ -6,11 +6,22 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:18:45 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/18 16:38:08 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/18 21:31:07 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell.h"
+
+char	*ft_join(char *tmp, char *value)
+{
+	char *tmp2;
+
+	tmp2 = ft_strjoin(tmp, value);
+	free(tmp);
+	tmp = tmp2;
+	free(value);
+	return (tmp);
+}
 
 char	*delet_dquotes(char *str)
 {
@@ -33,9 +44,7 @@ char	*delet_dquotes(char *str)
 		i++;
 	}
 	*new_str = '\0';
-	free(str);
 	str = new_str;
-	free(new_str);
 	return (str);
 }
 
@@ -60,8 +69,6 @@ char	*delet_squotes(char *str)
 		i++;
 	}
 	*new_str = '\0';
-	free(str);
 	str = new_str;
-	free(new_str);
 	return (str);
 }

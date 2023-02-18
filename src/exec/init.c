@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/17 15:20:22 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/18 17:04:12 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	exec_cmd(t_shell *shell, char *path)
 		exit_cmd(shell, shell->cmd[1]);
 	else if (ft_strcmp(shell->cmd[0], "cd") == 0)
 		ft_cd(shell);
-	else if (shell->cmd[0][0] == '$')
-		expander(shell, shell->cmd[0]);
+	// else if (shell->cmd[0][0] == '$')
+	// 	expander(shell, shell->cmd[0]);
 	else
 	{
 		pid = fork();
