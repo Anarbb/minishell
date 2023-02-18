@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/17 16:00:37 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/18 16:39:28 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,60 +14,87 @@
 
 char	*expand_after_dollar(t_shell *shell, char *str, int i)
 {
-	int		j;
-	int		len;
-	char	*tmp;
-	char	**env;
-	// char	*tmp1;
+	int len;
+	char *tmp;
+	char *value;
+	char **env;
 
-	j = 0;
 	env = shell->env;
 	len = ft_strlen(str) - 1;
 	tmp = ft_substr(str, i, len);
-	while (ft_strncmp(*env, tmp, len) != 0)
+	while (*env != NULL)
+	{
+		if (ft_strncmp(*env, tmp, len) == 0 && (*env)[len] == '=')
+		{
+			value = ft_strdup(*env + (len + 1));
+			free(tmp);
+			return (value);
+		}
 		env++;
-	tmp = (*env + (len + 1));
-	printf("%s, len :%d\n",tmp, len);
-	// printf("%s\n",tmp1);
+	}
+	free(tmp);
+	return (NULL);
+}
+
+char	*ft_join(char *tmp, char *value)
+{
+	char *tmp2;
+
+	tmp2 = ft_strjoin(tmp, value);
+	free(tmp);
+	tmp = tmp2;
+	free(value);
 	return (tmp);
 }
 
-void	after_dollar(t_shell *shell, char *str)
+char	*after_dollar(t_shell *shell, char *str, char *tmp)
 {
-	int 	i;
-	char	*tmp;
-
+	int i;
+	char *value;
+	
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '$' && ft_isdigit(str[i + 1]))
 			i += 2;
 		else if (str[i] == '$' && str[i + 1] == '?')
-			shell->exit_status = 0;
+			i += 2;
 		else if (str[i] == '$' && str[i + 1] != '\'' && str[i + 1] != '\"' && str[i + 1] != '\0' && str[i + 1] != ' ')
-			tmp = expand_after_dollar(shell, str, i + 1);
-		// else
-		// {
-			
-		// }
-		i++;
+		{
+			value = expand_after_dollar(shell, str, i + 1);
+			if (value != NULL)
+			{
+				i += ft_strlen(value) + 1;
+				tmp = ft_join(tmp, value);
+			}
+			else
+				i++;
+		}
+		else
+		{
+			tmp = ft_join(tmp, ft_substr(str, i, 1));
+			i++;
+		}
 	}
+	printf("%s\n",tmp);
+	return (tmp);
 }
+
 //str the whole word
 char	*expander(t_shell *shell, char *str)
 {
-	int i;
+	int		i;
+	char	*tmp;
 
 	i = 0;
+	tmp = ft_strdup("");
 	while (str[i])
 	{
 		if (str[i] && str[i] == '$' && str[i + 1] != '\0')
-		{
-			after_dollar(shell, str);
-		}
-		// delet_dquotes();
-		// delet_squotes();
+			tmp = after_dollar(shell, str, tmp);
+		// tmp = delet_squotes(tmp);
+		// tmp = delet_dquotes(tmp);
 		i++;
 	}
-	return (NULL);
+	return (tmp);
 }

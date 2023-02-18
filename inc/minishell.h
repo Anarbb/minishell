@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/17 15:12:20 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/18 15:20:41 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int		is_redirection(int type);
 char	*find_exec(t_shell *shell, char *cmd);
 void	exec_cmd(t_shell *shell, char *path);
 //Expander
-void    expand_tokens(t_shell *shell);
 char	*expander(t_shell *shell, char *str);
+char	*delet_squotes(char *str);
+char	*delet_dquotes(char *str);
 #endif

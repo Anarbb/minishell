@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:08:43 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/17 16:00:09 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/18 16:42:27 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	free_tokens(t_token **tokens)
 	while (ptr)
 	{
 		next = ptr->next;
+		free(ptr->content);
 		free(ptr);
 		ptr = next;
 	}
@@ -41,7 +42,7 @@ void    free_all(t_shell *shell)
             free(shell->cmd[i]);
         free(shell->cmd);
     }
-	free(shell->cwd);
-	free(shell->line);
+    free(shell->cwd);
+    free(shell->line);
     free_tokens(&shell->token);
 }

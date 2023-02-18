@@ -6,39 +6,39 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/17 15:09:56 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/18 16:36:47 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell.h"
 
-int	unclosed_err(t_token **token, int type)
+
+int unclosed_err(t_token **token, int type)
 {
-	int	count = 0;
-	while (*token)
-	{
-		if ((*token)->type == type)
-		{
-			if (++count && (*token)->content && (*token)->content[0] == type)
-				while (*token && --count)
-					*token = (*token)->next;
-			else
-				while (*token && --count >= 0)
-					*token = (*token)->next;
-			if (count < 0)
-			{
-				ft_putstr_fd("minishell: unclosed ", STDERR_FILENO);
-				if (type == SQUOTE)
-					ft_putstr_fd("single quotes detected.\n", STDERR_FILENO);
-				else if (type == DQUOTE)
-					ft_putstr_fd("double quotes detected.\n", STDERR_FILENO);
-				return (FAILURE);
-			}
-		}
-		*token = (*token)->next;
-	}
-	return (SUCCESS);
+	// t_token	*curr;
+    int		count;
+
+	count = 0;
+		// printf("******\n");
+    while (*token && count != 2)
+    {
+        if ((*token)->type == type)
+            count++;
+		// printf("%d,token %s\n",count,(*token)->content);
+        *token = (*token)->next;
+    }
+    if (count % 2 != 0)
+    {
+        ft_putstr_fd("minishell: unclosed ", STDERR_FILENO);
+        if (type == SQUOTE)
+            ft_putstr_fd("single quotes detected.\n", STDERR_FILENO);
+        else if (type == DQUOTE)
+            ft_putstr_fd("double quotes detected.\n", STDERR_FILENO);
+        return (FAILURE);
+    }
+    return (SUCCESS);
 }
+
 
 int	pipe_err(t_token *token, t_token *prev_tkn)
 {
@@ -79,7 +79,12 @@ int	validate_syntax(t_token *token)
 			if (pipe_err(token, prev_tkn))
 				return (FAILURE);
 		}
-		else if (token->type == SQUOTE || token->type == DQUOTE)
+		else if (token->type == DQUOTE)
+		{
+			if (unclosed_err(&token, token->type) == FAILURE)
+				return (FAILURE);
+		}
+		else if (token->type == SQUOTE)
 		{
 			if (unclosed_err(&token, token->type) == FAILURE)
 				return (FAILURE);
@@ -89,7 +94,8 @@ int	validate_syntax(t_token *token)
 			if (redir_err(token) == FAILURE)
 				return (FAILURE);
 		}
-		token = token->next;
+		if (token != NULL)
+			token = token->next;
 	}
 	return (SUCCESS);
 }
