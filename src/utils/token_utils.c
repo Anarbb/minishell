@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:33:10 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/20 12:07:40 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:41:30 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ int is_cmd_c(char c)
     {
         if (ft_strchr(*strs, c))
             return (0);
+        free(*strs);
         strs++;
     }
+    while (1);
     return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/20 14:17:15 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/20 14:43:08 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int		is_cmd_c(char c);
 // builtins
 void    ft_cd(t_shell *shell);
 int		echo_cmd(t_shell *shell);
-int 	export_cmd(t_shell *shell);
+void    ft_export(t_shell *shell, char **args);
 int		exit_cmd(t_shell *shell, char *code);
 //Signals
 void	init_signals(void);
