@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/18 21:31:34 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/20 14:00:35 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_env
 {
 	char	*var;
 	char	*value;
+	struct s_env *next;
 }	t_env;
 
 typedef struct  s_shell
@@ -72,32 +73,30 @@ typedef struct  s_shell
 	char	**cmd;
 	int	    type;
 	int		exit_status;
-	char	**env;
 	char	**path;
 	char	*line;
 	char	*cwd;
-	t_env	*evn;
+	t_env	*env;
+	char	**tmp_env;
 	t_token	*token;
 }   t_shell;
 
 // parsing.init
 void    init_shell(t_shell *shell, char **env);
-int		find_path(t_shell *shell, char **env);
+int 	find_path(t_shell *shell);
 // parsing.lexer
 int		ft_lexer(t_shell *shell);
-void split_by_ops(t_shell *shell, char *cmd);
+void 	split_by_ops(t_shell *shell, char *cmd);
 void	parse_ops(t_shell *shell);
 void	add_token(t_shell *shell, char *str, int type);
 int		is_cmd(char *cmd);
 // utils
 int		is_arg(char *str);
-char	*get_env(char **env, char *name);
-void    add_env(t_shell *shell, char *name, char *value);
-void    set_env(t_shell *shell, char *name, char *value);
 t_token *token_new(char *cmd, int type);
 void    token_add_b(t_token *tokens, t_token *new);
 void    free_all(t_shell *shell);
 void	free_tokens(t_token **tokens);
+int		is_cmd_c(char c);
 // builtins
 void    ft_cd(t_shell *shell);
 int		echo_cmd(t_shell *shell);
@@ -118,5 +117,11 @@ char	*delet_squotes(char *str);
 char	*delet_dquotes(char *str);
 char	*ft_join(char *tmp, char *value);
 
-int is_cmd_c(char c);
+
+// env
+void    init_env(t_shell *shell);
+void    add_env(t_shell *shell, char *key, char *value);
+void    set_env(t_shell *shell, char *key, char *value);
+char    *get_env(t_shell *shell, char *key);
+void 	ft_lstadd_back_env(t_env **alst, t_env *new);
 #endif

@@ -54,11 +54,7 @@ SRCS        :=      minishell.c \
 					    src/parsing/init.c \
                         src/builtin/cd.c \
                         src/builtin/echo.c \
-						src/utils/get_env.c \
-                        src/utils/set_env.c \
-                        src/builtin/export.c \
                         src/utils/is_arg.c \
-                        src/utils/add_env.c \
                         src/parsing/lexer.c \
                         src/parsing/signals.c \
                         src/utils/token_utils.c \
@@ -69,6 +65,7 @@ SRCS        :=      minishell.c \
                         src/syntax_analyser/syntax_utils.c \
                         src/expander/expander.c \
                         src/expander/expander_utis.c \
+                        src/utils/env_utils.c \
                           
 OBJS        := $(SRCS:.c=.o)
 
