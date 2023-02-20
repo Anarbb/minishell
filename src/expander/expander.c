@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/19 14:56:11 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/20 14:16:59 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*expand_after_dollar(t_shell *shell, char *str, int i)
 	char *value;
 	char **env;
 
-	env = shell->env;
+	env = shell->tmp_env;
 	len = ft_strlen(str) - 1;
 	tmp = ft_substr(str, i, len);
 	while (*env != NULL)

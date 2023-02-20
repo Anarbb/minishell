@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/11 20:08:39 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/20 13:25:01 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void    ft_cd(t_shell *shell)
     char *pwd;
 
     if (!shell->cmd[1] || ft_strcmp(shell->cmd[1], "~") == 0)
-        chdir(get_env(shell->env, "HOME"));
+        chdir(get_env(shell, "HOME"));
     else if (ft_strcmp(shell->cmd[1], "-") == 0)
     {
-        printf("%s\n", get_env(shell->env, "OLDPWD"));   
-        chdir(get_env(shell->env, "OLDPWD"));
+        printf("%s\n", get_env(shell, "OLDPWD"));   
+        chdir(get_env(shell, "OLDPWD"));
     }
     else if (chdir(shell->cmd[1]) == -1)
     {
@@ -32,7 +32,7 @@ void    ft_cd(t_shell *shell)
     }
     else
     {
-        oldpwd = get_env(shell->env, "PWD");
+        oldpwd = get_env(shell, "PWD");
         pwd = getcwd(NULL, 0);
         set_env(shell, "OLDPWD", oldpwd);
         set_env(shell, "PWD", pwd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/18 17:04:12 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/20 13:34:50 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	exec_cmd(t_shell *shell, char *path)
 		pid = fork();
 		if (pid == 0)
 		{
-			if (execve(path, &shell->cmd[0], shell->env) == -1)
+			if (execve(path, &shell->cmd[0], shell->tmp_env) == -1)
 			{
 				ft_putstr_fd("minishell: command not found: ", 2);
 				ft_putendl_fd(shell->cmd[0], 2);

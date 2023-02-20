@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:19:14 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/14 16:16:04 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/20 13:26:03 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@ void	exported_env(t_shell *shell)
 	int	i;
 
 	i = 0;
-	while(shell->env[i])
-		printf("declare -x %s\n",shell->env[i++]);
+	while (shell->env[i])
+	{
+		if (shell->env[i][0] != '\0')
+			printf("declare -x %s", shell->env[i]);
+		i++;
+	}
 }
 
 int	check_var(char *cmd, int *plus)
