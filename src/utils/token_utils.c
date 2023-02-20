@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:33:10 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/20 14:41:30 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:47:59 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,5 @@ int is_cmd_c(char c)
         free(*strs);
         strs++;
     }
-    while (1);
     return (1);
 }
