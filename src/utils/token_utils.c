@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:33:10 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/18 20:29:31 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/20 12:07:40 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,14 @@ int	is_cmd(char *cmd)
 
 int is_cmd_c(char c)
 {
-    if (!ft_strchr("| < << >> > \" \' *", c))
-        return (0);
+    char **strs;
+
+    strs = ft_split("| < << >> > \" \' *", ' ');
+    while (*strs)
+    {
+        if (ft_strchr(*strs, c))
+            return (0);
+        strs++;
+    }
     return (1);
 }

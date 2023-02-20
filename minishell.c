@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/18 15:40:15 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/20 11:36:40 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ int main(int ac, char **av, char **env)
 			char *path = find_exec(shell, shell->cmd[0]);
 			exec_cmd(shell, path);
 			free(path);
+		}
+		t_token *tmp = shell->token;
+		while (tmp)
+		{
+			printf("token: %s\n", tmp->content);
+			printf("type: %d\n", tmp->type);
+			tmp = tmp->next;
 		}
 		free_all(shell);
 	}
