@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/18 16:36:47 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/19 15:53:00 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ int unclosed_err(t_token **token, int type)
     int		count;
 
 	count = 0;
-		// printf("******\n");
+		printf("******\n");
     while (*token && count != 2)
     {
         if ((*token)->type == type)
             count++;
-		// printf("%d,token %s\n",count,(*token)->content);
         *token = (*token)->next;
     }
     if (count % 2 != 0)

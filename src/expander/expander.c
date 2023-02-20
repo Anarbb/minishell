@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/18 21:38:38 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/19 14:56:11 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,18 @@ char	*expander(t_shell *shell, t_token *token)
 			tmp = after_dollar(shell, token->content, tmp);
 		else
 		{
-			tmp = ft_join(tmp, ft_substr(token->content, ft_strlen(token->content), 1));
+			if (prev_tkn->type != SQUOTE && token->type != DQUOTE && token->type != DOLLAR)
+				tmp = ft_join(tmp, ft_strdup(token->content));
+			else
+				tmp = ft_join(tmp, ft_substr(token->content, i, ft_strlen(token->content)));
+		
 		}
-		// tmp = delet_squotes(tmp);
-		// tmp = delet_dquotes(tmp);
 		prev_tkn = token;
 		token = token->next;
 	}
+			printf("****%s\n",tmp);
+		// tmp = delet_squotes(tmp);
+		tmp = delet_dquotes(tmp);
 			printf("****%s\n",tmp);
 	return (tmp);
 }
