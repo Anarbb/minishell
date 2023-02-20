@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/20 14:35:05 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/20 16:37:20 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,15 @@ void	exec_cmd(t_shell *shell, char *path)
 		exit_cmd(shell, shell->cmd[1]);
 	else if (ft_strcmp(shell->cmd[0], "cd") == 0)
 		ft_cd(shell);
-	// else if (ft_strcmp(shell->cmd[0], "export") == 0)
-	// 	ft_export(shell, shell->cmd);
+	else if (ft_strcmp(shell->cmd[0], "export") == 0)
+	{
+		if (shell->cmd[1] == NULL || shell->cmd[2] == NULL)
+			ft_export(shell, NULL, NULL);
+		else
+			ft_export(shell, shell->cmd[1], shell->cmd[2]);
+	}
+	else if (ft_strcmp(shell->cmd[0], "env") == 0)
+		ft_env(shell);
 	// else if (shell->cmd[0][0] == '$')
 	// 	expander(shell, shell->cmd[0]);
 	else
@@ -70,4 +77,5 @@ void	exec_cmd(t_shell *shell, char *path)
 		else
 			waitpid(pid, &status, 0);
 	}
+	set_env(shell, "_", shell->cmd[0]);
 }

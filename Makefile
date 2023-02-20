@@ -66,6 +66,8 @@ SRCS        :=      minishell.c \
                         src/expander/expander.c \
                         src/expander/expander_utis.c \
                         src/utils/env_utils.c \
+                        src/builtin/export.c \
+                        src/builtin/env.c \
                           
 OBJS        := $(SRCS:.c=.o)
 
