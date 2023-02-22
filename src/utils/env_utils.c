@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 12:27:04 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/20 14:15:36 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:44:11 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,16 @@ void ft_lstadd_back_env(t_env **alst, t_env *new)
 void    set_env(t_shell *shell, char *name, char *value)
 {
 	t_env *tmp;
+	char *tmp_value;
 
 	tmp = shell->env;
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->var, name) == 0)
 		{
-			free(tmp->value);
-			tmp->value = ft_strdup(value);
+			tmp_value = ft_strdup(value);
+			tmp->value = tmp_value;
+			free(tmp_value);
 			return ;
 		}
 		tmp = tmp->next;

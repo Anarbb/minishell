@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/20 14:16:59 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/21 15:23:51 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,7 @@ char	*expander(t_shell *shell, t_token *token)
 		prev_tkn = token;
 		token = token->next;
 	}
-			printf("****%s\n",tmp);
 		// tmp = delet_squotes(tmp);
 		tmp = delet_dquotes(tmp);
-			printf("****%s\n",tmp);
 	return (tmp);
 }

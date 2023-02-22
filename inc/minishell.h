@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/20 16:35:52 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:40:54 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int		echo_cmd(t_shell *shell);
 void	ft_export(t_shell *shell, char *key, char *value);
 int		exit_cmd(t_shell *shell, char *code);
 void	ft_env(t_shell *shell);
+void    ft_unset(t_shell *shell, char *var);
 //Signals
 void	init_signals(void);
 void	control_d(char	*line);

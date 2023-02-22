@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:08:43 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/20 14:34:41 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:47:56 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ void    free_all(t_shell *shell)
     if (shell->cmd)
     {
         while (shell->cmd[++i])
-            free(shell->cmd[i]);
+		{
+			if (shell->cmd[i])
+            	free(shell->cmd[i]);
+		}
         free(shell->cmd);
     }
     free(shell->cwd);
