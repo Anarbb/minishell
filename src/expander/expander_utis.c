@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:18:45 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/19 15:34:31 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/24 15:56:22 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,35 @@
 char	*ft_join(char *tmp, char *value)
 {
 	char *tmp2;
-
 	tmp2 = ft_strjoin(tmp, value);
-	free(tmp);
-	tmp = tmp2;
-	free(value);
+	// free(tmp);
+	return (tmp2);
+}
+
+char	*after_dollar(t_shell *shell, char *str, char *tmp)
+{
+	int i;
+	char *value;
+	
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isdigit(str[0]))
+			i++;
+		else if (str[0] == '?')
+			i++;
+		else if (str[0] != '?' && !ft_isdigit(str[0]))
+		{
+			value = expand_after_dollar(shell, str, i);
+			tmp = ft_join(tmp, value);
+			i += ft_strlen(value) + 1;
+		}
+		else
+		{
+			tmp = ft_join(tmp, ft_substr(str, i, 1));
+			i++;
+		}
+	}
 	return (tmp);
 }
 
@@ -61,7 +85,7 @@ char	*delet_squotes(char *str)
 	while (str[++i])
 	{
 		if (str[i])
-		if (str[i] != '\"')
+		if (str[i] != '\'')
 			new_str[j++] = str[i];
 	}
 	new_str[j] = '\0';

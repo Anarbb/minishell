@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/20 12:14:02 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/24 12:00:20 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void split_by_ops(t_shell *shell, char *cmd)
             add_token(shell, "\"", DQUOTE);
         else if (cmd[i] == '*')
             add_token(shell, "*", WC);
+        else if (cmd[i] == '$')
+            add_token(shell, "$", DOLLAR);
         else if (is_cmd_c(cmd[i]))
         {
             start = i;

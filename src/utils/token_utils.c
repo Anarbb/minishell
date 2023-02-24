@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:33:10 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/20 14:47:59 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:02:05 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	is_cmd(char *cmd)
 {
 	while (!ft_isspace(*cmd) && *cmd)
 	{
-		if (ft_strchr("| < << >> > \" \' *", *cmd))
+		if (ft_strchr("| $ < << >> > \" \' *", *cmd))
 			return (0);
 		cmd++;
 	}
@@ -63,7 +63,7 @@ int is_cmd_c(char c)
 {
     char **strs;
 
-    strs = ft_split("| < << >> > \" \' *", ' ');
+    strs = ft_split("| $ < << >> > \" \' *", ' ');
     while (*strs)
     {
         if (ft_strchr(*strs, c))

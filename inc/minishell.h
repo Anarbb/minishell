@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/22 15:40:54 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:37:30 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,14 @@ typedef struct s_env
 	struct s_env *next;
 }	t_env;
 
+// typedef struct s_exec
+// {
+// 	char	*bin;
+// 	char	*option;
+// 	char	*option;
+// 	struct s_env *next;
+// }	t_exec;
+
 typedef struct  s_shell
 {
 	char	**cmd;
@@ -118,6 +126,8 @@ char	*expander(t_shell *shell, t_token *token);
 char	*delet_squotes(char *str);
 char	*delet_dquotes(char *str);
 char	*ft_join(char *tmp, char *value);
+char	*after_dollar(t_shell *shell, char *str, char *tmp);
+char	*expand_after_dollar(t_shell *shell, char *str, int i);
 
 
 // env

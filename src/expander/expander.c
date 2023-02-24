@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/21 15:23:51 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:37:22 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,92 +14,91 @@
 
 char	*expand_after_dollar(t_shell *shell, char *str, int i)
 {
-	int len;
 	char *tmp;
+	char *tmp2;
 	char *value;
 	char **env;
 
 	env = shell->tmp_env;
-	len = ft_strlen(str) - 1;
-	tmp = ft_substr(str, i, len);
+	if (ft_isalpha(str[i++]) || str[i++] == '_')
+		while (ft_isalnum(str[i]) || str[i] == '_')
+			i++;
+	tmp = ft_strndup(str, i);
+	tmp2 = ft_substr(str, i, ft_strlen(str));
 	while (*env != NULL)
 	{
-		if (ft_strncmp(*env, tmp, len) == 0 && (*env)[len] == '=')
+		if (ft_strncmp(*env, tmp, i) == 0 && (*env)[i] == '=')
 		{
-			value = ft_strdup(*env + (len + 1));
+			value = ft_strdup(*env + (i + 1));
 			free(tmp);
-			return (value);
+			if (tmp2[0] == '$')
+				tmp = ft_join(value, expand_after_dollar(shell, tmp2 + 1, 0));
+			else
+				tmp = ft_join(value, tmp2);
+			return (tmp);
 		}
 		env++;
 	}
-	free(tmp);
-	return (0);
-}
-
-char	*after_dollar(t_shell *shell, char *str, char *tmp)
-{
-	int i;
-	char *value;
-	
-	i = 0;
-	while (str[i])
+	if (tmp2[0] == '$')
 	{
-		if (str[i] == '$' && ft_isdigit(str[i + 1]))
-			i += 2;
-		else if (str[i] == '$' && str[i + 1] == '?')
-			i += 2;
-		else if (str[i] == '$' && str[i + 1] != '\0')
-		{
-			value = expand_after_dollar(shell, str, i + 1);
-			if (value != NULL)
-				tmp = ft_join(tmp, value);
-			i += ft_strlen(str) + 1;
-		}
-		else
-		{
-			tmp = ft_join(tmp, ft_substr(str, i, 1));
-			i++;
-		}
+		tmp = ft_join(ft_strdup(""), expand_after_dollar(shell, tmp2 + 1, 0));
+		return (tmp);
 	}
-	return (tmp);
-}
-
-int	check_dollar(char *str, char c)
-{
-	while (*str)
-	{
-		if (*str == c)
-			return (1);
-		str++;
-	}
-	return (0);
+	return (ft_strdup(""));
 }
 
 char	*expander(t_shell *shell, t_token *token)
 {
 	int		i;
 	char	*tmp;
+	char	*tmp2;
 	t_token	*prev_tkn;
 
-	prev_tkn = token;
 	i = 0;
+	prev_tkn = token;
 	tmp = ft_strdup("");
+	tmp2 = ft_strdup("");
 	while (token)
 	{
-		if (token && prev_tkn->type != SQUOTE && token->type == CMD  && check_dollar(token->content, '$'))
-			tmp = after_dollar(shell, token->content, tmp);
+		if (token->type == DQUOTE)
+		{
+			token = token->next;
+			while (token && token->type != DQUOTE)
+			{
+				if (token->type == DOLLAR && token->next->type == CMD)
+				{
+					tmp = after_dollar(shell, token->next->content, tmp);
+					token = token->next->next;
+				}
+				else
+				{
+					tmp = ft_join(tmp, token->content);
+					token = token->next;
+				}
+			}
+		}
 		else
 		{
-			if (prev_tkn->type != SQUOTE && token->type != DQUOTE && token->type != DOLLAR)
-				tmp = ft_join(tmp, ft_strdup(token->content));
-			else
-				tmp = ft_join(tmp, ft_substr(token->content, i, ft_strlen(token->content)));
-		
+			if (token->type == SQUOTE)
+			{
+				token = token->next;
+				while (token && token->type != SQUOTE)
+				{
+					tmp = ft_join(tmp, token->content);
+					token = token->next;
+				}
+			}
+			else if (token->type == DOLLAR && token->next->type == CMD)
+			{
+				tmp = after_dollar(shell, token->next->content, tmp);
+				token = token->next->next;
+			}
+			else if(token->type == CMD)
+				tmp = ft_join(tmp, token->content);
 		}
-		prev_tkn = token;
-		token = token->next;
+		if (token != NULL)
+			token = token->next;
 	}
-		// tmp = delet_squotes(tmp);
-		tmp = delet_dquotes(tmp);
+	printf("****%s\n",tmp);
 	return (tmp);
 }
