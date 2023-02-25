@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/23 15:23:59 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/25 14:28:18 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int main(int ac, char **av, char **env)
 		init_signals();
 		set_env(shell, "PWD", getcwd(NULL, 0));
 		shell->line = readline(GREEN "minishell[^,^]~> " RESET);
+		shell->exit_status = 0; 
 		if (ft_lexer(shell) == SUCCESS)
 		{
 			char *path = find_exec(shell, shell->cmd[0]);

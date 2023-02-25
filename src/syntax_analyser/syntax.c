@@ -6,23 +6,24 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/23 15:27:29 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/25 19:08:12 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell.h"
 
 
-int unclosed_err(t_token **token, int type)
+int unclosed_err(t_token **token, int type, t_token *prev_tkn)
 {
-	// t_token	*curr;
     int		count;
 
 	count = 0;
+	prev_tkn = *token;
     while (*token && count != 2)
     {
         if ((*token)->type == type)
             count++;
+		prev_tkn = *token;
         *token = (*token)->next;
     }
     if (count % 2 != 0)
@@ -34,9 +35,9 @@ int unclosed_err(t_token **token, int type)
             ft_putstr_fd("double quotes detected.\n", STDERR_FILENO);
         return (FAILURE);
     }
+	*token = prev_tkn;
     return (SUCCESS);
 }
-
 
 int	pipe_err(t_token *token, t_token *prev_tkn)
 {
@@ -79,12 +80,12 @@ int	validate_syntax(t_token *token)
 		}
 		else if (token->type == DQUOTE)
 		{
-			if (unclosed_err(&token, token->type) == FAILURE)
+			if (unclosed_err(&token, token->type, prev_tkn) == FAILURE)
 				return (FAILURE);
 		}
 		else if (token->type == SQUOTE)
 		{
-			if (unclosed_err(&token, token->type) == FAILURE)
+			if (unclosed_err(&token, token->type, prev_tkn) == FAILURE)
 				return (FAILURE);
 		}
 		else if (is_redirection(token->type))

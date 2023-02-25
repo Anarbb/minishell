@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:08:43 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/22 15:47:56 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/25 19:16:47 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ void    free_all(t_shell *shell)
     int i;
 
     i = -1;
-    if (shell->cmd)
-    {
-        while (shell->cmd[++i])
-		{
-			if (shell->cmd[i])
-            	free(shell->cmd[i]);
-		}
-        free(shell->cmd);
-    }
+    // if (shell->cmd)
+    // {
+    //     while (shell->cmd[++i])
+	// 	{
+	// 		if (shell->cmd[i])
+    //         	free(shell->cmd[i]);
+	// 	}
+    //     // free(shell->cmd);
+    // }
     free(shell->cwd);
     free(shell->line);
     free_tokens(&shell->token);

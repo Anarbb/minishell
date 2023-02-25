@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 21:01:34 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/17 12:03:14 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/02/25 15:45:30 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	exit_cmd(t_shell *shell, char *code)
 {
-    (void)shell;
+    (void)code;
     printf("exit\n");
-    exit(ft_atoi(code));
+    free_all(shell);
+    exit(EXIT_SUCCESS);
 }
