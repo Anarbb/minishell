@@ -6,11 +6,21 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/25 14:28:18 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/26 18:45:00 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void my_printf(const char* format, ...) {
+  printf("-->|");
+  va_list args;
+  va_start(args, format);
+  vprintf(format, args); // pass the format string and argument list to vprintf
+  va_end(args); // end the variable argument list
+  printf("|<--\n");
+  fflush(stdout);
+}
 
 int main(int ac, char **av, char **env)
 {
@@ -30,6 +40,7 @@ int main(int ac, char **av, char **env)
 		{
 			char *path = find_exec(shell, shell->cmd[0]);
 			exec_cmd(shell, path);
+			// exection(shell);
 			free(path);
 		}
 		free_all(shell);

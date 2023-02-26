@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:08:43 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/25 19:16:47 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/26 15:28:53 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ void    free_all(t_shell *shell)
     int i;
 
     i = -1;
-    // if (shell->cmd)
-    // {
-    //     while (shell->cmd[++i])
-	// 	{
-	// 		if (shell->cmd[i])
-    //         	free(shell->cmd[i]);
-	// 	}
-    //     // free(shell->cmd);
-    // }
+    if (shell->cmd && *shell->cmd)
+    {
+        while (shell->cmd[++i])
+		{
+			if (shell->cmd[i])
+            	free(shell->cmd[i]);
+		}
+        // free(shell->cmd);
+    }
     free(shell->cwd);
     free(shell->line);
     free_tokens(&shell->token);

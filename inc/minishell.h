@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/25 21:54:25 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/02/26 18:24:20 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,4 +131,6 @@ void    add_env(t_shell *shell, char *key, char *value);
 void    set_env(t_shell *shell, char *key, char *value);
 char    *get_env(t_shell *shell, char *key);
 void 	ft_lstadd_back_env(t_env **alst, t_env *new);
+
+void my_printf(const char* format, ...);
 #endif
