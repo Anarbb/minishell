@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/26 18:24:20 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/01 13:32:08 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 # define DOLLAR 		256
 # define APPEND_OUT		512
 # define APPEND_IN		1024
+# define ARG			2048
 # define SUCCESS	0
 # define FAILURE	1
 
@@ -68,17 +69,21 @@ typedef struct s_env
 	struct s_env *next;
 }	t_env;
 
-// typedef struct s_exec
-// {
-// 	char	*bin;
-// 	char	*option;
-// 	char	*option;
-// 	struct s_env *next;
-// }	t_exec;
+typedef struct s_exec
+{
+	char	*bin;
+	char	**args;
+	int 	type;
+	int		fd_in;
+	int		fd_out;
+	struct s_exec *next;
+	struct s_exec *prev;
+}	t_exec;
 
 typedef struct  s_shell
 {
 	char	**cmd;
+	t_exec	*exec;
 	int	    type;
 	int		exit_status;
 	char	**path;
@@ -120,7 +125,13 @@ int 	validate_syntax(t_token *token);
 int		is_redirection(int type);
 //Execution
 char	*find_exec(t_shell *shell, char *cmd);
-void	exec_cmd(t_shell *shell, char *path);
+void	exec_cmd(t_shell *shell, char *path, char **cmd);
+char	**lab(t_shell *shell);
+//Execution.utils
+t_exec	*exec_new(char *tmp, int type);
+void	exec_add_b(t_shell *shell, char *tmp, int type);
+void	exec_create(t_shell *shell, char *tmp, int type);
+int		exec_size(t_exec *exec);
 //Expander
 char	*expander(t_shell *shell, t_token *token);
 char	*ft_join(char *tmp, char *value);
@@ -132,5 +143,6 @@ void    set_env(t_shell *shell, char *key, char *value);
 char    *get_env(t_shell *shell, char *key);
 void 	ft_lstadd_back_env(t_env **alst, t_env *new);
 
+// debug
 void my_printf(const char* format, ...);
 #endif

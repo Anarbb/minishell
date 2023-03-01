@@ -1,6 +1,6 @@
 NAME        := minishell
 CC        := cc
-FLAGS    := -Wall -Wextra -Werror -I inc -g -fsanitize=address
+FLAGS    := -Wall -Wextra -Werror -I inc -g
 HEADERS    := inc/minishell.h inc/libft.h
 ifeq ($(USER), aarbaoui)
 	LDFLAGS="-L/Volumes/Untitled/opt/readline/lib"
@@ -69,7 +69,8 @@ SRCS        :=      minishell.c \
                         src/builtin/export.c \
                         src/builtin/env.c \
                         src/builtin/unset.c \
-                        # src/exec/execution.c\
+                        src/utils/exec_utils.c \
+                        src/parsing/parsing.c \
                           
 OBJS        := $(SRCS:.c=.o)
 

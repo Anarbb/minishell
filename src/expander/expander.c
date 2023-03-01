@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/25 21:52:42 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/01 10:47:49 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,17 @@ char	*expander(t_shell *shell, t_token *token)
 				if (token->type == DOLLAR && token->next->type == CMD)
 				{
 					tmp = after_dollar(shell, token->next->content, tmp, i);
+					exec_create(shell, tmp, token->next->type);
+					tmp = ft_strdup("");
 					token = token->next->next;
 				}
 				else
 				{
 					tmp = ft_join(tmp, token->content);
+					exec_create(shell, tmp, token->type);
+					tmp = ft_strdup("");
 					token = token->next;
-				} 
+				}
 			}
 			if (token->type == DQUOTE)
 				token = token->next;
@@ -56,6 +60,8 @@ char	*expander(t_shell *shell, t_token *token)
 				while (token && token->type != SQUOTE)
 				{
 					tmp = ft_join(tmp, token->content);
+					exec_create(shell, tmp, token->type);
+					tmp = ft_strdup("");
 					token = token->next;
 				}
 				if (token->type == SQUOTE)
@@ -64,11 +70,22 @@ char	*expander(t_shell *shell, t_token *token)
 			else if (token->type == DOLLAR && token->next->type == CMD)
 			{
 				tmp = after_dollar(shell, token->next->content, tmp, i);
+				exec_create(shell, tmp, token->type);
+				tmp = ft_strdup("");
 				token = token->next->next;
 			}
-			else if(token->type == CMD)
+			else if (token->type == CMD)
 			{
 				tmp = ft_join(tmp, token->content);
+				exec_create(shell, tmp, token->type);
+				tmp = ft_strdup("");
+				token = token->next;
+			}
+			else
+			{
+				tmp = ft_join(tmp, token->content);
+				exec_create(shell, tmp, token->type);
+				tmp = ft_strdup("");
 				token = token->next;
 			}
 		}
