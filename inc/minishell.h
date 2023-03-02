@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/01 13:32:08 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/02 14:26:44 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@
 # define APPEND_OUT		512
 # define APPEND_IN		1024
 # define ARG			2048
-# define SUCCESS	0
-# define FAILURE	1
+# define SUCCESS		0
+# define FAILURE		1
 
 typedef struct	s_token
 {
@@ -125,13 +125,14 @@ int 	validate_syntax(t_token *token);
 int		is_redirection(int type);
 //Execution
 char	*find_exec(t_shell *shell, char *cmd);
-void	exec_cmd(t_shell *shell, char *path, char **cmd);
-char	**lab(t_shell *shell);
+void	exec_cmd(t_shell *shell, char *path);
+void	parsing(t_shell *shell);
 //Execution.utils
 t_exec	*exec_new(char *tmp, int type);
 void	exec_add_b(t_shell *shell, char *tmp, int type);
 void	exec_create(t_shell *shell, char *tmp, int type);
 int		exec_size(t_exec *exec);
+void	exec_clear(t_exec **exec);
 //Expander
 char	*expander(t_shell *shell, t_token *token);
 char	*ft_join(char *tmp, char *value);

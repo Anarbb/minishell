@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/01 10:47:49 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:20:36 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,18 @@ char	*expander(t_shell *shell, t_token *token)
 				}
 				else
 				{
-					tmp = ft_join(tmp, token->content);
-					exec_create(shell, tmp, token->type);
-					tmp = ft_strdup("");
+					if (token->next && token->next->type != DQUOTE)
+						tmp = ft_join(tmp, ft_join(token->content, " "));
+					else
+						tmp = ft_join(tmp, token->content);
 					token = token->next;
 				}
 			}
 			if (token->type == DQUOTE)
+			{
+				exec_create(shell, tmp, token->type);
 				token = token->next;
+			}
 		}
 		else
 		{

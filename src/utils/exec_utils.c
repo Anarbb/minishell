@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:30:01 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/01 13:31:55 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/02 13:49:46 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_exec	*exec_new(char *tmp, int type)
 	exec = (t_exec *)ft_calloc(1, sizeof(t_exec));
 	exec->bin = ft_strdup(tmp);
 	exec->type = type;
+	exec->fd_in = 0;
+	exec->fd_out = 1;
 	exec->next = NULL;
 	exec->prev = NULL;
 	return (exec);

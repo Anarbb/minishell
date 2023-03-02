@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:08:43 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/26 15:28:53 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/02 13:49:50 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,28 @@ void	free_tokens(t_token **tokens)
 	*tokens = NULL;
 }
 
-void    free_all(t_shell *shell)
+void	exec_clear(t_exec **exec)
 {
-    int i;
+	t_exec	*ptr;
+	t_exec	*next;
 
-    i = -1;
-    if (shell->cmd && *shell->cmd)
-    {
-        while (shell->cmd[++i])
-		{
-			if (shell->cmd[i])
-            	free(shell->cmd[i]);
-		}
-        // free(shell->cmd);
-    }
-    free(shell->cwd);
-    free(shell->line);
-    free_tokens(&shell->token);
+	if (!exec)
+		return ;
+	ptr = *exec;
+	while (ptr)
+	{
+		next = ptr->next;
+		free(ptr->bin);
+		free(ptr);
+		ptr = next;
+	}
+	*exec = NULL;
+}
+
+void	free_all(t_shell *shell)
+{
+	free(shell->cwd);
+	free(shell->line);
+	exec_clear(&shell->exec);
+	free_tokens(&shell->token);
 }
