@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/02 14:26:44 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:35:58 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,12 @@ typedef struct s_env
 
 typedef struct s_exec
 {
-	char	*bin;
-	char	**args;
-	int 	type;
-	int		fd_in;
-	int		fd_out;
+	//cmd: ls -all ..
+	char	*bin; // ls
+	char	**args; // "ls". "-all". ".."
+	int 	type; // ls //cmd //arg | >> << ls w2odq
+	int		fd_in; // 0
+	int		fd_out; // 1
 	struct s_exec *next;
 	struct s_exec *prev;
 }	t_exec;
