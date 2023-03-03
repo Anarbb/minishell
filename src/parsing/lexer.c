@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/25 14:04:57 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/02 18:58:28 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void split_by_ops(t_shell *shell, char *cmd)
     {
         if (cmd[i] == '<' && cmd[i + 1] == '<')
         {
-            add_token(shell, "<<", APPEND_IN);
+            add_token(shell, "<<", HERDOC);
             i++;
         }
         else if (cmd[i] == '>' && cmd[i + 1] == '>')
         {
-            add_token(shell, ">>", APPEND_OUT);
+            add_token(shell, ">>", REDIR_APPEND);
             i++;
         }
         else if (cmd[i] == '>')

@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/02 18:38:40 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/02 20:42:03 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,25 @@ void	exec_cmd(t_shell *shell, char *path)
 	if (path == NULL)
 		path = shell->exec->bin;
 	pid = fork();
-	if (pid == 0)
+	if (pid == 0 && shell->exec->fd_in > 0)
 	{
-		printf("path: %s", path);
+		dup2(shell->exec->fd_in, 0);
+		dup2(shell->exec->fd_out, 1);
+		if (shell->exec->fd_in != 0)
+			close(shell->exec->fd_in);
+		// printf("path: %s", path);
 		// while (cmd)
 		// {
 		// 	printf("%s\n", *cmd);
 		// 	cmd++;
 		// }
-		// if (execve(path, opt, shell->tmp_env) == -1)
-		// {
-		// 	ft_putstr_fd("minishell: command not found: \n", 2);
-		// 	ft_putendl_fd(cmd[0], 2);
-		// 	exit(127);
-		// }
+		// printf("%s\n",shell->exec->args[0]);
+		if (execve(path, shell->exec->args, shell->tmp_env) == -1)
+		{
+			ft_putstr_fd("minishell: command not found: \n", 2);
+			// ft_putendl_fd(cmd[0], 2);
+			exit(127);
+		}
 	}
 	else
 		waitpid(pid, &status, 0);

@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/02 18:35:58 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/02 18:59:00 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@
 # define DQUOTE 		64 
 # define WC				128 
 # define DOLLAR 		256
-# define APPEND_OUT		512
-# define APPEND_IN		1024
+# define REDIR_APPEND	512
+# define HERDOC			1024
 # define ARG			2048
 # define SUCCESS		0
 # define FAILURE		1
