@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/02 18:59:00 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/04 10:15:01 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,11 @@ void	free_tokens(t_token **tokens);
 int		is_cmd_c(char c);
 // builtins
 void    ft_cd(t_shell *shell);
-int		echo_cmd(t_shell *shell);
-void	ft_export(t_shell *shell, char *key, char *value);
-int		exit_cmd(t_shell *shell, char *code);
+int		ft_echo(t_shell *shell);
+void	ft_export(t_shell *shell);
+int		ft_exit(t_shell *shell);
 void	ft_env(t_shell *shell);
-void    ft_unset(t_shell *shell, char *var);
+void    ft_unset(t_shell *shell);
 //Signals
 void	init_signals(void);
 void	control_d(char	*line);
