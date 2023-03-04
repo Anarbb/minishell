@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/04 13:23:00 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/04 17:02:16 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,15 @@ void	exec_cmd(t_shell *shell, char *path)
 	if (path == NULL)
 		path = shell->exec->bin;
 	pid = fork();
-	char **args = exec->args;
-	while (*args)
-	{
-		my_printf("exec: %s", *args);
-		args++;
-	}
 	if (pid == 0)
 	{
 		if (exec->fd_in != 0)
 			dup2(exec->fd_in, 0);
 		if (exec->fd_out != 1)
 			dup2(exec->fd_out, 1);
-		if (execve(path, exec->args, shell->tmp_env) == -1)
+		if (execve(path, exec->args, shell->env_arr) == -1)
 		{
-			printf("minishell: %s: command not found\n", exec->bin);
+			printf("minishell: %s: command not found\n", exec->args[0]);
 			exit(1);
 		}
 		close(exec->fd_in);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/26 18:45:40 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/04 15:34:00 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void    init_shell(t_shell *shell, char **env)
 	int     shlvl;
 
 	shlvl = 1;
-	shell->tmp_env = env;
+	shell->env_arr = env;
 	shlvlc = ft_itoa(shlvl);
 	init_env(shell);
 	if (!find_path(shell))

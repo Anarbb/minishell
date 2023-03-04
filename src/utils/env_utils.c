@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 12:27:04 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/22 15:44:11 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/04 15:34:00 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void    init_env(t_shell *shell)
 	t_env 	*new;
 	char 	**tmp_env;
 
-	tmp_env = shell->tmp_env;
+	tmp_env = shell->env_arr;
 	while (*tmp_env)
 	{
 		new = (t_env *)malloc(sizeof(t_env));

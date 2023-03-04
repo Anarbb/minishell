@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/04 13:28:52 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/04 15:43:48 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,11 @@ typedef struct s_env
 
 typedef struct s_exec
 {
-	//cmd: ls -all ..
-	char	*bin; // ls
-	char	**args; // "ls". "-all". ".."
-	int 	type; // ls //cmd //arg | >> << ls w2odq
-	int		fd_in; // 0
-	int		fd_out; // 1
+	char	*bin;
+	char	**args;
+	int 	type;
+	int		fd_in;
+	int		fd_out;
 	struct s_exec *next;
 	struct s_exec *prev;
 }	t_exec;
@@ -84,6 +83,7 @@ typedef struct s_exec
 typedef struct  s_shell
 {
 	char	**cmd;
+	char	**env_arr;
 	t_exec	*exec;
 	int	    type;
 	int		exit_status;
@@ -91,7 +91,6 @@ typedef struct  s_shell
 	char	*line;
 	char	*cwd;
 	t_env	*env;
-	char	**tmp_env;
 	t_token	*token;
 }   t_shell;
 
