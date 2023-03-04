@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/20 13:25:01 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/04 13:30:06 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void    ft_cd(t_shell *shell)
         printf("%s\n", get_env(shell, "OLDPWD"));   
         chdir(get_env(shell, "OLDPWD"));
     }
-    else if (chdir(shell->cmd[1]) == -1)
+    else if (chdir(shell->exec->args[1]) == -1)
     {
         ft_putstr_fd("cd: no such file or directory: ", 2);
         ft_putendl_fd(shell->cmd[1], 2);
@@ -36,7 +36,7 @@ void    ft_cd(t_shell *shell)
         pwd = getcwd(NULL, 0);
         set_env(shell, "OLDPWD", oldpwd);
         set_env(shell, "PWD", pwd);
-        free(oldpwd);
-        free(pwd);
+        // free(oldpwd);
+        // free(pwd);
     }
 }

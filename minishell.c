@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/02 18:37:48 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:27:41 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int main(int ac, char **av, char **env)
 		if (ft_lexer(shell) == SUCCESS)
 		{
 			parsing(shell);
-			exec_cmd(shell, find_exec(shell, shell->exec->bin));
+			run(shell);
 		}
 		free_all(shell);
 	}
