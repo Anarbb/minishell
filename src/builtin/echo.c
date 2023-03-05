@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 20:07:55 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/04 10:11:45 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/04 13:44:40 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,23 @@ int	ft_echo(t_shell *shell)
 	int		i;
 	int		j;
 	int	new_line;
+	t_exec	*exec;
 
+	exec = shell->exec;
 	i = 1;
 	new_line = 1;
-	while(shell->cmd[i] && shell->cmd[i][0] == '-' && shell->cmd[i][1] == 'n')
+	while (exec->args[i] && ft_strcmp(exec->args[i], "-n") == 0)
 	{
-		j = 1;
-		while(shell->cmd[i][j] == 'n')
-			j++;
-		if (shell->cmd[i][j] == '\0')
-			new_line = 0;
-		else
-			break;
+		new_line = 0;
 		i++;
 	}
-	while (shell->cmd[i])
+	j = i;
+	while (exec->args[j])
 	{
-		ft_putstr_fd(shell->cmd[i++], 1);
-		if (shell->cmd[i])
-			write(1, " ", 1);
+		ft_putstr_fd(exec->args[j], 1);
+		j++;
 	}
-	if (new_line == 1)
-		write(1, "\n", 1);
+	if (new_line)
+		ft_putchar_fd('\n', 1);
 	return (SUCCESS);
 }

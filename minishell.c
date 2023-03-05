@@ -6,15 +6,14 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/04 14:11:45 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/05 18:55:57 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#include "minishell.h"
-
-void my_printf(const char* format, ...) {
+void my_printf(const char* format, ...)
+{
   printf("-->|");
   va_list args;
   va_start(args, format);
