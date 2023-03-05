@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/05 18:54:38 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/05 18:58:18 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,12 @@ void	exec_cmd(t_shell *shell, char *path)
 			dup2(exec->fd_in, 0);
 		if (exec->fd_out != 1)
 			dup2(exec->fd_out, 1);
+		dup2(exec->fd_in, 0);
 		if (execve(path, exec->args, shell->tmp_env) == -1)
 		{
-			printf("minishell: %s: command not found\n", exec->bin);
-			exit(1);
+			printf("minishell: %s: command not found\n", exec->cmd);
+			shell->exit_status = 127;
+			exit(EXIT_FAILURE);
 		}
 		close(exec->fd_in);
 		close(exec->fd_out);
