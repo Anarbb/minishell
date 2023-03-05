@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/05 18:55:20 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/05 19:02:48 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,18 +85,19 @@ typedef struct s_exec
 }	t_exec;
 
 typedef struct  s_shell
-{
-	char	**cmd;
-	char	**env_arr;
-	t_exec	*exec;
-	int	    type;
-	int		exit_status;
-	char	**path;
-	char	*line;
-	char	*cwd;
-	t_env	*env;
-	t_token	*token;
-}   t_shell;
+ {
+ 	char	**cmd;
+ 	char	**env_arr;
+ 	t_exec	*exec;
+ 	int	    type;
+ 	int		exit_status;
+ 	char	**path;
+ 	char	*line;
+ 	char	*cwd;
+ 	t_env	*env;
+ 	char	**tmp_env;
+ 	t_token	*token;
+ }   t_shell;
 
 // parsing.init
 void    init_shell(t_shell *shell, char **env);
