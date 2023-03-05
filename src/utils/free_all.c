@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:08:43 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/02 13:49:50 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/03 13:11:38 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	exec_clear(t_exec **exec)
 	while (ptr)
 	{
 		next = ptr->next;
-		free(ptr->bin);
+		free(ptr->cmd);
 		free(ptr);
 		ptr = next;
 	}

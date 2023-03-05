@@ -1,6 +1,6 @@
 NAME        := minishell
 CC        := cc
-FLAGS    := -Wall -Wextra -Werror -I inc -g
+FLAGS    := -Wall -Wextra -Werror -I inc -g -fsanitize=address
 HEADERS    := inc/minishell.h inc/libft.h
 ifeq ($(USER), aarbaoui)
 	LDFLAGS="-L/Users/aarbaoui/goinfre/.brew/opt/readline/lib"
@@ -72,6 +72,7 @@ SRCS        :=      minishell.c \
                         src/utils/exec_utils.c \
                         src/parsing/parsing.c \
                         src/exec/execution.c \
+                        src/utils/get_next_line.c \
                           
 OBJS        := $(SRCS:.c=.o)
 

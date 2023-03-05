@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/04 13:23:00 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/05 18:52:38 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,49 +49,67 @@ void	exec_cmd(t_shell *shell, char *path)
 
 	exec = shell->exec;	
 	if (path == NULL)
-		path = shell->exec->bin;
+		path = shell->exec->cmd;
+		
 	pid = fork();
-	char **args = exec->args;
-	while (*args)
-	{
-		my_printf("exec: %s", *args);
-		args++;
-	}
 	if (pid == 0)
 	{
 		if (exec->fd_in != 0)
 			dup2(exec->fd_in, 0);
 		if (exec->fd_out != 1)
 			dup2(exec->fd_out, 1);
+		dup2(exec->fd_in, 0);
 		if (execve(path, exec->args, shell->tmp_env) == -1)
 		{
-			printf("minishell: %s: command not found\n", exec->bin);
-			exit(1);
+			printf("minishell: %s: command not found\n", exec->cmd);
+			shell->exit_status = 127;
+			exit(EXIT_FAILURE);
 		}
 		close(exec->fd_in);
 		close(exec->fd_out);
+		unlink(limiter_path(exec->limiter));
 	}
 	else
 		waitpid(pid, &status, 0);
 }
+void	handle_heredoc(t_shell *shell, t_exec *exec)
+{
+	char	*line;
+	(void)shell;
+
+	while (exec->herdoc == 1)
+	{
+		line = readline("> ");
+		if (ft_strcmp(line, exec->limiter) == 0)
+		{
+			// free(line);
+			write(1, "\n", 1);
+			return ;
+		}
+		write(exec->fd_in, line, ft_strlen(line));
+		write(exec->fd_in, "\n", 1);
+	}
+}
 
 void	run(t_shell *shell)
 {
-	if (ft_strcmp(shell->exec->bin, "echo") == 0)
+	if (ft_strcmp(shell->exec->cmd, "echo") == 0)
 		ft_echo(shell);
-	else if (ft_strcmp(shell->exec->bin, "cd") == 0)
+	else if (ft_strcmp(shell->exec->cmd, "cd") == 0)
 		ft_cd(shell);
-	else if (ft_strcmp(shell->exec->bin, "export") == 0)
+	else if (ft_strcmp(shell->exec->cmd, "export") == 0)
 		ft_export(shell);
-	else if (ft_strcmp(shell->exec->bin, "unset") == 0)
+	else if (ft_strcmp(shell->exec->cmd, "unset") == 0)
 		ft_unset(shell);
-	else if (ft_strcmp(shell->exec->bin, "env") == 0)
+	else if (ft_strcmp(shell->exec->cmd, "env") == 0)
 		ft_env(shell);
-	else if (ft_strcmp(shell->exec->bin, "exit") == 0)
+	else if (ft_strcmp(shell->exec->cmd, "exit") == 0)
 		ft_exit(shell);
 	else
-	{
-		shell->exec->bin = find_exec(shell, shell->exec->bin);
-		exec_cmd(shell, shell->exec->bin);
-	}
+    {
+		if (shell->exec->herdoc == 1)
+			handle_heredoc(shell, shell->exec);
+        shell->exec->cmd = find_exec(shell, shell->exec->cmd);
+        exec_cmd(shell, shell->exec->cmd);
+    }
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/04 13:28:52 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/05 18:47:03 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <termios.h>
 # include <curses.h>
 # include <term.h>
+# include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft.h"
@@ -72,11 +73,13 @@ typedef struct s_env
 typedef struct s_exec
 {
 	//cmd: ls -all ..
-	char	*bin; // ls
+	char	*cmd; // ls
 	char	**args; // "ls". "-all". ".."
 	int 	type; // ls //cmd //arg | >> << ls w2odq
 	int		fd_in; // 0
 	int		fd_out; // 1
+	int		herdoc;
+	char	*limiter;
 	struct s_exec *next;
 	struct s_exec *prev;
 }	t_exec;
@@ -112,6 +115,7 @@ void    token_add_b(t_token *tokens, t_token *new);
 void    free_all(t_shell *shell);
 void	free_tokens(t_token **tokens);
 int		is_cmd_c(char c);
+char	*get_next_line(int fd);
 // builtins
 void    ft_cd(t_shell *shell);
 int		ft_echo(t_shell *shell);
@@ -135,6 +139,7 @@ void	exec_add_b(t_shell *shell, char *tmp, int type);
 void	exec_create(t_shell *shell, char *tmp, int type);
 int		exec_size(t_exec *exec);
 void	exec_clear(t_exec **exec);
+char	*limiter_path(char *limiter);
 //Expander
 char	*expander(t_shell *shell, t_token *token);
 char	*ft_join(char *tmp, char *value);
