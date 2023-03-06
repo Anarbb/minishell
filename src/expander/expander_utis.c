@@ -6,11 +6,11 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:18:45 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/04 15:34:00 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/06 15:39:34 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell.h"
+#include "minishell.h"
 
 char	*expand_after_dollar(t_shell *shell, char *str, int *i, int j)
 {

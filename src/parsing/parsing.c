@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/05 18:52:32 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/06 16:38:07 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 char	*limiter_path(char *limiter)
 {
 	char	*new_limtr;
+	static int i;
 
-	new_limtr =(char *)malloc(sizeof(char) * (ft_strlen(limiter) + 7));
+	new_limtr =(char *)malloc(sizeof(char) * (ft_strlen(limiter) + 8));
 	if (!new_limtr)
         return (NULL);
     ft_strcpy(new_limtr, "/tmp/.");
 	ft_strcat(new_limtr, limiter);
+	ft_strcat(new_limtr, ft_itoa(i));
+	i++;
 	return (new_limtr);	
 }
 
@@ -38,7 +41,7 @@ void	parsing(t_shell *shell)
 	shell->exec->args = args;
 	while (tmp)
 	{
-		if (tmp && tmp->type == CMD && tmp->cmd)
+		if ((tmp && tmp->cmd) && (tmp->type == CMD))
 		{
 			*args = ft_strdup(tmp->cmd);
 			args++;
@@ -59,7 +62,7 @@ void	parsing(t_shell *shell)
 		{
 			fd_in = open(limiter_path(tmp->next->cmd), O_CREAT | O_RDWR, 0777);
 			if (fd_in == -1)
-				printf("minishell: ERROR IN OPENING FILE\n");
+				printf("minishell: error: heredoc\n");
 			tmp->herdoc = 1;
 			shell->exec->limiter = ft_strdup(tmp->next->cmd);
 		}
@@ -69,3 +72,77 @@ void	parsing(t_shell *shell)
 	shell->exec->fd_out = fd_out;
 	exec_clear(&shell->exec->next);
 }
+
+// #include "minishell.h"
+
+// char	*limiter_path(char *limiter)
+// {
+// 	char	*new_limtr;
+// 	static int i;
+
+// 	new_limtr = ft_strjoin("/tmp/.", limiter);
+// 	new_limtr = ft_strjoin(new_limtr, ft_itoa(i));
+// 	i++;
+// 	return (new_limtr);	
+// }
+
+// void	handle_redirections(t_exec **exec, t_exec *current_exec)
+// {
+// 	if (current_exec->type == REDIR_OUT)
+// 	{
+// 		close((*exec)->fd_out);
+// 		(*exec)->fd_out = open(current_exec->next->cmd,
+// 				O_RDWR | O_CREAT | O_TRUNC, 0644);
+// 	}
+// 	else if (current_exec->type == REDIR_APPEND)
+// 	{
+// 		close((*exec)->fd_out);
+// 		(*exec)->fd_out = open(current_exec->next->cmd,
+// 				O_RDWR | O_CREAT | O_APPEND, 0644);
+// 	}
+// 	else if (current_exec->type == REDIR_IN)
+// 	{
+// 		close((*exec)->fd_in);
+// 		(*exec)->fd_in = open(current_exec->next->cmd, O_RDONLY);
+// 		if ((*exec)->fd_in == -1)
+// 			fprintf(stderr, "minishell: %s: No such file or directory\n",
+// 					current_exec->next->cmd);
+// 	}
+// 	else if (current_exec->type == HERDOC)
+// 	{
+// 		close((*exec)->fd_in);
+// 		(*exec)->fd_in = open(limiter_path(current_exec->next->cmd),
+// 				O_CREAT | O_RDWR | O_TRUNC, 0644);
+// 		if ((*exec)->fd_in == -1)
+// 			fprintf(stderr, "minishell: error: heredoc\n");
+// 		(*exec)->limiter = ft_strdup(current_exec->next->cmd);
+// 		current_exec->herdoc = 1;
+// 	}
+// }
+
+// void	parsing(t_shell *shell)
+// {
+// 	t_exec	*current_exec;
+// 	char	**args;
+
+// 	current_exec = shell->exec;
+// 	while (current_exec)
+// 	{
+// 		if (current_exec->type == CMD)
+// 		{
+// 			args = (char **)ft_calloc(exec_size(current_exec) + 1, sizeof(char *));
+// 			shell->exec->args = args;
+// 			while (current_exec && current_exec->type == CMD)
+// 			{
+// 				*args = ft_strdup(current_exec->cmd);
+// 				args++;
+// 				current_exec = current_exec->next;
+// 			}
+// 			*args = NULL;
+// 		}
+// 		else
+// 			handle_redirections(&shell->exec, current_exec);
+// 		if (current_exec)
+// 			current_exec = current_exec->next;
+// 	}
+// }

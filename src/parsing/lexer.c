@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/02 18:58:28 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/06 13:48:58 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 void parse_ops(t_shell *shell)
 {
 	int i;
+    char *cmd;
 
+    cmd = shell->line;
 	i = -1;
-	while (shell->cmd && shell->cmd[++i])
-		split_by_ops(shell, shell->cmd[i]);
+	split_by_ops(shell, cmd);
 }
 
 void split_by_ops(t_shell *shell, char *cmd)
@@ -53,11 +54,13 @@ void split_by_ops(t_shell *shell, char *cmd)
             add_token(shell, "*", WC);
         else if (cmd[i] == '$')
             add_token(shell, "$", DOLLAR);
+        else if (cmd[i] == ' ' && is_cmd(cmd + i + 1))
+            add_token(shell, " ", SPACE_MS);
         else if (is_cmd_c(cmd[i]))
         {
             start = i;
             len = 1;
-            while (!ft_isspace(cmd[i + 1]) && cmd[i + 1] && is_cmd_c(cmd[i + 1]))
+            while (cmd[i + 1] && is_cmd_c(cmd[i + 1]))
             {
                 len++;
                 i++;
@@ -68,7 +71,6 @@ void split_by_ops(t_shell *shell, char *cmd)
     }
 }
 
-
 int ft_lexer(t_shell *shell)
 {
     char *test;
@@ -76,7 +78,6 @@ int ft_lexer(t_shell *shell)
 	if (shell->line && *shell->line)
 	{
 		add_history(shell->line);
-		shell->cmd = ft_split(shell->line, ' ');
 		parse_ops(shell);
 		if (!validate_syntax(shell->token))
 		{

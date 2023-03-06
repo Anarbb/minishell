@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/25 19:08:12 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/06 15:17:04 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	pipe_err(t_token *token, t_token *prev_tkn)
     if (!prev_tkn || !token->next)
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", STDERR_FILENO);
     else if (prev_tkn->type != CMD || (token->next->type != CMD 
+			&& token->next->type != SPACE_MS
 			&& !is_redirection(token->next->type)))
         ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", STDERR_FILENO);
 	else
