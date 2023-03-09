@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/06 15:17:04 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/09 13:46:09 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	redir_err(t_token *token)
 {
     if (!(token->next))
 		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", STDERR_FILENO);
-	else if (token->next->type != CMD && token->next->type != DOLLAR)
+	else if (token->next->type != CMD && token->next->type != DOLLAR
+			&& token->next->type != SPACE_MS)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR_FILENO);
 		ft_putstr_fd(token->next->content, STDERR_FILENO);
