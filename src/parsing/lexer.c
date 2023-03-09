@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/09 13:15:26 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/09 15:46:51 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void split_by_ops(t_shell *shell, char *cmd)
 
 int ft_lexer(t_shell *shell)
 {
+    char *test;
 	control_d(shell->line);
 	if (shell->line && *shell->line)
 	{
