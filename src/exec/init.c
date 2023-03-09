@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/09 19:21:49 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/09 20:33:05 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,15 @@ void	handle_heredoc(t_shell *shell, t_exec *exec, int fd)
 
 	while (exec->herdoc == 1)
 	{
-		// signal(SIGINT, sig_handl);
 		line = readline("> ");
+		signal(SIGINT, sig_handl);
 		if (line == NULL)
 			return ;
+		if (gvars->herdoc == 0)
+		{
+			free(line);
+			return ;
+		}
 		if (ft_strcmp(line, exec->limiter) == 0)
 		{
 			free(line);

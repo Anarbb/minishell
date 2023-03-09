@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/09 19:10:47 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/09 20:53:54 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main(int ac, char **av, char **env)
 	t_shell *shell;
 
 	shell = ft_calloc(1, sizeof(t_shell));
-	init_shell(shell, env);
+	init_shell(shell, env); 
 	while (1337)
 	{
 		init_signals();
@@ -40,7 +40,7 @@ int main(int ac, char **av, char **env)
 		if (ft_lexer(shell) == SUCCESS)
 		{
 			parsing(shell);
-			// exection(shell);
+			exection(shell->exec);
 			run(shell);
 
 		}

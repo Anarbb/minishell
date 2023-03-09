@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/04 15:34:00 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/09 20:22:26 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void    init_shell(t_shell *shell, char **env)
 	int     shlvl;
 
 	shlvl = 1;
+	gvars = malloc(sizeof(int));
+	gvars->herdoc = 1;
 	shell->env_arr = env;
 	shlvlc = ft_itoa(shlvl);
 	init_env(shell);

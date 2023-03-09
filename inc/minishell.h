@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/09 19:14:43 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/09 20:21:27 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,14 @@
 # define SPACE_MS		4096
 # define SUCCESS		0
 # define FAILURE		1
+
+typedef struct	s_global
+{
+	int	herdoc;
+	int	exit_status;
+}	t_global;
+
+t_global	*gvars;
 
 typedef struct	s_token
 {
