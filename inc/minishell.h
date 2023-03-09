@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/09 11:53:53 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/09 19:14:43 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void    ft_unset(t_shell *shell);
 //Signals
 void	init_signals(void);
 void	control_d(char	*line);
+void	sig_handl(int signum);
 //Syntax.analyser
 int 	validate_syntax(t_token *token);
 int		is_redirection(int type);
@@ -135,6 +136,7 @@ int		is_redirection(int type);
 char	*find_exec(t_shell *shell, char *cmd);
 void	exec_cmd(t_shell *shell, char *path);
 void	parsing(t_shell *shell);
+void    exection(t_shell *shell);
 //Execution.utils
 t_exec	*exec_new(char *tmp, int type);
 void	exec_add_b(t_shell *shell, char *tmp, int type);
@@ -152,7 +154,8 @@ void    add_env(t_shell *shell, char *key, char *value);
 void    set_env(t_shell *shell, char *key, char *value);
 char    *get_env(t_shell *shell, char *key);
 void 	ft_lstadd_back_env(t_env **alst, t_env *new);
-
+// heredoc
+void	handle_heredoc(t_shell *shell, t_exec *exec, int fd);
 // debug
 void my_printf(const char* format, ...);
 #endif

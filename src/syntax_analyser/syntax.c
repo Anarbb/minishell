@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/06 15:17:04 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/09 17:19:59 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,23 @@ int	pipe_err(t_token *token, t_token *prev_tkn)
 	return (FAILURE);
 }
 
+void	skip_space(t_token **token)
+{
+	if ((*token)->type == SPACE_MS)
+		while ((*token)->type == SPACE_MS)
+			*token = (*token)->next;
+}
+
 int	redir_err(t_token *token)
 {
-    if (!(token->next))
+    if (!token)
 		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", STDERR_FILENO);
-	else if (token->next->type != CMD && token->next->type != DOLLAR)
+	if (token->type == SPACE_MS)
+		skip_space(&token);
+	if (token->type != CMD && token->type != DOLLAR)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR_FILENO);
-		ft_putstr_fd(token->next->content, STDERR_FILENO);
+		ft_putstr_fd(token->content, STDERR_FILENO);
 		ft_putstr_fd("'\n", STDERR_FILENO);
 	}
 	else
@@ -91,7 +100,7 @@ int	validate_syntax(t_token *token)
 		}
 		else if (is_redirection(token->type))
 		{
-			if (redir_err(token) == FAILURE)
+			if (redir_err(token->next) == FAILURE)
 				return (FAILURE);
 		}
 		if (token != NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/09 13:25:22 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/09 19:17:37 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,20 @@ void	parsing(t_shell *shell)
 		}
 		else if (tmp->type == HERDOC)
 		{
-			fd_in = open(limiter_path(tmp->next->cmd), O_CREAT | O_RDWR, 0777);
-			if (fd_in == -1)
+			int fd;
+			signal(SIGINT, NULL);
+			fd = open(limiter_path(tmp->next->cmd), O_CREAT | O_RDWR, 0777);
+			if (fd == -1)
 				printf("minishell: error: heredoc\n");
 			tmp->herdoc = 1;
 			shell->exec->limiter = ft_strdup(tmp->next->cmd);
+			handle_heredoc(shell, shell->exec, fd);
 		}
 		tmp = tmp->next;
 	}
 	shell->exec->fd_in = fd_in;
 	shell->exec->fd_out = fd_out;
+	// if (shell->exec->herdoc == 1)
 	exec_clear(&shell->exec->next);
 }
 

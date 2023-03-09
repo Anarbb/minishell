@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 16:00:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/02/14 16:35:52 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/09 17:42:55 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	sig_handler(int signum)
 {
-	if(signum == SIGINT)
+	if (signum == SIGINT)
 	{
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
@@ -22,6 +22,13 @@ void	sig_handler(int signum)
 		rl_redisplay();
 	}
 }
+
+// void	sig_handl(int signum)
+// {
+// 	if (signum == SIGINT)
+// 		return;
+// }
+
 void	control_d(char	*line)
 {
 	if (!line)

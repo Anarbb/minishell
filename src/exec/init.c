@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/07 14:42:25 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/09 19:21:49 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,16 @@ void	exec_cmd(t_shell *shell, char *path)
 	pid_t	pid;
 	t_exec	*exec;
 	int		status;
-
+	char **args;
 	exec = shell->exec;	
 	if (path == NULL)
+	{
+		args = shell->exec->args;
+		*args = shell->exec->cmd;
+		args++;
+		*args = NULL;
 		path = shell->exec->cmd;
+	}
 	pid = fork();
 	if (pid == 0)
 	{
@@ -68,27 +74,28 @@ void	exec_cmd(t_shell *shell, char *path)
 		}
 		close(exec->fd_in);
 		close(exec->fd_out);
-		unlink(limiter_path(exec->limiter));
 	}
 	else
 		waitpid(pid, &status, 0);
 }
-void	handle_heredoc(t_shell *shell, t_exec *exec)
+void	handle_heredoc(t_shell *shell, t_exec *exec, int fd)
 {
 	char	*line;
 	(void)shell;
 
 	while (exec->herdoc == 1)
 	{
+		// signal(SIGINT, sig_handl);
 		line = readline("> ");
+		if (line == NULL)
+			return ;
 		if (ft_strcmp(line, exec->limiter) == 0)
 		{
 			free(line);
-			write(1, "\n", 1);
 			return ;
 		}
-		ft_putstr_fd(line, exec->fd_in);
-		ft_putchar_fd('\n', exec->fd_in);
+		ft_putstr_fd(line, fd);
+		ft_putchar_fd('\n', fd);
 	}
 }
 
@@ -108,8 +115,6 @@ void	run(t_shell *shell)
 		ft_exit(shell);
 	else
     {
-		if (shell->exec->herdoc == 1)
-			handle_heredoc(shell, shell->exec);
         shell->exec->cmd = find_exec(shell, shell->exec->cmd);
         exec_cmd(shell, shell->exec->cmd);
     }

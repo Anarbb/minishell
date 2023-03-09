@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/09 13:08:29 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/09 16:57:46 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,14 @@ void	expander(t_shell *shell, t_token *token)
 				while (token && token->type != SQUOTE)
 				{
 					tmp = ft_join(tmp, token->content);
-					exec_create(shell, tmp, token->type);
-					tmp = ft_strdup("");
+					// tmp = ft_strdup("");
 					token = token->next;
 				}
 				if (token->type == SQUOTE)
+				{
+					exec_create(shell, tmp, token->type);
 					token = token->next;
+				}
 			}
 			else if (token->type == DOLLAR && token->next->type == CMD)
 			{
@@ -82,9 +84,12 @@ void	expander(t_shell *shell, t_token *token)
 			}
 			else
 			{
-				tmp = ft_join(tmp, token->content);
-				exec_create(shell, tmp, token->type);
-				tmp = ft_strdup("");
+				if (token->type != SPACE_MS)
+				{
+					tmp = ft_join(tmp, token->content);
+					exec_create(shell, tmp, token->type);
+					tmp = ft_strdup("");
+				}
 				token = token->next;
 			}
 		}
