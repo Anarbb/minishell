@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/02 17:20:36 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/09 13:08:29 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_join(char *tmp, char *value)
 	return (tmp);
 }
 
-char	*expander(t_shell *shell, t_token *token)
+void	expander(t_shell *shell, t_token *token)
 {
 	int		i;
 	char	*tmp;
@@ -37,22 +37,17 @@ char	*expander(t_shell *shell, t_token *token)
 				if (token->type == DOLLAR && token->next->type == CMD)
 				{
 					tmp = after_dollar(shell, token->next->content, tmp, i);
-					exec_create(shell, tmp, token->next->type);
-					tmp = ft_strdup("");
 					token = token->next->next;
 				}
 				else
 				{
-					if (token->next && token->next->type != DQUOTE)
-						tmp = ft_join(tmp, ft_join(token->content, " "));
-					else
-						tmp = ft_join(tmp, token->content);
+					tmp = ft_join(tmp, token->content);
 					token = token->next;
 				}
 			}
 			if (token->type == DQUOTE)
 			{
-				exec_create(shell, tmp, token->type);
+				exec_create(shell, tmp, CMD);
 				token = token->next;
 			}
 		}
@@ -74,7 +69,7 @@ char	*expander(t_shell *shell, t_token *token)
 			else if (token->type == DOLLAR && token->next->type == CMD)
 			{
 				tmp = after_dollar(shell, token->next->content, tmp, i);
-				exec_create(shell, tmp, token->type);
+				exec_create(shell, tmp, token->next->type);
 				tmp = ft_strdup("");
 				token = token->next->next;
 			}
@@ -94,5 +89,4 @@ char	*expander(t_shell *shell, t_token *token)
 			}
 		}
 	}
-	return (tmp);
 }

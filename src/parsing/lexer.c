@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/06 13:48:58 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/09 13:15:26 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void split_by_ops(t_shell *shell, char *cmd)
             add_token(shell, "*", WC);
         else if (cmd[i] == '$')
             add_token(shell, "$", DOLLAR);
-        else if (cmd[i] == ' ' && is_cmd(cmd + i + 1))
+        else if (cmd[i] == ' ')
             add_token(shell, " ", SPACE_MS);
         else if (is_cmd_c(cmd[i]))
         {
@@ -73,7 +73,6 @@ void split_by_ops(t_shell *shell, char *cmd)
 
 int ft_lexer(t_shell *shell)
 {
-    char *test;
 	control_d(shell->line);
 	if (shell->line && *shell->line)
 	{
@@ -81,8 +80,7 @@ int ft_lexer(t_shell *shell)
 		parse_ops(shell);
 		if (!validate_syntax(shell->token))
 		{
-			test = expander(shell, shell->token);
-            free(test);
+			expander(shell, shell->token);
 			return (SUCCESS);
 		}
 	}

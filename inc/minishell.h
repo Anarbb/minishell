@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/06 12:52:12 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/09 11:53:53 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int		exec_size(t_exec *exec);
 void	exec_clear(t_exec **exec);
 char	*limiter_path(char *limiter);
 //Expander
-char	*expander(t_shell *shell, t_token *token);
+void	expander(t_shell *shell, t_token *token);
 char	*ft_join(char *tmp, char *value);
 char	*after_dollar(t_shell *shell, char *str, char *tmp, int i);
 // env
