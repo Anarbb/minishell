@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/09 16:28:07 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/09 19:59:47 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void parse_ops(t_shell *shell)
 {
-	int i;
     char *cmd;
 
     cmd = shell->line;
-	i = -1;
 	split_by_ops(shell, cmd);
 }
 
@@ -73,7 +71,7 @@ void split_by_ops(t_shell *shell, char *cmd)
 
 int ft_lexer(t_shell *shell)
 {
-    // char *test;
+    char *test;
 	control_d(shell->line);
 	if (shell->line && *shell->line)
 	{
