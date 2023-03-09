@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/06 15:37:38 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/07 14:42:25 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,12 @@ void	handle_heredoc(t_shell *shell, t_exec *exec)
 		line = readline("> ");
 		if (ft_strcmp(line, exec->limiter) == 0)
 		{
-			// free(line);
+			free(line);
 			write(1, "\n", 1);
 			return ;
 		}
-		write(exec->fd_in, line, ft_strlen(line));
-		write(exec->fd_in, "\n", 1);
+		ft_putstr_fd(line, exec->fd_in);
+		ft_putchar_fd('\n', exec->fd_in);
 	}
 }
 
