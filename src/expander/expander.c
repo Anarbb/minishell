@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/11 18:24:19 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/11 22:41:40 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,87 +18,76 @@ char	*ft_join(char *tmp, char *value)
 	return (tmp);
 }
 
+char	*after_dollar(t_shell *shell, char *str, char *tmp, int i)
+{
+	int		len;
+	char	*value;
+
+	len = ft_strlen(str);
+	if (ft_isdigit(str[i]))
+		i++;
+	else if (str[i] == '?')
+	{
+		tmp = ft_join(tmp, ft_itoa(shell->exit_status));
+		i++;
+	}
+	while (i < len)
+	{
+		if (i == 0)
+			return (value = expand_after_dollar(shell, str, &i, 0) \
+				, ft_join(tmp, value));
+		else
+			tmp = ft_join(tmp, ft_substr(str, i, 1));
+		i++;
+	}
+	return (tmp);
+}
+
+void	expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
+{
+	char	*tmp;
+
+	tmp = ft_strdup("");
+	if ((*token)->type == DOLLAR && (*token)->next->type == CMD)
+	{
+		*token = (*token)->next;
+		tmp = after_dollar(shell, (*token)->content, tmp, 0);
+		*new_tkn = create_token(*new_tkn, tmp, CMD);
+	}
+	else if ((*token)->type == CMD)
+	{
+		tmp = ft_join(tmp, (*token)->content);
+		*new_tkn = create_token(*new_tkn, tmp, CMD);
+	}
+	else
+		skip_spaces(token, new_tkn, tmp);
+	tmp = NULL;
+}
+
 void	expander(t_shell *shell, t_token *token)
 {
-	int		i;
-	char	*tmp;
 	t_token	*new_tkn;
 
-	i = 0;
 	new_tkn = NULL;
-	tmp = ft_strdup("");
 	while (token)
 	{
 		if (token->type == DQUOTE)
-		{
-			token = token->next;
-			while (token && token->type != DQUOTE)
-			{
-				if (token->type == DOLLAR && token->next->type == CMD)
-				{
-					tmp = after_dollar(shell, token->next->content, tmp, i);
-					token = token->next->next;
-				}
-				else
-				{
-					tmp = ft_join(tmp, token->content);
-					token = token->next;
-				}
-			}
-			if (token->type == DQUOTE)
-			{
-				new_tkn = create_token(new_tkn, tmp, CMD);
-				token = token->next;
-			}
-		}
+			expand_in_dquote(&token, shell, &new_tkn);
 		else
 		{
 			if (token->type == SQUOTE)
-			{
-				token = token->next;
-				while (token && token->type != SQUOTE)
-				{
-					tmp = ft_join(tmp, token->content);
-					token = token->next;
-				}
-				if (token->type == SQUOTE)
-				{
-					new_tkn = create_token(new_tkn, tmp, CMD);
-					tmp = ft_strdup("");
-					token = token->next;
-				}
-			}
-			else if (token->type == DOLLAR && token->next->type == CMD)
-			{
-				tmp = after_dollar(shell, token->next->content, tmp, i);
-				new_tkn = create_token(new_tkn, tmp, CMD);
-				tmp = ft_strdup("");
-				token = token->next->next;
-			}
-			else if (token->type == CMD)
-			{
-				tmp = ft_join(tmp, token->content);
-				new_tkn = create_token(new_tkn, tmp, CMD);
-				tmp = ft_strdup("");
-				token = token->next;
-			}
+				expand_in_squote(&token, &new_tkn);
 			else
-			{
-				if (token->type != SPACE_MS)
-				{
-					tmp = ft_join(tmp, token->content);
-					new_tkn = create_token(new_tkn, tmp, token->type);
-					tmp = ft_strdup("");
-				}
-				token = token->next;
-			}
+				expand_cmd(&token, shell, &new_tkn);
 		}
+		token = token->next;
 	}
 	shell->token = new_tkn;
-	t_token *ptr = shell->token;
-	while (ptr)
-	{
-		printf("content: %s, type: %d\n", ptr->content, ptr->type);
-		ptr = ptr->next;
-	}
 }
+
+	// t_token *ptr = shell->token;
+	// while (ptr)
+	// {
+	// 	printf("content: %s, type: %d\n", ptr->content, ptr->type);
+	// 	ptr = ptr->next;
+	// }

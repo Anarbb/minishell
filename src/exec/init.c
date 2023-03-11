@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/10 18:50:42 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/11 22:43:11 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,53 +40,56 @@ char *find_exec(t_shell *shell, char *cmd)
 	return (NULL);
 }
 // bash 3
-// minishell 4
+// miniexec 4
 // minhsell 4
 
-void	exec_cmd(t_shell *shell, char *path)
+void	exec_cmd(t_shell *shell, t_exec *exec, char *path)
 {
 	pid_t	pid;
-	t_exec	*exec;
+	
 	int		status;
-	char **args;
-	exec = shell->exec;	
-	if (path == NULL)
-	{
-		args = shell->exec->args;
-		*args = shell->exec->cmd;
-		args++;
-		*args = NULL;
-		path = shell->exec->cmd;
-	}
+	// char **args;
+	
+
+	
+	// if (path == NULL)
+	// {
+	// 	args = exec->args;
+	// 	*args = exec->cmd;
+	// 	args++;
+	// 	*args = NULL;
+	// 	path = exec->cmd;
+	// }
 	pid = fork();
 	if (pid == 0)
 	{
-		if (exec->fd_in != 0)
-			dup2(exec->fd_in, 0);
-		if (exec->fd_out != 1)
-			dup2(exec->fd_out, 1);
 		dup2(exec->fd_in, 0);
+		printf("%d\n",exec->fd_in);
+		printf("%d\n",exec->fd_out);
+		dup2(exec->fd_out, 1);
+		// printf("|path %s|\n", exec->args);	
+		if (ft_strcmp(exec->cmd, "echo") == 0)
+			ft_echo(exec);
 		if (execve(path, exec->args, shell->env_arr) == -1)
 		{
-			printf("minishell: %s: command not found\n", exec->cmd);
+			printf("minishell: %s: command not found\n", exec->args[0]);
 			shell->exit_status = 127;
 			exit(EXIT_FAILURE);
 		}
 		close(exec->fd_in);
 		close(exec->fd_out);
 	}
-	else
-		waitpid(pid, &status, 0);
+	// else
+	waitpid(pid, &status, 0);
 }
-void	handle_heredoc(t_shell *shell, t_exec *exec, int fd)
+void	handle_heredoc(t_exec *exec, int fd)
 {
 	char	*line;
-	(void)shell;
 
 	while (exec->herdoc == 1)
 	{
 		line = readline("> ");
-		signal(SIGINT, sig_handl);
+		// signal(SIGINT, sig_handl);
 		if (line == NULL)
 			return ;
 		if (gvars->herdoc == 0)
@@ -104,23 +107,35 @@ void	handle_heredoc(t_shell *shell, t_exec *exec, int fd)
 	}
 }
 
-void	run(t_shell *shell)
+void	run(t_shell *shell, t_exec *exec)
 {
-	if (ft_strcmp(shell->exec->cmd, "echo") == 0)
-		ft_echo(shell);
-	else if (ft_strcmp(shell->exec->cmd, "cd") == 0)
-		ft_cd(shell);
-	else if (ft_strcmp(shell->exec->cmd, "export") == 0)
-		ft_export(shell);
-	else if (ft_strcmp(shell->exec->cmd, "unset") == 0)
-		ft_unset(shell);
-	else if (ft_strcmp(shell->exec->cmd, "env") == 0)
-		ft_env(shell);
-	else if (ft_strcmp(shell->exec->cmd, "exit") == 0)
-		ft_exit(shell);
-	else
-    {
-        shell->exec->cmd = find_exec(shell, shell->exec->cmd);
-        exec_cmd(shell, shell->exec->cmd);
-    }
+	(void)shell;
+	while (exec)
+	{
+
+	// if cmd first and next type is pipe	: in=0		out=pipe
+	// if cmd first and next type is pipe	: in=pipe	out=pipe
+	// if cmd LAST and next type null		: in=pipe	out=1
+		pipe_handler(exec);
+		if (ft_strcmp(exec->cmd, "cd") == 0)
+			ft_cd(shell, exec);
+		else if (ft_strcmp(exec->cmd, "export") == 0)
+			ft_export(shell, exec);
+		else if (ft_strcmp(exec->cmd, "unset") == 0)
+			ft_unset(shell);
+		else if (ft_strcmp(exec->cmd, "env") == 0)
+			ft_env(shell);
+		else if (ft_strcmp(exec->cmd, "exit") == 0)
+			ft_exit(shell);
+		else
+    	{
+			// printf("------> %s\n", exec->args[1]);
+			if (exec->type == CMD)
+    	    {
+				exec->cmd = find_exec(shell, exec->cmd);
+    	    	exec_cmd(shell, exec, exec->cmd);
+			}
+    	}
+		exec= exec->next;
+	}
 }

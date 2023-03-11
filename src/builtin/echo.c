@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 20:07:55 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/04 13:44:40 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:02:33 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_echo(t_shell *shell)
+int	ft_echo(t_exec *exec)
 {
 	int		i;
 	int		j;
 	int	new_line;
-	t_exec	*exec;
-
-	exec = shell->exec;
+	
 	i = 1;
 	new_line = 1;
 	while (exec->args[i] && ft_strcmp(exec->args[i], "-n") == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:33:10 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/11 18:09:40 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/11 22:49:29 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_token *create_token(t_token *token, char *cmd, int type)
     return (token);
 }
 
-void	add_token(t_shell *shell, char *str, int type)
+void    add_token(t_shell *shell, char *str, int type)
 {
 	if (!shell->token)
 		shell->token = token_new(str, type);
@@ -57,7 +57,7 @@ void	add_token(t_shell *shell, char *str, int type)
 		token_add_b(shell->token, token_new(str, type));
 }
 
-int	is_cmd(char *cmd)
+int is_cmd(char *cmd)
 {
 	while (!ft_isspace(*cmd) && *cmd)
 	{
@@ -70,7 +70,7 @@ int	is_cmd(char *cmd)
 
 int is_cmd_c(char c)
 {
-    char **strs;
+    char    **strs;
 
     strs = ft_split("|\n$\n<\n<<\n>>\n>\n\"\n\'\n*\n ", '\n');
     while (*strs)

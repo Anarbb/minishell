@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:07:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/04 10:13:07 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:12:42 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_export(t_shell *shell)
+void ft_export(t_shell *shell, t_exec *exec)
 {
 	(void)shell;
+	(void)exec;
 	// t_env *new;
 	// t_env *tmp;
 

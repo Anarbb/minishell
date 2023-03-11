@@ -6,12 +6,11 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:30:01 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/05 18:47:13 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/11 22:48:22 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 t_exec	*exec_new(char *tmp, int type)
 {
@@ -42,9 +41,9 @@ void	exec_add_b(t_shell *shell, char *tmp, int type)
 	new->prev = tmp_exec;
 }
 
-int		exec_size(t_exec *exec)
+int	exec_size(t_exec *exec)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (exec)

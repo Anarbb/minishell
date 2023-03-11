@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 12:27:04 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/10 18:54:53 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/11 22:47:54 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_lstadd_back_env(t_env **alst, t_env *new)
+void	ft_lstadd_back_env(t_env **alst, t_env *new)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = *alst;
 	while (tmp->next)
@@ -22,9 +22,9 @@ void ft_lstadd_back_env(t_env **alst, t_env *new)
 	tmp->next = new;
 }
 
-void    set_env(t_shell *shell, char *name, char *value)
+void	set_env(t_shell *shell, char *name, char *value)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = shell->env;
 	while (tmp)
@@ -40,9 +40,9 @@ void    set_env(t_shell *shell, char *name, char *value)
 	add_env(shell, name, value);
 }
 
-char *get_env(t_shell *shell, char *key)
+char	*get_env(t_shell *shell, char *key)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = shell->env;
 	while (tmp)
@@ -54,9 +54,9 @@ char *get_env(t_shell *shell, char *key)
 	return (NULL);
 }
 
-void    add_env(t_shell *shell, char *key, char *value)
+void	add_env(t_shell *shell, char *key, char *value)
 {
-	t_env *new;
+	t_env	*new;
 
 	new = (t_env *)malloc(sizeof(t_env));
 	new->var = ft_strdup(key);
@@ -68,10 +68,10 @@ void    add_env(t_shell *shell, char *key, char *value)
 		ft_lstadd_back_env(&shell->env, new);
 }
 
-void    init_env(t_shell *shell)
+void	init_env(t_shell *shell)
 {
-	t_env 	*new;
-	char 	**tmp_env;
+	t_env	*new;
+	char	**tmp_env;
 
 	tmp_env = shell->env_arr;
 	while (*tmp_env)

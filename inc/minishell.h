@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/11 18:10:06 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/11 22:31:28 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ typedef struct  s_shell
 // parsing.init
 void    init_shell(t_shell *shell, char **env);
 int 	find_path(t_shell *shell);
-void	run(t_shell *shell);
 // parsing.lexer
 int		ft_lexer(t_shell *shell);
 void 	split_by_ops(t_shell *shell, char *cmd);
@@ -128,9 +127,9 @@ void	free_tokens(t_token **tokens);
 int		is_cmd_c(char c);
 char	*get_next_line(int fd);
 // builtins
-void    ft_cd(t_shell *shell);
-int		ft_echo(t_shell *shell);
-void	ft_export(t_shell *shell);
+void    ft_cd(t_shell *shell, t_exec *exec);
+int		ft_echo(t_exec *exec);
+void	ft_export(t_shell *shell, t_exec *exec);
 int		ft_exit(t_shell *shell);
 void	ft_env(t_shell *shell);
 void    ft_unset(t_shell *shell);
@@ -143,9 +142,10 @@ int 	validate_syntax(t_token *token);
 int		is_redirection(int type);
 //Execution
 char	*find_exec(t_shell *shell, char *cmd);
-void	exec_cmd(t_shell *shell, char *path);
+void	exec_cmd(t_shell *shell, t_exec *exec, char *path);
 void	parsing(t_shell *shell);
-void    exection(t_exec *exec);
+void    pipe_handler(t_exec *exec);
+void	run(t_shell *shell, t_exec *exec);
 //Execution.utils
 t_exec	*exec_new(char *tmp, int type);
 void	exec_add_b(t_shell *shell, char *tmp, int type);
@@ -157,6 +157,11 @@ char	*limiter_path(char *limiter);
 void	expander(t_shell *shell, t_token *token);
 char	*ft_join(char *tmp, char *value);
 char	*after_dollar(t_shell *shell, char *str, char *tmp, int i);
+//Expander.utils
+char	*expand_after_dollar(t_shell *shell, char *str, int *i, int j);
+void	expand_in_dquote(t_token **token, t_shell *shell, t_token **new_tkn);
+void	expand_in_squote(t_token **token, t_token **new_tkn);
+void	skip_spaces(t_token **token, t_token **new_tkn, char *tmp);
 // env
 void    init_env(t_shell *shell);
 void    add_env(t_shell *shell, char *key, char *value);
@@ -164,7 +169,7 @@ void    set_env(t_shell *shell, char *key, char *value);
 char    *get_env(t_shell *shell, char *key);
 void 	ft_lstadd_back_env(t_env **alst, t_env *new);
 // heredoc
-void	handle_heredoc(t_shell *shell, t_exec *exec, int fd);
+void	handle_heredoc(t_exec *exec, int fd);
 // debug
 void my_printf(const char* format, ...);
 #endif

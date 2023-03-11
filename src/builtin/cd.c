@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/10 18:57:09 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/11 20:12:49 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_cd(t_shell *shell)
+void	ft_cd(t_shell *shell, t_exec *exec)
 {
 	char	*oldpwd;
 	char	*pwd;
 
-	if (!shell->exec->args[1] || ft_strcmp(shell->exec->args[1], "~") == 0)
+	if (!exec->args[1] || ft_strcmp(exec->args[1], "~") == 0)
 		chdir(get_env(shell, "HOME"));
-	else if (ft_strcmp(shell->exec->args[1], "-") == 0)
+	else if (ft_strcmp(exec->args[1], "-") == 0)
 	{
 		printf("%s\n", get_env(shell, "OLDPWD"));
 		chdir(get_env(shell, "OLDPWD"));
 	}
-	else if (chdir(shell->exec->args[1]) == -1)
+	else if (chdir(exec->args[1]) == -1)
 	{
 		ft_putstr_fd("cd: no such file or directory: ", 2);
-		ft_putendl_fd(shell->exec->args[1], 2);
+		ft_putendl_fd(exec->args[1], 2);
 		return ;
 	}
 	else

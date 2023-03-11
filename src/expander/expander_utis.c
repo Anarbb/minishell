@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utis.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:18:45 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/06 15:39:34 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/11 22:42:37 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,57 @@ char	*expand_after_dollar(t_shell *shell, char *str, int *i, int j)
 	return (*i = j, ft_strdup(""));
 }
 
-char	*after_dollar(t_shell *shell, char *str, char *tmp, int i)
+void	expand_in_dquote(t_token **token, t_shell *shell, t_token **new_tkn)
 {
-	int len;
-	char *value;
-	
-	len = ft_strlen(str);
-	if (ft_isdigit(str[i]))
-		i++;
-	else if (str[i] == '?')
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	tmp = ft_strdup("");
+	*token = (*token)->next;
+	while (*token && (*token)->type != DQUOTE)
 	{
-		tmp = ft_join(tmp, ft_itoa(shell->exit_status));
-		i++;
-	}
-	while (i < len)
-	{
-		if (i == 0)
-			return (value = expand_after_dollar(shell, str, &i, 0), ft_join(tmp, value));
+		if ((*token)->type == DOLLAR && (*token)->next->type == CMD)
+		{
+			*token = (*token)->next;
+			tmp = after_dollar(shell, (*token)->content, tmp, i);
+		}
 		else
-			tmp = ft_join(tmp, ft_substr(str, i, 1));
-		i++;
+			tmp = ft_join(tmp, (*token)->content);
+		*token = (*token)->next;
 	}
-	return (tmp);
+	if ((*token)->type == DQUOTE)
+	{
+		*new_tkn = create_token(*new_tkn, tmp, CMD);
+		tmp = NULL;
+	}
+}
+
+void	expand_in_squote(t_token **token, t_token **new_tkn)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	tmp = ft_strdup("");
+	*token = (*token)->next;
+	while (*token && (*token)->type != SQUOTE)
+	{
+		tmp = ft_join(tmp, (*token)->content);
+		*token = (*token)->next;
+	}
+	if ((*token)->type == SQUOTE)
+	{
+		*new_tkn = create_token(*new_tkn, tmp, CMD);
+		tmp = NULL;
+	}
+}
+
+void	skip_spaces(t_token **token, t_token **new_tkn, char *tmp)
+{
+	if ((*token)->type != SPACE_MS)
+	{
+		tmp = ft_join(tmp, (*token)->content);
+		*new_tkn = create_token(*new_tkn, tmp, (*token)->type);
+	}
 }
