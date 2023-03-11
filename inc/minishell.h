@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/09 20:21:27 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/11 18:10:06 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ int		ft_lexer(t_shell *shell);
 void 	split_by_ops(t_shell *shell, char *cmd);
 void	parse_ops(t_shell *shell);
 void	add_token(t_shell *shell, char *str, int type);
+t_token *create_token(t_token *token, char *cmd, int type);
 int		is_cmd(char *cmd);
 // utils
 int		is_arg(char *str);
@@ -144,7 +145,7 @@ int		is_redirection(int type);
 char	*find_exec(t_shell *shell, char *cmd);
 void	exec_cmd(t_shell *shell, char *path);
 void	parsing(t_shell *shell);
-void    exection(t_shell *shell);
+void    exection(t_exec *exec);
 //Execution.utils
 t_exec	*exec_new(char *tmp, int type);
 void	exec_add_b(t_shell *shell, char *tmp, int type);
