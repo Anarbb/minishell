@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 15:28:48 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/12 15:36:39 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	parsing(t_shell *shell)
 	shell->exec = tmp;
 	tmp->args = (char **)ft_calloc(20, sizeof(char *));
 	handle_redirs(shell);
-	my_printf("%d:%d", tmp->fd_in, tmp->fd_out);
 	while (tokens)
 	{
 		if ((tokens->type == REDIR_OUT || tokens->type == REDIR_IN
