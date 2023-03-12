@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/09 20:01:07 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/12 18:08:47 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,15 @@ void split_by_ops(t_shell *shell, char *cmd)
 
 int ft_lexer(t_shell *shell)
 {
+    t_token *prev_tkn;
+    
+    prev_tkn = shell->token;
 	control_d(shell->line);
 	if (shell->line && *shell->line)
 	{
 		add_history(shell->line);
 		parse_ops(shell);
-		if (!validate_syntax(shell->token))
+		if (!validate_syntax(shell->token, prev_tkn))
 		{
 			expander(shell, shell->token);
 			return (SUCCESS);

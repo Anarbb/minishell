@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 15:28:48 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/12 17:12:47 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,39 +36,38 @@ int	checker(t_exec *tmp)
 		&& tmp->prev->type != REDIR_IN && tmp->prev->type != HERDOC
 		&& tmp->type != SPACE_MS);
 }
-
+ 
 void	handle_redirs(t_shell *shell)
 {
-	int		fd_in;
-	int		fd_out;
+	int		fd;
 	t_token	*tokens;
-	t_token	*prev;
 
-	prev = NULL;
 	tokens = shell->token;
-	fd_in = 0;
-	fd_out = 1;
 	while (tokens)
 	{
 		if (tokens->type == REDIR_OUT)
 		{
-			fd_out = open(tokens->next->content,
+			shell->exec->fd_out = open(tokens->next->content,
 							O_RDWR | O_CREAT | O_CLOEXEC | O_TRUNC,
 							0664);
 		}
 		if (tokens->type == REDIR_APPEND)
-			fd_out = open(tokens->next->content,
+			shell->exec->fd_out = open(tokens->next->content,
 							O_RDWR | O_CREAT | O_CLOEXEC | O_APPEND,
 							0664);
 		if (tokens->type == REDIR_IN)
-			fd_in = open(tokens->next->content, O_RDONLY);
-		if (tokens->type == HERDOC)
-			return ;
-		prev = tokens;
+			shell->exec->fd_in = open(tokens->next->content, O_RDONLY);
+		else if (tokens->type == HERDOC)
+		{
+			signal(SIGINT, NULL);
+			fd = open(limiter_path(tokens->next->content), O_CREAT | O_RDWR, 0777);
+			if (fd == -1)
+				printf("minishell: error: heredoc\n");
+			shell->exec->limiter = ft_strdup(tokens->next->content);
+			handle_heredoc(shell->exec, fd);
+		}
 		tokens = tokens->next;
 	}
-	shell->exec->fd_in = fd_in;
-	shell->exec->fd_out = fd_out;
 }
 
 void	parsing(t_shell *shell)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 11:22:03 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/12 18:09:08 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void	init_signals(void);
 void	control_d(char	*line);
 void	sig_handl(int signum);
 //Syntax.analyser
-int 	validate_syntax(t_token *token);
+int 	validate_syntax(t_token *token, t_token *prev_tkn);
 int		is_redirection(int type);
 //Execution
 char	*find_exec(t_shell *shell, char *cmd);
@@ -169,6 +169,7 @@ char    *get_env(t_shell *shell, char *key);
 void 	ft_lstadd_back_env(t_env **alst, t_env *new);
 // heredoc
 void	handle_heredoc(t_exec *exec, int fd);
+void	sig_handler(int signum);
 // debug
 void my_printf(const char* format, ...);
 #endif
