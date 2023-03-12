@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:33:10 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/11 22:49:29 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/12 11:23:06 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,14 @@ t_token *create_token(t_token *token, char *cmd, int type)
     return (token);
 }
 
-void    add_token(t_shell *shell, char *str, int type)
+void    delete_one_token(t_token **token)
+{
+    t_token *next_node = (*token)->next;
+    free((*token)->content);
+    free(*token);
+    *token = next_node;
+}
+void	add_token(t_shell *shell, char *str, int type)
 {
 	if (!shell->token)
 		shell->token = token_new(str, type);

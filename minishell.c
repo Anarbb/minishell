@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/11 22:39:26 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/12 11:23:11 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	my_printf(const char* format, ...)
-// {
-//   printf("-->|");
-//   va_list args;
-//   va_start(args, format);
-//   vprintf(format, args);
-//   va_end(args);
-//   printf("|<--\n");
-//   fflush(stdout);
-// }
+void	my_printf(const char* format, ...)
+{
+  printf("-->|");
+  va_list args;
+  va_start(args, format);
+  vprintf(format, args);
+  va_end(args);
+  printf("|<--\n");
+  fflush(stdout);
+}
 
 int	main(int ac, char **av, char **env)
 {

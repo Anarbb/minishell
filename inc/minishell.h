@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/11 22:31:28 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/12 11:22:03 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ typedef struct s_exec
 	int 	type; // ls //cmd //arg | >> << ls w2odq
 	int		fd_in; // 0
 	int		fd_out; // 1
-	int		herdoc;
 	char	*limiter;
 	struct s_exec *next;
 	struct s_exec *prev;
@@ -125,7 +124,7 @@ void    token_add_b(t_token *tokens, t_token *new);
 void    free_all(t_shell *shell);
 void	free_tokens(t_token **tokens);
 int		is_cmd_c(char c);
-char	*get_next_line(int fd);
+void    delete_one_token(t_token **token);
 // builtins
 void    ft_cd(t_shell *shell, t_exec *exec);
 int		ft_echo(t_exec *exec);

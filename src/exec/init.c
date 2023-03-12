@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/11 22:43:11 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/12 11:22:11 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	handle_heredoc(t_exec *exec, int fd)
 {
 	char	*line;
 
-	while (exec->herdoc == 1)
+	while (gvars->herdoc == 1)
 	{
 		line = readline("> ");
 		// signal(SIGINT, sig_handl);

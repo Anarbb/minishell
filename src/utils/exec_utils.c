@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:30:01 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/11 22:48:22 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/12 11:21:35 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_exec	*exec_new(char *tmp, int type)
 	exec->type = type;
 	exec->fd_in = 0;
 	exec->fd_out = 1;
-	exec->herdoc = 0;
 	exec->next = NULL;
 	exec->prev = NULL;
 	return (exec);
