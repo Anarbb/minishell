@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:07:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 18:03:34 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/12 18:10:30 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_env(t_shell *shell)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = shell->env;
 	while (tmp)
@@ -24,12 +24,12 @@ void	print_env(t_shell *shell)
 	}
 }
 
-void ft_export(t_shell *shell, t_exec *exec)
+void	ft_export(t_shell *shell, t_exec *exec)
 {
-	int i;
-	int j;
-	char *var;
-	char *value;
+	int		i;
+	int		j;
+	char	*var;
+	char	*value;
 
 	i = 1;
 	if (!exec->args[1])

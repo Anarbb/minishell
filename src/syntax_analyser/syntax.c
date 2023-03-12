@@ -6,47 +6,48 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/12 17:09:16 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/12 18:09:49 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell.h"
+#include "minishell.h"
 
-
-int unclosed_err(t_token **token, int type, t_token *prev_tkn)
+int	unclosed_err(t_token **token, int type, t_token *prev_tkn)
 {
-    int		count;
+	int	count;
 
 	count = 0;
 	prev_tkn = *token;
-    while (*token && count != 2)
-    {
-        if ((*token)->type == type)
-            count++;
+	while (*token && count != 2)
+	{
+		if ((*token)->type == type)
+			count++;
 		prev_tkn = *token;
-        *token = (*token)->next;
-    }
-    if (count % 2 != 0)
-    {
-        ft_putstr_fd("minishell: unclosed ", STDERR_FILENO);
-        if (type == SQUOTE)
-            ft_putstr_fd("single quotes detected.\n", STDERR_FILENO);
-        else if (type == DQUOTE)
-            ft_putstr_fd("double quotes detected.\n", STDERR_FILENO);
-        return (FAILURE);
-    }
+		*token = (*token)->next;
+	}
+	if (count % 2 != 0)
+	{
+		ft_putstr_fd("minishell: unclosed ", STDERR_FILENO);
+		if (type == SQUOTE)
+			ft_putstr_fd("single quotes detected.\n", STDERR_FILENO);
+		else if (type == DQUOTE)
+			ft_putstr_fd("double quotes detected.\n", STDERR_FILENO);
+		return (FAILURE);
+	}
 	*token = prev_tkn;
-    return (SUCCESS);
+	return (SUCCESS);
 }
 
 int	pipe_err(t_token *token, t_token *prev_tkn)
 {
-    if (!prev_tkn || !token->next)
-		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", STDERR_FILENO);
-    else if (prev_tkn->type != CMD || (token->next->type != CMD 
-			&& token->next->type != SPACE_MS
-			&& !is_redirection(token->next->type)))
-        ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", STDERR_FILENO);
+	if (!prev_tkn || !token->next)
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
+						STDERR_FILENO);
+	else if (prev_tkn->type != CMD || (token->next->type != CMD
+				&& token->next->type != SPACE_MS
+				&& !is_redirection(token->next->type)))
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
+						STDERR_FILENO);
 	else
 		return (SUCCESS);
 	return (FAILURE);
@@ -61,11 +62,13 @@ void	skip_space(t_token **token)
 
 int	redir_err(t_token *token)
 {
-    if (!token)
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", STDERR_FILENO);
+	if (!token)
+		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",
+						STDERR_FILENO);
 	else if (token->next->type != CMD && token->next->type != DOLLAR)
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR_FILENO);
+		ft_putstr_fd("minishell: syntax error near unexpected token `",
+						STDERR_FILENO);
 		ft_putstr_fd(token->content, STDERR_FILENO);
 		ft_putstr_fd("'\n", STDERR_FILENO);
 	}

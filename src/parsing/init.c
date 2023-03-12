@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/09 20:22:26 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/12 18:09:23 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int find_path(t_shell *shell)
+int	find_path(t_shell *shell)
 {
-	char *path;
+	char	*path;
 
 	path = get_env(shell, "PATH");
 	if (path == NULL)
@@ -30,12 +30,10 @@ int find_path(t_shell *shell)
 	return (1);
 }
 
-
-
-void    init_shell(t_shell *shell, char **env)
+void	init_shell(t_shell *shell, char **env)
 {
-	char    *shlvlc;
-	int     shlvl;
+	char *shlvlc;
+	int shlvl;
 
 	shlvl = 1;
 	gvars = malloc(sizeof(int));

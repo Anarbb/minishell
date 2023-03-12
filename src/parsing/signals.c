@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 16:00:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/09 20:36:37 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/12 18:11:43 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,21 @@ void	sig_handler(int signum)
 
 void	sig_handl(int signum)
 {
-	int fd[2];
+	int	fd[2];
 
-	(void) signum;
+	(void)signum;
 	pipe(fd);
 	dup2(fd[0], 0);
 	gvars->herdoc = 0;
 	write(fd[0], "\n", 1);
 }
 
-void	control_d(char	*line)
+void	control_d(char *line)
 {
 	if (!line)
 	{
 		ft_putstr_fd(CLEAR_LINE, 1);
-  		ft_putstr_fd(GREEN"minishell[^,^]~>"RESET" exit\n", 1);
+		ft_putstr_fd(GREEN "minishell[^,^]~>" RESET " exit\n", 1);
 		exit(EXIT_SUCCESS);
 	}
 }
