@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 12:27:04 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/11 22:47:54 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/12 18:02:25 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,31 @@ char	*get_env(t_shell *shell, char *key)
 		tmp = tmp->next;
 	}
 	return (NULL);
+}
+
+void	unset_env(t_shell *shell, char *key)
+{
+	t_env	*tmp;
+	t_env	*prev;
+
+	tmp = shell->env;
+	prev = NULL;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->var, key) == 0)
+		{
+			if (prev == NULL)
+				shell->env = tmp->next;
+			else
+				prev->next = tmp->next;
+			free(tmp->var);
+			free(tmp->value);
+			free(tmp);
+			return ;
+		}
+		prev = tmp;
+		tmp = tmp->next;
+	}
 }
 
 void	add_env(t_shell *shell, char *key, char *value)

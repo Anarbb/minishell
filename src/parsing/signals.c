@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 16:00:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/12 16:57:01 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/12 18:20:01 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void	sig_handler(int signum)
 // 	write(fd[0], "\n", 1);
 // }
 
-void	control_d(char	*line)
+void	control_d(char *line)
 {
 	if (!line)
 	{
 		ft_putstr_fd(CLEAR_LINE, 1);
-  		ft_putstr_fd(GREEN"minishell[^,^]~>"RESET" exit\n", 1);
+		ft_putstr_fd(GREEN "minishell[^,^]~>" RESET " exit\n", 1);
 		exit(EXIT_SUCCESS);
 	}
 }

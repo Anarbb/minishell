@@ -3,35 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 20:07:55 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/10 13:02:33 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/12 18:04:53 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+// echo with the -n option that bahaves like the echo command in bash
 int	ft_echo(t_exec *exec)
 {
-	int		i;
-	int		j;
-	int	new_line;
-	
+	int	i;
+	int	n;
+
 	i = 1;
-	new_line = 1;
-	while (exec->args[i] && ft_strcmp(exec->args[i], "-n") == 0)
+	n = 0;
+	if (exec->args[1] && ft_strcmp(exec->args[1], "-n") == 0)
 	{
-		new_line = 0;
+		n = 1;
 		i++;
 	}
-	j = i;
-	while (exec->args[j])
+	while (exec->args[i])
 	{
-		ft_putstr_fd(exec->args[j], 1);
-		j++;
+		ft_putstr_fd(exec->args[i], 1);
+		if (exec->args[i + 1])
+			ft_putchar_fd(' ', 1);
+		i++;
 	}
-	if (new_line)
+	if (!n)
 		ft_putchar_fd('\n', 1);
-	return (SUCCESS);
+	return (0);	
 }

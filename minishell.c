@@ -6,21 +6,22 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 17:31:32 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/12 18:19:40 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_printf(const char* format, ...)
+void	my_printf(const char *format, ...)
 {
-  printf("-->|");
-  va_list args;
-  va_start(args, format);
-  vprintf(format, args);
-  va_end(args);
-  printf("|<--\n");
-  fflush(stdout);
+	va_list	args;
+
+	printf("-->|");
+	va_start(args, format);
+	vprintf(format, args);
+	va_end(args);
+	printf("|<--\n");
+	fflush(stdout);
 }
 
 int	main(int ac, char **av, char **env)
@@ -34,7 +35,6 @@ int	main(int ac, char **av, char **env)
 	while (1337)
 	{
 		init_signals();
-		set_env(shell, "PWD", getcwd(NULL, 0));
 		shell->line = readline(GREEN "minishell[^,^]~> " RESET);
 		shell->exit_status = 0;
 		if (ft_lexer(shell) == SUCCESS)

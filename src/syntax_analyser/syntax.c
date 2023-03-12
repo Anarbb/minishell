@@ -6,11 +6,11 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/12 18:15:04 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/12 18:32:02 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell.h"
+#include "minishell.h"
 
 int	skip_space(t_token **token)
 {
@@ -87,17 +87,25 @@ int	validate_syntax(t_token *token, t_token *prev_tkn)
 		if (!token)
 			break ;
 		if (token->type == PIPE)
+		{
 			if (pipe_err(token, prev_tkn))
 				return (FAILURE);
+		}
 		else if (token->type == DQUOTE)
+		{
 			if (unclosed_err(&token, token->type, prev_tkn) == FAILURE)
 				return (FAILURE);
+		}
 		else if (token->type == SQUOTE)
+		{
 			if (unclosed_err(&token, token->type, prev_tkn) == FAILURE)
 				return (FAILURE);
+		}
 		else if (is_redirection(token->type))
+		{
 			if (redir_err(token->next) == FAILURE)
 				return (FAILURE);
+		}
 		prev_tkn = token;
 		token = token->next;
 	}
