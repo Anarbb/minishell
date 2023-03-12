@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:33:10 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 11:23:06 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/12 13:15:45 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,17 @@ t_token *create_token(t_token *token, char *cmd, int type)
     return (token);
 }
 
-void    delete_one_token(t_token **token)
+void    delete_one_token(t_token **prev)
 {
-    t_token *next_node = (*token)->next;
-    free((*token)->content);
-    free(*token);
-    *token = next_node;
+    t_token *current;
+    t_token *next;
+
+    current = (*prev)->next;
+    next = current->next;
+    free(current);
+    free(current->content);
+    (*prev)->next = next;
+    
 }
 void	add_token(t_shell *shell, char *str, int type)
 {

@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 11:22:11 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/12 15:30:52 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ void	exec_cmd(t_shell *shell, t_exec *exec, char *path)
 	if (pid == 0)
 	{
 		dup2(exec->fd_in, 0);
-		printf("%d\n",exec->fd_in);
-		printf("%d\n",exec->fd_out);
 		dup2(exec->fd_out, 1);
 		// printf("|path %s|\n", exec->args);	
 		if (ft_strcmp(exec->cmd, "echo") == 0)
@@ -78,8 +76,11 @@ void	exec_cmd(t_shell *shell, t_exec *exec, char *path)
 		}
 		close(exec->fd_in);
 		close(exec->fd_out);
-	}
-	// else
+	} 
+	if (exec->fd_in != 0)
+		close(exec->fd_in);
+	if (exec->fd_out != 1)
+		close(exec->fd_out);
 	waitpid(pid, &status, 0);
 }
 void	handle_heredoc(t_exec *exec, int fd)
@@ -113,9 +114,9 @@ void	run(t_shell *shell, t_exec *exec)
 	while (exec)
 	{
 
-	// if cmd first and next type is pipe	: in=0		out=pipe
-	// if cmd first and next type is pipe	: in=pipe	out=pipe
-	// if cmd LAST and next type null		: in=pipe	out=1
+		// if cmd first and next type is pipe	: in=0		out=pipe
+		// if cmd first and next type is pipe	: in=pipe	out=pipe
+		// if cmd LAST and next type null		: in=pipe	out=1
 		pipe_handler(exec);
 		if (ft_strcmp(exec->cmd, "cd") == 0)
 			ft_cd(shell, exec);

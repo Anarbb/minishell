@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 11:22:50 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/12 15:28:48 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ void	handle_redirs(t_shell *shell)
 	int		fd_in;
 	int		fd_out;
 	t_token	*tokens;
+	t_token	*prev;
 
+	prev = NULL;
 	tokens = shell->token;
 	fd_in = 0;
 	fd_out = 1;
@@ -53,7 +55,6 @@ void	handle_redirs(t_shell *shell)
 			fd_out = open(tokens->next->content,
 							O_RDWR | O_CREAT | O_CLOEXEC | O_TRUNC,
 							0664);
-			delete_one_token(&tokens);
 		}
 		if (tokens->type == REDIR_APPEND)
 			fd_out = open(tokens->next->content,
@@ -63,27 +64,44 @@ void	handle_redirs(t_shell *shell)
 			fd_in = open(tokens->next->content, O_RDONLY);
 		if (tokens->type == HERDOC)
 			return ;
+		prev = tokens;
 		tokens = tokens->next;
 	}
 	shell->exec->fd_in = fd_in;
 	shell->exec->fd_out = fd_out;
 }
+
 void	parsing(t_shell *shell)
 {
 	t_exec	*tmp;
 	t_token	*tokens;
+	int		i;
 
+	i = 0;
 	tokens = shell->token;
 	tmp = (t_exec *)ft_calloc(1, sizeof(t_exec));
 	shell->exec = tmp;
+	tmp->args = (char **)ft_calloc(20, sizeof(char *));
 	handle_redirs(shell);
-	my_printf("fd_in = %d, fd_out = %d", shell->exec->fd_in, shell->exec->fd_out);
-	t_token *tmp1 = shell->token;
-	while (tmp1)
+	my_printf("%d:%d", tmp->fd_in, tmp->fd_out);
+	while (tokens)
 	{
-		my_printf("type = %d, content = %s", tmp1->type, tmp1->content);
-		tmp1 = tmp1->next;
+		if ((tokens->type == REDIR_OUT || tokens->type == REDIR_IN
+				|| tokens->type == REDIR_APPEND || tokens->type == HERDOC)
+			&& tokens->next->type == CMD)
+			delete_one_token(&tokens);
+		if (tokens->type == CMD)
+		{
+			if (!tmp->cmd)
+				tmp->cmd = ft_strdup(tokens->content);
+			tmp->args[i] = ft_strdup(tokens->content);
+			tmp->type = tokens->type;
+			i++;
+		}
+		tokens = tokens->next;
 	}
+	tmp->args[i] = NULL;
+	shell->exec = tmp;
 }
 
 // void	parsing(t_shell *shell)
@@ -123,14 +141,14 @@ void	parsing(t_shell *shell)
 // 		}
 // 		else if (tmp->type == HERDOC)
 // 		{
-			// int fd;
-			// signal(SIGINT, NULL);
-			// fd = open(limiter_path(tmp->next->cmd), O_CREAT | O_RDWR, 0777);
-			// if (fd == -1)
-			// 	printf("minishell: error: heredoc\n");
-			// tmp->herdoc = 1;
-			// shell->exec->limiter = ft_strdup(tmp->next->cmd);
-			// handle_heredoc(shell, shell->exec, fd);
+// int fd;
+// signal(SIGINT, NULL);
+// fd = open(limiter_path(tmp->next->cmd), O_CREAT | O_RDWR, 0777);
+// if (fd == -1)
+// 	printf("minishell: error: heredoc\n");
+// tmp->herdoc = 1;
+// shell->exec->limiter = ft_strdup(tmp->next->cmd);
+// handle_heredoc(shell, shell->exec, fd);
 // 		}
 // 		tmp = tmp->next;
 // 	}
