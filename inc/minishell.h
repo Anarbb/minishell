@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 11:22:03 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/12 17:15:13 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ void    add_env(t_shell *shell, char *key, char *value);
 void    set_env(t_shell *shell, char *key, char *value);
 char    *get_env(t_shell *shell, char *key);
 void 	ft_lstadd_back_env(t_env **alst, t_env *new);
+void	unset_env(t_shell *shell, char *key);
 // heredoc
 void	handle_heredoc(t_exec *exec, int fd);
 // debug

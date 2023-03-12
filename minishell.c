@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 11:23:11 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/12 17:25:21 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	main(int ac, char **av, char **env)
 	while (1337)
 	{
 		init_signals();
-		set_env(shell, "PWD", getcwd(NULL, 0));
 		shell->line = readline(GREEN "minishell[^,^]~> " RESET);
 		shell->exit_status = 0;
 		if (ft_lexer(shell) == SUCCESS)
