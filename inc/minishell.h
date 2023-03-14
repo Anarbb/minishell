@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/13 13:18:38 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/14 15:36:40 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void				free_all(t_shell *shell);
 void				free_tokens(t_token **tokens);
 int					is_cmd_c(char c);
 void				delete_one_token(t_token **token);
+int					count_cmds(t_token *token);
 // builtins
 void				ft_cd(t_shell *shell, t_exec *exec);
 int					ft_echo(t_exec *exec);
