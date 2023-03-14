@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 18:19:40 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/12 18:40:52 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int ac, char **av, char **env)
 		if (ft_lexer(shell) == SUCCESS)
 		{
 			parsing(shell);
-			// run(shell, shell->exec);
+			run(shell, shell->exec);
 		}
 		free_all(shell);
 	}

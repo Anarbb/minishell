@@ -6,11 +6,37 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 18:19:32 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/14 14:00:34 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	handle_heredoc(t_exec *exec, int fd)
+{
+	char	*line;
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		while (1)
+		{
+			gvars->herdoc = 0;
+			line = readline("> ");
+			signal(SIGINT, sig_handler);
+			if (line == NULL)
+				return ;
+			if (ft_strcmp(line, exec->limiter) == 0)
+			{
+				free(line);
+				return ;
+			}
+			ft_putstr_fd(line, fd);
+			ft_putchar_fd('\n', fd);
+		}
+	}
+}
 
 char	*find_exec(t_shell *shell, char *cmd)
 {
@@ -39,94 +65,80 @@ char	*find_exec(t_shell *shell, char *cmd)
 	}
 	return (NULL);
 }
-// bash 3
-// miniexec 4
-// minhsell 4
 
-void	exec_cmd(t_shell *shell, t_exec *exec, char *path)
+
+int	count_cmmds(t_exec *exec)
 {
-	pid_t	pid;
-	int		status;
+	t_exec *tmp;
+	int count;
 
-	pid = fork();
-	if (pid == 0)
+	count = 0;
+	tmp = exec;
+	while (tmp)
 	{
-		dup2(exec->fd_in, 0);
-		dup2(exec->fd_out, 1);
-		// printf("|path %s|\n", exec->args);
-		if (ft_strcmp(exec->cmd, "echo") == 0)
-			ft_echo(exec);
-		if (execve(path, exec->args, shell->env_arr) == -1)
-		{
-			printf("minishell: %s: command not found\n", exec->args[0]);
-			shell->exit_status = 127;
-			exit(EXIT_FAILURE);
-		}
-		close(exec->fd_in);
-		close(exec->fd_out);
+		count++;
+		tmp = tmp->next;
 	}
-	if (exec->fd_in != 0)
-		close(exec->fd_in);
-	if (exec->fd_out != 1)
-		close(exec->fd_out);
-	waitpid(pid, &status, 0);
+	return(count);
 }
-void	handle_heredoc(t_exec *exec, int fd)
-{
-	char	*line;
-	pid_t	pid;
-	int		status;
 
-	pid = fork();
-	if (pid == 0)
+void close_all(int *fd, int size)
+{
+    int i;
+
+    i = 0;
+    while (i < size)
+    {
+        close(fd[i]);
+        i++;
+    }
+}
+
+void execute_command(t_shell *shell, t_exec *exec, char *path)
+{
+	exec->args[0] = ft_strdup(exec->cmd);
+	exec->args[1] = NULL;
+	if (execve(path, exec->args, shell->env_arr) == -1)
 	{
-		while (1)
-		{
-			gvars->herdoc = 0;
-			line = readline("> ");
-			signal(SIGINT, sig_handler);
-			if (line == NULL)
-				return ;
-			if (ft_strcmp(line, exec->limiter) == 0)
-			{
-				free(line);
-				return ;
-			}
-			ft_putstr_fd(line, fd);
-			ft_putchar_fd('\n', fd);
-		}
+		printf("minishell: %s: command not found\n", exec->args[0]);
+		shell->exit_status = 127;
+		exit(EXIT_FAILURE);
 	}
-	waitpid(pid, &status,0);
+    exit(EXIT_FAILURE);
 }
 
 void	run(t_shell *shell, t_exec *exec)
 {
-	(void)shell;
-	while (exec)
-	{
-		// if cmd first and next type is pipe	: in=0		out=pipe
-		// if cmd first and next type is pipe	: in=pipe	out=pipe
-		// if cmd LAST and next type null		: in=pipe	out=1
-		pipe_handler(exec);
-		if (ft_strcmp(exec->cmd, "cd") == 0)
-			ft_cd(shell, exec);
-		else if (ft_strcmp(exec->cmd, "export") == 0)
-			ft_export(shell, exec);
-		else if (ft_strcmp(exec->cmd, "unset") == 0)
-			ft_unset(shell);
-		else if (ft_strcmp(exec->cmd, "env") == 0)
-			ft_env(shell);
-		else if (ft_strcmp(exec->cmd, "exit") == 0)
-			ft_exit(shell);
-		else
-		{
-			// printf("------> %s\n", exec->args[1]);
-			if (exec->type == CMD)
-			{
-				exec->cmd = find_exec(shell, exec->cmd);
-				exec_cmd(shell, exec, exec->cmd);
-			}
-		}
-		exec = exec->next;
-	}
+    int i = 0;
+    int j = 0;
+    int *fd = malloc(count_cmmds(exec) * sizeof(int) * 2);
+    t_exec *tmp = exec;
+
+    while (j < count_cmmds(exec) * 2)
+    {
+        pipe(&fd[j]);
+        j += 2;
+    }
+    j = 0;
+    while (tmp)
+    {
+        int pid = fork();
+        if (pid == 0)
+        {
+            if (tmp->next)
+                dup2(fd[j + 1], 1);
+            if (j)
+				dup2(fd[j - 2], 0);
+            close_all(fd, count_cmmds(exec) * 2);
+			char *path;
+			path = find_exec(shell, tmp->cmd);
+            execute_command(shell, tmp, path);
+            exit(0);
+        }
+        i++;
+        j += 2;
+        tmp = tmp->next;
+    }
+    close_all(fd, count_cmmds(exec) * 2);
+    while (wait(NULL) != -1);
 }

@@ -6,30 +6,58 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 14:52:08 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/11 18:21:26 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/14 14:00:59 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell.h"
 
-void	pipes(t_exec *exec, int *fd)
+void	init_pipesfd(t_exec *exec, int **fd, int j)
 {
-    
-	if (exec->fd_out == 1)
-		exec->fd_out = fd[1];
-	if (exec->next->next->fd_in == 0)
-	exec->next->next->fd_in = fd[0];
+    if (!exec->prev && exec->next)
+	{
+		if (exec->fd_out == 1)
+			exec->fd_out = fd[j][1];
+	}
+	else if (exec->prev && exec->next)
+	{
+		if (exec->fd_out == 1)
+			exec->fd_out = fd[j][1];
+		if (exec->fd_in == 0)
+			exec->fd_in = fd[j - 1][0];
+	}
+	else if (exec->prev && !exec->next)
+	{
+		if (exec->fd_in == 0)
+			exec->fd_in = fd[j - 1][0];
+	}
 }
                                                    
 void	pipe_handler(t_exec *exec)
 {
-    // int **fd;
-	int	fd[2];
+	int	**fd;
+	int	j;
+	int	nbr_cmds;;
 
-	if (exec->next && exec->next->type == PIPE)
+	j = 0;
+	nbr_cmds = count_commands(exec) - 1;
+	fd = malloc(sizeof(int *) * nbr_cmds);
+	if (!fd)
+		exit(1);
+	while (j < nbr_cmds)
 	{
-		if (pipe(fd) == -1)
+		fd[j] = malloc(sizeof(int) * 2);
+		if (!fd[j])
+			exit(1);
+		if (pipe(fd[j]) == -1)
 			exit(EXIT_FAILURE);
-		pipes(exec, fd);
+		j++;
+	}
+	j = 0;
+	while (exec)
+	{
+		init_pipesfd(exec, fd, j);
+		j++;
+		exec = exec->next;
 	}
 }

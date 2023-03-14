@@ -71,6 +71,7 @@ SRCS        :=      minishell.c \
                         src/utils/exec_utils.c \
                         src/parsing/parsing.c \
                         src/exec/execution.c \
+                        src/exec/execution_utils.c \
                           
 OBJS        := $(SRCS:.c=.o)
 

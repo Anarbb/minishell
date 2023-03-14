@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 18:21:17 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/13 13:18:38 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ void				exec_create(t_shell *shell, char *tmp, int type);
 int					exec_size(t_exec *exec);
 void				exec_clear(t_exec **exec);
 char				*limiter_path(char *limiter);
+int					count_commands(t_exec *exec);
 //Expander
 void				expander(t_shell *shell, t_token *token);
 char				*ft_join(char *tmp, char *value);
