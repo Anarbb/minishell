@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 14:11:07 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/14 15:43:31 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,15 @@ void execute_command(t_shell *shell, t_exec *exec, char *path)
 
 void	run(t_shell *shell, t_exec *exec)
 {
-    int i = 0;
-    int j = 0;
-    int *fd = (int *)malloc(count_cmmds(exec) * sizeof(int) * 2);
-    t_exec *tmp = exec;
+    int i;
+    int j;
+    int *fd;
+    t_exec *tmp;
 
+	i = 0;
+	j = 0;
+	fd = (int *)malloc(count_cmmds(exec) * sizeof(int) * 2);
+	tmp = exec;
     while (j < count_cmmds(exec) * 2)
     {
         pipe(&fd[j]);
@@ -124,9 +128,11 @@ void	run(t_shell *shell, t_exec *exec)
         if (pid == 0)
         {
             if (tmp->next)
-                dup2(fd[j + 1], 1);
+				exec->fd_out = fd[j + 1];
             if (j)
-				dup2(fd[j - 2], 0);
+				exec->fd_in = fd[j - 2];
+            dup2(exec->fd_out, 1);
+			dup2(exec->fd_in, 0);
             close_all(fd, count_cmmds(exec) * 2);
 			char *path;
 			path = find_exec(shell, tmp->cmd);
