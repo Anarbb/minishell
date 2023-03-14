@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/12 11:21:09 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/14 18:48:18 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,27 @@ char	*after_dollar(t_shell *shell, char *str, char *tmp, int i)
 
 void	expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 {
-	char	*tmp;
+	char			*tmp;
+	DIR				*dirp;
+	struct dirent	*direc_p;
 
 	tmp = ft_strdup("");
-	if ((*token)->type == DOLLAR && (*token)->next->type == CMD)
+	if ((*token)->type == WC)
+	{
+    	dirp = opendir(getcwd(NULL, 0));
+    	while ((direc_p = readdir(dirp)) != NULL)
+    	{
+			if (ft_strncmp(direc_p->d_name, ".", 1))
+			{
+				tmp = ft_join(tmp, direc_p->d_name);
+				*new_tkn = create_token(*new_tkn, tmp, CMD);
+				tmp = NULL;
+				tmp = ft_strdup("");
+			}
+		}
+    	closedir(dirp);
+	}
+	else if ((*token)->type == DOLLAR && (*token)->next->type == CMD)
 	{
 		*token = (*token)->next;
 		tmp = after_dollar(shell, (*token)->content, tmp, 0);

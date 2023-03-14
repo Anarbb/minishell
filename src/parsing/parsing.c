@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 18:12:45 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/14 18:31:16 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	parsing(t_shell *shell)
 	handle_redirs(shell, tokens);
 	while (tokens)
 	{
-		printf("token: %s, type: %d\n", tokens->content, tokens->type);
+		// printf("token: %s, type: %d\n", tokens->content, tokens->type);
 		if ((tokens->type == REDIR_OUT || tokens->type == REDIR_IN
 				|| tokens->type == REDIR_APPEND || tokens->type == HERDOC)
 			&& tokens->next->type == CMD)
