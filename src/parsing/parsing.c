@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 12:39:21 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/14 14:48:40 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,46 @@ void	handle_redirs(t_shell *shell)
 	}
 }
 
-// void	parsing(t_shell *shell)
+void	parsing(t_shell *shell)
+{
+	t_exec	*tmp;
+	t_token	*tokens;
+	int		i;
+
+	i = 0;
+	tokens = shell->token;
+	tmp = (t_exec *)ft_calloc(1, sizeof(t_exec));
+	shell->exec = tmp;
+	tmp->args = (char **)ft_calloc(20, sizeof(char *));
+	handle_redirs(shell);
+	while (tokens)
+	{
+		if (tokens->type == PIPE)
+		{
+			tmp->next = (t_exec *)ft_calloc(1, sizeof(t_exec));
+			tmp->next->prev = tmp;
+			tmp = tmp->next;
+			tmp->args = (char **)ft_calloc(20, sizeof(char *));
+			handle_redirs(shell);
+			i = 0;
+		}
+		if ((tokens->type == REDIR_OUT || tokens->type == REDIR_IN
+				|| tokens->type == REDIR_APPEND || tokens->type == HERDOC)
+			&& tokens->next->type == CMD)
+			delete_one_token(&tokens);
+		if (tokens->type == CMD)
+		{
+			if (!tmp->cmd)
+				tmp->cmd = ft_strdup(tokens->content);
+			tmp->args[i] = ft_strdup(tokens->content);
+			tmp->type = tokens->type;
+			i++;
+		}
+		// printf("%s\n", tokens->content);
+		tokens = tokens->next;
+	}
+}
+// void parsing(t_shell *shell)
 // {
 // 	t_exec	*tmp;
 // 	t_token	*tokens;
@@ -78,79 +117,43 @@ void	handle_redirs(t_shell *shell)
 
 // 	i = 0;
 // 	tokens = shell->token;
-// 	tmp = (t_exec *)ft_calloc(1, sizeof(t_exec));
-// 	shell->exec = tmp;
-// 	tmp->args = (char **)ft_calloc(20, sizeof(char *));
-// 	handle_redirs(shell);
+// 	tmp = NULL;
 // 	while (tokens)
 // 	{
-// 		if ((tokens->type == REDIR_OUT || tokens->type == REDIR_IN
-// 				|| tokens->type == REDIR_APPEND || tokens->type == HERDOC)
-// 			&& tokens->next->type == CMD)
-// 			delete_one_token(&tokens);
 // 		if (tokens->type == CMD)
 // 		{
-// 			if (!tmp->cmd)
+// 			if (!tmp)
+// 			{
+// 				tmp = (t_exec *)ft_calloc(1, sizeof(t_exec));
+// 				shell->exec = tmp;
+// 				tmp->args = (char **)malloc(sizeof(char *) * 2);
+// 				// tmp->args[0] = ft_strdup(tmp->cmd);
+// 				// tmp->args[1] = NULL;
 // 				tmp->cmd = ft_strdup(tokens->content);
-// 			tmp->args[i] = ft_strdup(tokens->content);
-// 			tmp->type = tokens->type;
-// 			i++;
+// 				tmp->type = tokens->type;
+// 			}
+// 			else
+// 			{
+// 				tmp->next = (t_exec *)ft_calloc(1, sizeof(t_exec));
+// 				tmp = tmp->next;
+// 				tmp->args = (char **)malloc(sizeof(char *) * 2);
+// 				// tmp->args[0] = ft_strdup(tmp->cmd);
+// 				// tmp->args[1] = NULL;
+// 				tmp->cmd = ft_strdup(tokens->content);
+// 				tmp->type = tokens->type;
+// 			}
+// 			i = 0;
 // 		}
-// 		// printf("%s\n", tokens->content);
+// 		else if (tokens->type == PIPE)
+// 		{
+// 			pipe = 1;
+// 			i = 0;
+// 		}
+// 		// else if (tokens->type == CMD)
+// 		// {
+// 		// 	tmp->args[] = ft_strdup(tokens->content);
+// 		// 	i++;
+// 		// }
 // 		tokens = tokens->next;
 // 	}
-	
-// 	tmp->args[i] = NULL;
-// 	shell->exec = tmp;
-
 // }
-void parsing(t_shell *shell)
-{
-	t_exec	*tmp;
-	t_token	*tokens;
-	int		i;
-	int		pipe;
-
-	i = 0;
-	tokens = shell->token;
-	tmp = NULL;
-	pipe = 0;
-	while (tokens)
-	{
-		if (tokens->type == CMD)
-		{
-			if (!tmp)
-			{
-				tmp = (t_exec *)ft_calloc(1, sizeof(t_exec));
-				shell->exec = tmp;
-				tmp->args = (char **)malloc(sizeof(char *) * 2);
-				// tmp->args[0] = ft_strdup(tmp->cmd);
-				// tmp->args[1] = NULL;
-				tmp->cmd = ft_strdup(tokens->content);
-				tmp->type = tokens->type;
-			}
-			else
-			{
-				tmp->next = (t_exec *)ft_calloc(1, sizeof(t_exec));
-				tmp = tmp->next;
-				tmp->args = (char **)malloc(sizeof(char *) * 2);
-				// tmp->args[0] = ft_strdup(tmp->cmd);
-				// tmp->args[1] = NULL;
-				tmp->cmd = ft_strdup(tokens->content);
-				tmp->type = tokens->type;
-			}
-			i = 0;
-		}
-		else if (tokens->type == PIPE)
-		{
-			pipe = 1;
-			i = 0;
-		}
-		// else if (tokens->type == CMD)
-		// {
-		// 	tmp->args[] = ft_strdup(tokens->content);
-		// 	i++;
-		// }
-		tokens = tokens->next;
-	}
-}

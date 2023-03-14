@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 14:00:34 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/14 14:11:07 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ void close_all(int *fd, int size)
 
 void execute_command(t_shell *shell, t_exec *exec, char *path)
 {
-	exec->args[0] = ft_strdup(exec->cmd);
-	exec->args[1] = NULL;
 	if (execve(path, exec->args, shell->env_arr) == -1)
 	{
 		printf("minishell: %s: command not found\n", exec->args[0]);
@@ -111,7 +109,7 @@ void	run(t_shell *shell, t_exec *exec)
 {
     int i = 0;
     int j = 0;
-    int *fd = malloc(count_cmmds(exec) * sizeof(int) * 2);
+    int *fd = (int *)malloc(count_cmmds(exec) * sizeof(int) * 2);
     t_exec *tmp = exec;
 
     while (j < count_cmmds(exec) * 2)
