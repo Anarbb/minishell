@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:33:10 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 15:27:00 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/14 18:48:34 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,33 @@ int	is_cmd(char *cmd)
 	return (1);
 }
 
+void free_str_arr(char **str_arr)
+{
+    char **temp = str_arr;
+    while (*str_arr)
+    {
+        free(*str_arr);
+        str_arr++;
+    }
+    free(temp);
+}
+
 int	is_cmd_c(char c)
 {
 	char **strs;
+    char **temp;
 
 	strs = ft_split("|\n$\n<\n<<\n>>\n>\n\"\n\'\n*\n ", '\n');
+    temp = strs;
 	while (*strs)
 	{
 		if (ft_strchr(*strs, c))
+        {
+			free_str_arr(temp);
 			return (0);
-		free(*strs);
+        }
 		strs++;
 	}
+	free_str_arr(temp);
 	return (1);
 }

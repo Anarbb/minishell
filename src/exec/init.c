@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 18:11:52 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/14 18:41:38 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,10 +146,11 @@ void	run(t_shell *shell, t_exec *exec)
             execute_command(shell, tmp, path);
             exit(0);
         }
+		else
+			waitpid(pid, &shell->exit_status, 0);
         i++;
         j += 2;
         tmp = tmp->next;
     }
-    close_all(fd, count_cmmds(exec) * 2);
-    while (wait(NULL) != -1);
+    // close_all(fd, count_cmmds(exec) * 2);
 }

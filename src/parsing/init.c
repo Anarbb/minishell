@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 18:09:23 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/14 18:37:42 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,40 @@ int	find_path(t_shell *shell)
 	return (1);
 }
 
+char	*get_shlvl(t_shell *shell)
+{
+	char	*shlvl;
+	char	*shlvlc;
+	int		i;
+
+	i = 0;
+	shlvl = get_env(shell, "SHLVL");
+	if (shlvl == NULL)
+	{
+		shlvlc = ft_itoa(1);
+		set_env(shell, "SHLVL", shlvlc);
+		free(shlvlc);
+		return (ft_strdup("1"));
+	}
+	while (shlvl[i])
+	{
+		if (!ft_isdigit(shlvl[i]))
+			return (ft_strdup("1"));
+		i++;
+	}
+	return (ft_itoa(ft_atoi(shlvl) + 1));
+}
+
 void	init_shell(t_shell *shell, char **env)
 {
-	char *shlvlc;
-	int shlvl;
-
-	shlvl = 1;
+	char	*shlvl;
 	gvars = malloc(sizeof(int));
 	gvars->herdoc = 1;
 	shell->env_arr = env;
-	shlvlc = ft_itoa(shlvl);
 	init_env(shell);
 	if (!find_path(shell))
 		exit(0);
-	if (get_env(shell, "SHLVL") == NULL)
-		set_env(shell, "SHLVL", shlvlc);
-	else
-	{
-		shlvlc = ft_itoa(ft_atoi(get_env(shell, "SHLVL")) + 1);
-		set_env(shell, "SHLVL", shlvlc);
-	}
-	free(shlvlc);
+	shlvl = get_shlvl(shell);
+	set_env(shell, "SHLVL", shlvl);
+	free(shlvl);
 }
