@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/14 19:01:10 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/14 19:02:17 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,5 @@ void	expander(t_shell *shell, t_token *token)
 		token = token->next;
 	}
 	shell->token = new_tkn;
-	free_tokens(&new_tkn);
+	// free_tokens(&new_tkn);
 }

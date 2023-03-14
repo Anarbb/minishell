@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 18:59:32 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/14 19:04:33 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	parsing(t_shell *shell)
 			tmp->next = (t_exec *)ft_calloc(1, sizeof(t_exec));
 			tmp->next->prev = tmp;
 			tmp = tmp->next;
-			tmp->args = (char **)ft_calloc(20, sizeof(char *));
+			tmp->args = (char **)ft_calloc(count_cmds(tokens), sizeof(char *));
 			handle_redirs(shell, tokens);
 			i = 0;
 		}
