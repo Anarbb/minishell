@@ -1,0 +1,7 @@
+Makefile
+inc
+minishell
+minishell.c
+minishell.o
+src
+test
