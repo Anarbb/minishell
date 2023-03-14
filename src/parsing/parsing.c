@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 17:21:03 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/14 18:12:45 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,51 +107,3 @@ void	parsing(t_shell *shell)
 		tokens = tokens->next;
 	}
 }
-// void parsing(t_shell *shell)
-// {
-// 	t_exec	*tmp;
-// 	t_token	*tokens;
-// 	int		i;
-
-// 	i = 0;
-// 	tokens = shell->token;
-// 	tmp = NULL;
-// 	while (tokens)
-// 	{
-// 		if (tokens->type == CMD)
-// 		{
-// 			if (!tmp)
-// 			{
-// 				tmp = (t_exec *)ft_calloc(1, sizeof(t_exec));
-// 				shell->exec = tmp;
-// 				tmp->args = (char **)malloc(sizeof(char *) * 2);
-// 				// tmp->args[0] = ft_strdup(tmp->cmd);
-// 				// tmp->args[1] = NULL;
-// 				tmp->cmd = ft_strdup(tokens->content);
-// 				tmp->type = tokens->type;
-// 			}
-// 			else
-// 			{
-// 				tmp->next = (t_exec *)ft_calloc(1, sizeof(t_exec));
-// 				tmp = tmp->next;
-// 				tmp->args = (char **)malloc(sizeof(char *) * 2);
-// 				// tmp->args[0] = ft_strdup(tmp->cmd);
-// 				// tmp->args[1] = NULL;
-// 				tmp->cmd = ft_strdup(tokens->content);
-// 				tmp->type = tokens->type;
-// 			}
-// 			i = 0;
-// 		}
-// 		else if (tokens->type == PIPE)
-// 		{
-// 			pipe = 1;
-// 			i = 0;
-// 		}
-// 		// else if (tokens->type == CMD)
-// 		// {
-// 		// 	tmp->args[] = ft_strdup(tokens->content);
-// 		// 	i++;
-// 		// }
-// 		tokens = tokens->next;
-// 	}
-// }

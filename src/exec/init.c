@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 17:13:45 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/14 18:11:52 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,17 @@ char	*find_exec(t_shell *shell, char *cmd)
 }
 
 
+void close_all(int *fd, int size)
+{
+    int i;
+
+    i = 0;
+    while (i < size)
+    {
+        close(fd[i]);
+        i++;
+    }
+}
 int	count_cmmds(t_exec *exec)
 {
 	t_exec *tmp;
@@ -82,17 +93,6 @@ int	count_cmmds(t_exec *exec)
 	return(count);
 }
 
-void close_all(int *fd, int size)
-{
-    int i;
-
-    i = 0;
-    while (i < size)
-    {
-        close(fd[i]);
-        i++;
-    }
-}
 
 void execute_command(t_shell *shell, t_exec *exec, char *path)
 {
@@ -111,27 +111,34 @@ void	run(t_shell *shell, t_exec *exec)
     int j;
     int *fd;
     t_exec *tmp;
-	int		pid;
+
 	i = 0;
 	j = 0;
 	fd = (int *)malloc(count_cmmds(exec) * sizeof(int) * 2);
 	tmp = exec;
+	if (count_cmmds(exec) > 1)
+	{
     while (j < count_cmmds(exec) * 2)
     {
         pipe(&fd[j]);
         j += 2;
     }
+	}
     j = 0;
     while (tmp)
     {
-        pid = fork();
+        int pid = fork();
         if (pid == 0)
         {
             if (tmp->next)
+			{
 				exec->fd_out = fd[j + 1];
+			}
             if (j)
+			{
 				exec->fd_in = fd[j - 2];
-            dup2(exec->fd_out, 1);
+			}
+        	dup2(exec->fd_out, 1);
 			dup2(exec->fd_in, 0);
             close_all(fd, count_cmmds(exec) * 2);
 			char *path;
@@ -139,11 +146,10 @@ void	run(t_shell *shell, t_exec *exec)
             execute_command(shell, tmp, path);
             exit(0);
         }
-		else
-			waitpid(pid, &shell->exit_status, 0);
-		printf("%d\n", shell->exit_status);
         i++;
         j += 2;
         tmp = tmp->next;
     }
+    close_all(fd, count_cmmds(exec) * 2);
+    while (wait(NULL) != -1);
 }
