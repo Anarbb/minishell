@@ -51,6 +51,7 @@ SRCS        :=      minishell.c \
                         src/libft/ft_substr.c \
                         src/libft/ft_tolower.c \
                         src/libft/ft_toupper.c \
+                        src/libft/ft_realloc.c \
 					    src/parsing/init.c \
                         src/builtin/cd.c \
                         src/builtin/echo.c \
@@ -70,9 +71,9 @@ SRCS        :=      minishell.c \
                         src/builtin/unset.c \
                         src/utils/exec_utils.c \
                         src/parsing/parsing.c \
+                        src/utils/parsing_utils.c \
                         src/exec/execution.c \
                         src/exec/execution_utils.c \
-                        src/utils/parsing_utils.c \
                           
 OBJS        := $(SRCS:.c=.o)
 

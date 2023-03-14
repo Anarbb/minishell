@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 15:37:09 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/14 17:21:03 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,10 @@ int	checker(t_exec *tmp)
 		&& tmp->type != SPACE_MS);
 }
  
-void	handle_redirs(t_shell *shell)
+void	handle_redirs(t_shell *shell, t_token *tokens)
 {
 	int		fd;
-	t_token	*tokens;
 
-	tokens = shell->token;
 	while (tokens)
 	{
 		if (tokens->type == REDIR_OUT)
@@ -81,9 +79,10 @@ void	parsing(t_shell *shell)
 	tmp = (t_exec *)ft_calloc(1, sizeof(t_exec));
 	shell->exec = tmp;
 	tmp->args = (char **)ft_calloc(count_cmds(tokens) + 1, sizeof(char *));
-	handle_redirs(shell);
+	handle_redirs(shell, tokens);
 	while (tokens)
 	{
+		printf("token: %s, type: %d\n", tokens->content, tokens->type);
 		if ((tokens->type == REDIR_OUT || tokens->type == REDIR_IN
 				|| tokens->type == REDIR_APPEND || tokens->type == HERDOC)
 			&& tokens->next->type == CMD)
@@ -94,7 +93,7 @@ void	parsing(t_shell *shell)
 			tmp->next->prev = tmp;
 			tmp = tmp->next;
 			tmp->args = (char **)ft_calloc(20, sizeof(char *));
-			handle_redirs(shell);
+			handle_redirs(shell, tokens);
 			i = 0;
 		}
 		if (tokens->type == CMD)

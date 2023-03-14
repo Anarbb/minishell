@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:42:39 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 15:43:31 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/14 17:13:45 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	run(t_shell *shell, t_exec *exec)
     int j;
     int *fd;
     t_exec *tmp;
-
+	int		pid;
 	i = 0;
 	j = 0;
 	fd = (int *)malloc(count_cmmds(exec) * sizeof(int) * 2);
@@ -124,7 +124,7 @@ void	run(t_shell *shell, t_exec *exec)
     j = 0;
     while (tmp)
     {
-        int pid = fork();
+        pid = fork();
         if (pid == 0)
         {
             if (tmp->next)
@@ -139,10 +139,11 @@ void	run(t_shell *shell, t_exec *exec)
             execute_command(shell, tmp, path);
             exit(0);
         }
+		else
+			waitpid(pid, &shell->exit_status, 0);
+		printf("%d\n", shell->exit_status);
         i++;
         j += 2;
         tmp = tmp->next;
     }
-    close_all(fd, count_cmmds(exec) * 2);
-    while (wait(NULL) != -1);
 }

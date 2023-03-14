@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 15:36:40 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/14 17:14:01 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_shell
 	t_env			*env;
 	char			**tmp_env;
 	t_token			*token;
+
 }					t_shell;
 
 // parsing.init
