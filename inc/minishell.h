@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 18:56:28 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/14 21:02:17 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@
 # define BLINK "\033[5m"
 # define CLEAR_LINE "\033[A\033[K"
 # define EMPTY 1
+# define WITH_QUOTES 1
+# define WITHOUT_QUOTES 0
 # define CMD 2
 # define PIPE 4
 # define REDIR_OUT 8
@@ -61,6 +63,7 @@ typedef struct s_global
 {
 	int				herdoc;
 	int				exit_status;
+	int				inside_quotes;
 }					t_global;
 
 t_global			*gvars;
@@ -82,11 +85,11 @@ typedef struct s_env
 typedef struct s_exec
 {
 	//cmd: ls -all ..
-	char *cmd;   // ls
-	char **args; // "ls". "-all". ".."
-	int type;    // ls //cmd //arg | >> << ls w2odq
-	int fd_in;   // 0
-	int fd_out;  // 1
+	char 			*cmd;   // ls
+	char 			**args; // "ls". "-all". ".."
+	int 			type;    // ls //cmd //arg | >> << ls w2odq
+	int 			fd_in;   // 0
+	int 			fd_out;  // 1
 	char			*limiter;
 	struct s_exec	*next;
 	struct s_exec	*prev;
@@ -101,6 +104,7 @@ typedef struct s_shell
 	int				exit_status;
 	char			**path;
 	char			*line;
+	int				inside_quotes;
 	char			*cwd;
 	t_env			*env;
 	char			**tmp_env;
@@ -174,7 +178,7 @@ char				*get_env(t_shell *shell, char *key);
 void				ft_lstadd_back_env(t_env **alst, t_env *new);
 void				unset_env(t_shell *shell, char *key);
 // heredoc
-void				handle_heredoc(t_exec *exec, int fd);
+void				handle_heredoc(t_shell *shell, t_exec *exec, int fd);
 void				sig_handler(int signum);
 // debug
 void				my_printf(const char *format, ...);

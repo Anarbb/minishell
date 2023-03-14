@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 19:04:33 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/14 21:13:49 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ void	handle_redirs(t_shell *shell, t_token *tokens)
 			shell->exec->fd_in = open(tokens->next->content, O_RDONLY);
 		else if (tokens->type == HERDOC)
 		{
-			signal(SIGINT, NULL);
+			// signal(SIGINT, NULL);
 			fd = open(limiter_path(tokens->next->content), O_CREAT | O_RDWR, 0777);
 			if (fd == -1)
 				printf("minishell: error: heredoc\n");
 			shell->exec->limiter = ft_strdup(tokens->next->content);
-			handle_heredoc(shell->exec, fd);
+			handle_heredoc(shell, shell->exec, fd);
 		}
 		tokens = tokens->next;
 	}
@@ -75,6 +75,7 @@ void	parsing(t_shell *shell)
 	int		i;
 
 	i = 0;
+				printf("salm\n");
 	tokens = shell->token;
 	tmp = (t_exec *)ft_calloc(1, sizeof(t_exec));
 	shell->exec = tmp;
@@ -82,7 +83,7 @@ void	parsing(t_shell *shell)
 	handle_redirs(shell, tokens);
 	while (tokens)
 	{
-		// printf("token: %s, type: %d\n", tokens->content, tokens->type);
+		printf("token: %s, type: %d\n", tokens->content, tokens->type);
 		if ((tokens->type == REDIR_OUT || tokens->type == REDIR_IN
 				|| tokens->type == REDIR_APPEND || tokens->type == HERDOC)
 			&& tokens->next->type == CMD)

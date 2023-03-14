@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/12 18:32:02 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/14 21:16:36 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,12 @@ int	pipe_err(t_token *token, t_token *prev_tkn)
 int	redir_err(t_token *token)
 {
 	skip_space(&token);
+	if (token->type == DQUOTE || token->type == SQUOTE)
+		gvars->inside_quotes = WITH_QUOTES;
 	if (!token)
 		ft_putstr_fd("minishell: syntax error near unexpected \
 			token `newline'\n", STDERR_FILENO);
-	else if (token->type != CMD && token->type != DOLLAR)
+	else if (token->type != CMD && token->type != DOLLAR && token->type != DQUOTE && token->type != SQUOTE)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `" \
 			, STDERR_FILENO);

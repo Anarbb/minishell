@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/14 19:08:04 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/14 20:18:01 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,6 @@ void	expander(t_shell *shell, t_token *token)
 		}
 		token = token->next;
 	}
+	free(shell->token);
 	shell->token = new_tkn;
 }
-
-	// t_token *ptr = shell->token;
-	// while (ptr)
-	// {
-	// 	printf("content: %s, type: %d\n", ptr->content, ptr->type);
-	// 	ptr = ptr->next;
-	// }
