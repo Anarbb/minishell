@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:33:10 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 18:08:52 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/14 15:27:00 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	delete_one_token(t_token **prev)
 
 	current = (*prev)->next;
 	next = current->next;
-	free(current);
 	free(current->content);
+	free(current);
 	(*prev)->next = next;
 }
 void	add_token(t_shell *shell, char *str, int type)

@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 14:48:40 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/14 15:06:51 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,10 @@ void	parsing(t_shell *shell)
 	handle_redirs(shell);
 	while (tokens)
 	{
+		if ((tokens->type == REDIR_OUT || tokens->type == REDIR_IN
+				|| tokens->type == REDIR_APPEND || tokens->type == HERDOC)
+			&& tokens->next->type == CMD)
+			delete_one_token(&tokens);
 		if (tokens->type == PIPE)
 		{
 			tmp->next = (t_exec *)ft_calloc(1, sizeof(t_exec));
@@ -93,10 +97,6 @@ void	parsing(t_shell *shell)
 			handle_redirs(shell);
 			i = 0;
 		}
-		if ((tokens->type == REDIR_OUT || tokens->type == REDIR_IN
-				|| tokens->type == REDIR_APPEND || tokens->type == HERDOC)
-			&& tokens->next->type == CMD)
-			delete_one_token(&tokens);
 		if (tokens->type == CMD)
 		{
 			if (!tmp->cmd)
@@ -105,7 +105,6 @@ void	parsing(t_shell *shell)
 			tmp->type = tokens->type;
 			i++;
 		}
-		// printf("%s\n", tokens->content);
 		tokens = tokens->next;
 	}
 }
