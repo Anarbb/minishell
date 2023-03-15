@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 21:13:49 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/15 14:20:28 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void	handle_redirs(t_shell *shell, t_token *tokens)
 			if (fd == -1)
 				printf("minishell: error: heredoc\n");
 			shell->exec->limiter = ft_strdup(tokens->next->content);
-			handle_heredoc(shell, shell->exec, fd);
+			
+			// handle_heredoc(shell);
 		}
 		tokens = tokens->next;
 	}
@@ -75,15 +76,15 @@ void	parsing(t_shell *shell)
 	int		i;
 
 	i = 0;
-				printf("salm\n");
 	tokens = shell->token;
 	tmp = (t_exec *)ft_calloc(1, sizeof(t_exec));
+	tmp->fd_in = 0;
+	tmp->fd_out = 1;
 	shell->exec = tmp;
 	tmp->args = (char **)ft_calloc(count_cmds(tokens) + 1, sizeof(char *));
 	handle_redirs(shell, tokens);
 	while (tokens)
 	{
-		printf("token: %s, type: %d\n", tokens->content, tokens->type);
 		if ((tokens->type == REDIR_OUT || tokens->type == REDIR_IN
 				|| tokens->type == REDIR_APPEND || tokens->type == HERDOC)
 			&& tokens->next->type == CMD)

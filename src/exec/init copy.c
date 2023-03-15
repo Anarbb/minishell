@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/15 15:18:34 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/15 13:32:36 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,28 @@ char	*expand_heredoc(t_shell *shell, char *str, int j)
 	return (str);
 }
 
-void	handle_heredoc(t_shell *shell)
+void    handle_heredoc(t_shell *shell, int fd)
 {
-	int		fds[2];
-	char	*line;
+    pid_t   pid;
+    int fds[2];
+    char *line;
 
-	pipe(fds);
-	while (true)
-	{
-		line = readline("> ");
-		if (!line)
-			break ;
-		if (!ft_strcmp(line, shell->exec->limiter))
-		{
-			shell->exec->fd_in = fds[0];
-			free(line);
-			break ;
-		}
-		write(fds[1], line, ft_strlen(line));
-		write(fds[1], "\n", 1);
-		free(line);
-	}
-	close(fds[1]);
+    pipe(fds);
+    pid = fork();
+    while (pid == 0 && true)
+    {
+        line = readline("> ");
+        if (!line)
+            return ;
+        if (!ft_strcmp(line, shell->exec->limiter))
+        {
+            shell->exec->fd_in = fds[0];
+            free(line);
+            return ;
+        }
+        write(fds[1], &line, ft_strlen(line));
+    }
+    close(fds[1]);
 }
 
 char	*find_exec(t_shell *shell, char *cmd)
@@ -91,31 +91,7 @@ char	*find_exec(t_shell *shell, char *cmd)
 	return (NULL);
 }
 
-void	run(t_shell *shell)
+void    run(t_shell *shell)
 {
-	t_exec	*exec;
-	pid_t	pid;
-
-	exec = shell->exec;
-	while (exec != NULL)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			if (*shell->exec->limiter)
-				handle_heredoc(shell);
-			if (exec->fd_in != 0)
-				dup2(exec->fd_in, 0);
-			if (exec->fd_out != 1)
-				dup2(exec->fd_out, 1);
-			if (execve(find_exec(shell, exec->cmd), exec->args,
-					shell->env_arr) == -1)
-			{
-				printf("hey");
-				exit(EXIT_FAILURE);
-			}
-		}
-		waitpid(pid, NULL, 0);
-		exec = exec->next;
-	}
+    
 }

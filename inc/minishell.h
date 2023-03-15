@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 21:02:17 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/15 15:08:16 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,8 @@ int					is_redirection(int type);
 char				*find_exec(t_shell *shell, char *cmd);
 void				exec_cmd(t_shell *shell, t_exec *exec, char *path);
 void				parsing(t_shell *shell);
-void				pipe_handler(t_exec *exec);
-void				run(t_shell *shell, t_exec *exec);
+void				pipe_handler(t_shell *shell, t_exec *exec);
+void				run(t_shell *shell);
 //Execution.utils
 t_exec				*exec_new(char *tmp, int type);
 void				exec_add_b(t_shell *shell, char *tmp, int type);
@@ -178,7 +178,7 @@ char				*get_env(t_shell *shell, char *key);
 void				ft_lstadd_back_env(t_env **alst, t_env *new);
 void				unset_env(t_shell *shell, char *key);
 // heredoc
-void				handle_heredoc(t_shell *shell, t_exec *exec, int fd);
+void				handle_heredoc(t_shell *shell);
 void				sig_handler(int signum);
 // debug
 void				my_printf(const char *format, ...);

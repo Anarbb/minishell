@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 21:11:16 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/15 13:46:20 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int ac, char **av, char **env)
 		{
 			
 			parsing(shell);
-			run(shell, shell->exec);
+			run(shell);
 		}
 		free_all(shell);
 	}
