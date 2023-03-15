@@ -24,7 +24,6 @@ int	main(int ac, char **av, char **env)
 	{
 		init_signals();
 		shell->line = readline(GREEN "minishell[^,^]~> " RESET);
-		shell->exit_status = 0;
 		if (ft_lexer(shell) == SUCCESS)
 		{
 			parsing(shell);
