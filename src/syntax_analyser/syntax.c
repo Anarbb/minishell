@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/14 21:16:36 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/15 21:39:07 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ int	pipe_err(t_token *token, t_token *prev_tkn)
 	if (!prev_tkn || !token->next)
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n" \
 			, STDERR_FILENO);
-	else if (prev_tkn->type != CMD || (token->next->type != CMD
-			&& token->next->type != SPACE_MS
+	else if ((prev_tkn->type != CMD && prev_tkn->type != WC)
+		|| (token->next->type != CMD && token->next->type != WC
+			&& token->next->type != SPACE_MS 
 			&& !is_redirection(token->next->type)))
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n" \
 			, STDERR_FILENO);
@@ -69,7 +70,8 @@ int	redir_err(t_token *token)
 	if (!token)
 		ft_putstr_fd("minishell: syntax error near unexpected \
 			token `newline'\n", STDERR_FILENO);
-	else if (token->type != CMD && token->type != DOLLAR && token->type != DQUOTE && token->type != SQUOTE)
+	else if (token->type != CMD && token->type != DOLLAR && token->type != \
+		DQUOTE && token->type != SQUOTE && token->type != WC)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `" \
 			, STDERR_FILENO);

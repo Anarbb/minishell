@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 16:00:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/12 18:20:01 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/15 16:34:39 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,17 @@ void	sig_handler(int signum)
 	}
 }
 
-// void	sig_handl(int signum)
-// {
-// 	int fd[2];
+void	sig_handl(int signum)
+{
+	// int fd[2];
 
-// 	(void) signum;
-// 	pipe(fd);
-// 	dup2(fd[0], 0);
-// 	gvars->herdoc = 0;
-// 	write(fd[0], "\n", 1);
-// }
+	(void) signum;
+	gvars->herdoc = 0;
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	rl_replace_line("", 0);
+	// rl_on_new_line();
+	rl_redisplay();
+}
 
 void	control_d(char *line)
 {

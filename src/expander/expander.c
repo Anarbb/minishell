@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/14 20:18:01 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/15 21:39:22 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,33 @@ char	*after_dollar(t_shell *shell, char *str, char *tmp, int i)
 	return (tmp);
 }
 
+void	expand_wildcard(t_token **new_tkn, char *tmp)
+{
+	DIR				*dirp;
+	struct dirent	*direc_p;
+	dirp = opendir(getcwd(NULL, 0));
+	while ((direc_p = readdir(dirp)) != NULL)
+	{
+		if (ft_strncmp(direc_p->d_name, ".", 1))
+		{
+			tmp = ft_join(tmp, direc_p->d_name);
+			*new_tkn = create_token(*new_tkn, tmp, CMD);
+			tmp = NULL;
+			tmp = ft_strdup("");
+		}
+	}
+	closedir(dirp);
+}
+
 void	expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 {
-	char	*tmp;
+ 	char			*tmp;
 
 	tmp = ft_strdup("");
-	if ((*token)->type == DOLLAR && (*token)->next->type == CMD)
+ 		tmp = ft_strdup("");
+ 	if ((*token)->type == WC)
+ 		expand_wildcard(new_tkn, tmp);
+	else if ((*token)->type == DOLLAR && (*token)->next->type == CMD)
 	{
 		*token = (*token)->next;
 		tmp = after_dollar(shell, (*token)->content, tmp, 0);

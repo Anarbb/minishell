@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 20:50:24 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/15 17:23:42 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*get_shlvl(t_shell *shell)
 void	init_shell(t_shell *shell, char **env)
 {
 	char	*shlvl;
-	gvars = malloc(sizeof(int));
+	gvars = malloc(sizeof(t_global));
 	gvars->herdoc = 1;
 	gvars->inside_quotes = WITHOUT_QUOTES;
 	shell->env_arr = env;

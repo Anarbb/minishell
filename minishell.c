@@ -6,23 +6,11 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/15 13:46:20 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/15 21:17:59 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	my_printf(const char *format, ...)
-{
-	va_list	args;
-
-	printf("-->|");
-	va_start(args, format);
-	vprintf(format, args);
-	va_end(args);
-	printf("|<--\n");
-	fflush(stdout);
-}
 
 int	main(int ac, char **av, char **env)
 {
