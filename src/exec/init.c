@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/15 15:18:34 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/15 15:19:27 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,57 @@ void	run(t_shell *shell)
 		waitpid(pid, NULL, 0);
 		exec = exec->next;
 	}
+}
+char	*expand_heredoc(t_shell *shell, char *str, int j)
+{
+	char	*tmp;
+	char	*value;
+	char	**env;
+
+	env = shell->env_arr;
+	if (str[0] == '$')
+	{
+		j = 1;
+		if (ft_isalpha(str[j++]) || str[j++] == '_')
+			while (ft_isalnum(str[j]) || str[j] == '_')
+				(j)++;
+		tmp = ft_strdup(str + 1);
+		while (*env != NULL)
+		{
+			if (ft_strncmp(*env, tmp, j - 1) == 0 && (*env)[j - 1] == '=')
+			{
+				value = ft_strdup(*env + j);
+				return (value);
+			}
+			env++;
+		}
+	}
+	return (str);
+}
+
+void	handle_heredoc(t_shell *shell, t_exec *exec, int fd)
+{
+	char	*line;
+	pid_t	pid;
+
+	pid = fork();
+	while (1 && pid == 0)
+	{
+		gvars->herdoc = 0;
+		line = readline("> ");
+		signal(SIGINT, SIG_DFL);
+		if (line == NULL)
+			return ;
+		if (gvars->inside_quotes == WITHOUT_QUOTES)
+			line = expand_heredoc(shell, line, 0);
+		if (ft_strcmp(line, exec->limiter) == 0)
+		{
+			free(line);
+			return ;
+		}
+		ft_putstr_fd(line, fd);
+		ft_putchar_fd('\n', fd);
+	}
+	waitpid(pid, NULL, 0);
+	exec->fd_in = fd;
 }
