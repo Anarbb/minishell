@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:08:43 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 19:56:30 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/15 22:31:26 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	free_cmd(t_shell *shell)
 
 void	free_all(t_shell *shell)
 {
-	// free(shell->cwd);
 	free(shell->line);
 	exec_clear(&shell->exec);
 	free_tokens(&shell->token);

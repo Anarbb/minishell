@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 12:27:04 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 18:02:25 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/15 23:34:54 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,23 +93,3 @@ void	add_env(t_shell *shell, char *key, char *value)
 		ft_lstadd_back_env(&shell->env, new);
 }
 
-void	init_env(t_shell *shell)
-{
-	t_env	*new;
-	char	**tmp_env;
-
-	tmp_env = shell->env_arr;
-	while (*tmp_env)
-	{
-		new = (t_env *)malloc(sizeof(t_env));
-		new->var = ft_substr(*tmp_env, 0, ft_strchr(*tmp_env, '=') - *tmp_env);
-		new->value = ft_substr(*tmp_env,
-				ft_strchr(*tmp_env, '=') - *tmp_env + 1, ft_strlen(*tmp_env));
-		new->next = NULL;
-		if (shell->env == NULL)
-			shell->env = new;
-		else
-			ft_lstadd_back_env(&shell->env, new);
-		tmp_env++;
-	}
-}

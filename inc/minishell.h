@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/15 19:46:56 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/15 23:30:14 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <sys/ioctl.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <term.h>
 # include <termios.h>
 # include <unistd.h>
-#include <sys/ioctl.h>
 # define RESET "\033[0m"
 # define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
@@ -67,7 +67,7 @@ typedef struct s_global
 	char			*limiter_file;
 }					t_global;
 
-t_global			*gvars;
+t_global			*g_gvars;
 
 typedef struct s_token
 {
@@ -85,12 +85,11 @@ typedef struct s_env
 
 typedef struct s_exec
 {
-	//cmd: ls -all ..
-	char 			*cmd;   // ls
-	char 			**args; // "ls". "-all". ".."
-	int 			type;    // ls //cmd //arg | >> << ls w2odq
-	int 			fd_in;   // 0
-	int 			fd_out;  // 1
+	char			*cmd;
+	char			**args;
+	int				type;
+	int				fd_in;
+	int				fd_out;
 	char			*limiter;
 	struct s_exec	*next;
 	struct s_exec	*prev;
@@ -132,6 +131,7 @@ void				free_tokens(t_token **tokens);
 int					is_cmd_c(char c);
 void				delete_one_token(t_token **token);
 int					count_cmds(t_token *token);
+void				free_str_arr(char **str_arr);
 // builtins
 void				ft_cd(t_shell *shell, t_exec *exec);
 int					ft_echo(t_exec *exec);
@@ -144,7 +144,7 @@ void				init_signals(void);
 void				control_d(char *line);
 void				sig_handl(int signum);
 //Syntax.analyser
-int 				validate_syntax(t_token *token, t_token *prev_tkn);
+int					validate_syntax(t_token *token, t_token *prev_tkn);
 int					is_redirection(int type);
 //Execution
 char				*find_exec(t_shell *shell, char *cmd);
@@ -152,7 +152,8 @@ void				exec_cmd(t_shell *shell, t_exec *exec, char *path);
 void				parsing(t_shell *shell);
 int					**pipe_handler(t_exec *exec);
 void				run(t_shell *shell);
-int	count_cmmds(t_exec *exec);
+int					count_cmmds(t_exec *exec);
+void				execute_command(t_shell *shell, t_exec *exec, char *path);
 //Execution.utils
 t_exec				*exec_new(char *tmp, int type);
 void				exec_add_b(t_shell *shell, char *tmp, int type);
@@ -161,6 +162,7 @@ int					exec_size(t_exec *exec);
 void				exec_clear(t_exec **exec);
 char				*limiter_path(char *limiter);
 int					count_commands(t_exec *exec);
+void				close_all(int **fd, int nbr, t_exec *exec);
 //Expander
 void				expander(t_shell *shell, t_token *token);
 char				*ft_join(char *tmp, char *value);
@@ -180,8 +182,6 @@ char				*get_env(t_shell *shell, char *key);
 void				ft_lstadd_back_env(t_env **alst, t_env *new);
 void				unset_env(t_shell *shell, char *key);
 // heredoc
-void				handle_heredoc(t_shell *shell, int fd);
+int					handle_heredoc(t_shell *shell, int fd);
 void				sig_handler(int signum);
-// debug
-void				my_printf(const char *format, ...);
 #endif

@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:30:01 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 20:30:29 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/15 23:35:08 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,26 @@ void	exec_create(t_shell *shell, char *tmp, int type)
 		shell->exec = exec_new(tmp, type);
 	else
 		exec_add_b(shell, tmp, type);
+}
+
+
+void	init_env(t_shell *shell)
+{
+	t_env	*new;
+	char	**tmp_env;
+
+	tmp_env = shell->env_arr;
+	while (*tmp_env)
+	{
+		new = (t_env *)malloc(sizeof(t_env));
+		new->var = ft_substr(*tmp_env, 0, ft_strchr(*tmp_env, '=') - *tmp_env);
+		new->value = ft_substr(*tmp_env,
+			ft_strchr(*tmp_env, '=') - *tmp_env + 1, ft_strlen(*tmp_env));
+		new->next = NULL;
+		if (shell->env == NULL)
+			shell->env = new;
+		else
+			ft_lstadd_back_env(&shell->env, new);
+		tmp_env++;
+	}
 }

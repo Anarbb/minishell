@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/15 21:39:07 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/15 23:29:46 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,10 @@ int	pipe_err(t_token *token, t_token *prev_tkn)
 {
 	if (!prev_tkn || !token->next)
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n" \
-			, STDERR_FILENO);
+		, STDERR_FILENO);
 	else if ((prev_tkn->type != CMD && prev_tkn->type != WC)
-		|| (token->next->type != CMD && token->next->type != WC
-			&& token->next->type != SPACE_MS 
-			&& !is_redirection(token->next->type)))
+		|| (token->next->type != CMD && token->next->type != WC \
+		&& token->next->type != SPACE_MS && !is_redirection(token->next->type)))
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n" \
 			, STDERR_FILENO);
 	else
@@ -66,15 +65,16 @@ int	redir_err(t_token *token)
 {
 	skip_space(&token);
 	if (token->type == DQUOTE || token->type == SQUOTE)
-		gvars->inside_quotes = WITH_QUOTES;
+		g_gvars->inside_quotes = WITH_QUOTES;
 	if (!token)
 		ft_putstr_fd("minishell: syntax error near unexpected \
 			token `newline'\n", STDERR_FILENO);
-	else if (token->type != CMD && token->type != DOLLAR && token->type != \
-		DQUOTE && token->type != SQUOTE && token->type != WC)
+	else if (token->type != CMD && token->type != DOLLAR
+		&& token->type != DQUOTE && token->type != SQUOTE
+		&& token->type != WC)
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `" \
-			, STDERR_FILENO);
+		ft_putstr_fd("minishell: syntax error near unexpected token `", \
+						STDERR_FILENO);
 		ft_putstr_fd(token->content, STDERR_FILENO);
 		ft_putstr_fd("'\n", STDERR_FILENO);
 	}

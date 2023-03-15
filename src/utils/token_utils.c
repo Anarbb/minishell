@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:33:10 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 18:48:34 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/15 22:31:12 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,6 @@ t_token	*create_token(t_token *token, char *cmd, int type)
 	return (token);
 }
 
-void	delete_one_token(t_token **prev)
-{
-	t_token	*current;
-	t_token	*next;
-
-	current = (*prev)->next;
-	next = current->next;
-	free(current->content);
-	free(current);
-	(*prev)->next = next;
-}
 void	add_token(t_shell *shell, char *str, int type)
 {
 	if (!shell->token)
@@ -68,44 +57,15 @@ void	add_token(t_shell *shell, char *str, int type)
 		token_add_b(shell->token, token_new(str, type));
 }
 
-int	is_cmd(char *cmd)
+void	free_str_arr(char **str_arr)
 {
-	while (!ft_isspace(*cmd) && *cmd)
+	char	**temp;
+
+	temp = str_arr;
+	while (*str_arr)
 	{
-		if (ft_strchr("| $ < << >> > \" \' *", *cmd))
-			return (0);
-		cmd++;
+		free(*str_arr);
+		str_arr++;
 	}
-	return (1);
-}
-
-void free_str_arr(char **str_arr)
-{
-    char **temp = str_arr;
-    while (*str_arr)
-    {
-        free(*str_arr);
-        str_arr++;
-    }
-    free(temp);
-}
-
-int	is_cmd_c(char c)
-{
-	char **strs;
-    char **temp;
-
-	strs = ft_split("|\n$\n<\n<<\n>>\n>\n\"\n\'\n*\n ", '\n');
-    temp = strs;
-	while (*strs)
-	{
-		if (ft_strchr(*strs, c))
-        {
-			free_str_arr(temp);
-			return (0);
-        }
-		strs++;
-	}
-	free_str_arr(temp);
-	return (1);
+	free(temp);
 }

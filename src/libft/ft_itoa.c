@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 10:08:56 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/02/11 17:54:58 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/15 22:34:34 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_itoa(int n)
 {
 	char	*str;
 	int		len;
-	
+
 	if (n == -2147483648)
 		return (ft_strdup("-2147483648"));
 	len = ft_getintlen(n);

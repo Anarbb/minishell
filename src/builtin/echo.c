@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 20:07:55 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/12 18:04:53 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/15 22:28:19 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 // echo with the -n option that bahaves like the echo command in bash
 int	ft_echo(t_exec *exec)
 {
@@ -33,5 +34,5 @@ int	ft_echo(t_exec *exec)
 	}
 	if (!n)
 		ft_putchar_fd('\n', 1);
-	return (0);	
+	return (0);
 }

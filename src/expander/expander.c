@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/15 21:39:22 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/15 23:32:26 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	expand_wildcard(t_token **new_tkn, char *tmp)
 {
 	DIR				*dirp;
 	struct dirent	*direc_p;
+
 	dirp = opendir(getcwd(NULL, 0));
 	while ((direc_p = readdir(dirp)) != NULL)
 	{
@@ -63,12 +64,12 @@ void	expand_wildcard(t_token **new_tkn, char *tmp)
 
 void	expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 {
- 	char			*tmp;
+	char	*tmp;
 
 	tmp = ft_strdup("");
- 		tmp = ft_strdup("");
- 	if ((*token)->type == WC)
- 		expand_wildcard(new_tkn, tmp);
+	tmp = ft_strdup("");
+	if ((*token)->type == WC)
+		expand_wildcard(new_tkn, tmp);
 	else if ((*token)->type == DOLLAR && (*token)->next->type == CMD)
 	{
 		*token = (*token)->next;
