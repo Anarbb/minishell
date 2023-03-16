@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 14:54:20 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:20:44 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,23 +89,26 @@ void	run(t_shell *shell)
 	int		j;
 	int		**pipefd;
 
+	tmp = shell->exec;
 	j = count_commands(shell->exec);
 	if (shell->exec->limiter)
 		shell->exec->fd_in = open(g_gvars->limiter_file, O_CREAT | O_RDWR, 0777);
-	if (!shell->exec->next)
+	if (!tmp->next)
 	{
-		execute_single_cmd(shell->exec, shell);
+		printf("fd_in: %d, fd_out: %d", tmp->fd_in, tmp->fd_out);
+		execute_single_cmd(tmp, shell);
 		return ;
 	}
 	pipefd = malloc(sizeof(int) * (j - 1));
 	if (!pipefd)
 		exit(1);
 	pipefd = pipe_handler(shell->exec);
-	tmp = shell->exec;
+	
 	while (tmp)
 	{
 		if (tmp->cmd == NULL)
 			return ;
+		// printf("fd_in: %d, fd_out: %d", tmp->fd_in, tmp->fd_out);
 		execute(shell, tmp, pipefd, j);
 		tmp = tmp->next;
 	}

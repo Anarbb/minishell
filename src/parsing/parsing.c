@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/16 14:49:18 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 15:23:18 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,15 @@ void	parsing(t_shell *shell)
 	t_exec	*tmp;
 	t_token	*tokens;
 	int		i;
-	int cmd_count;
 
 	i = 0;
 	tokens = shell->token;
-	cmd_count = count_cmds(tokens);
 	tmp = exec_new(NULL, 0);
 	shell->exec = tmp;
-	tmp->args = (char **)ft_calloc(cmd_count + 1, sizeof(char *));
-	handle_redirs(shell, tokens, tmp);
+	tmp->args = (char **)ft_calloc(count_cmds(tokens) + 1, sizeof(char *));
 	while (tokens)
 	{
+		handle_redirs(shell, tokens, tmp);
 		if ((tokens->type == REDIR_OUT || tokens->type == REDIR_IN
 				|| tokens->type == REDIR_APPEND || tokens->type == HERDOC)
 			&& tokens->next->type == CMD)
@@ -86,7 +84,7 @@ void	parsing(t_shell *shell)
 			tmp->next = exec_new(NULL, 0);
 			tmp->next->prev = tmp;
 			tmp = tmp->next;
-			tmp->args = (char **)ft_calloc(cmd_count + 1,
+			tmp->args = (char **)ft_calloc(count_cmds(tokens) + 1,
 					sizeof(char *));
 			handle_redirs(shell, tokens, tmp);
 			i = 0;
@@ -97,7 +95,9 @@ void	parsing(t_shell *shell)
 				tmp->cmd = ft_strdup(tokens->content);
 			tmp->args[i] = ft_strdup(tokens->content);
 			tmp->type = tokens->type;
+			i++;
 		}
+		tmp->args[i] = NULL;
 		tokens = tokens->next;
 	}
 }
