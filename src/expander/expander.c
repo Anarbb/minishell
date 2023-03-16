@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/15 23:32:26 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 18:53:30 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*after_dollar(t_shell *shell, char *str, char *tmp, int i)
 		i++;
 	else if (str[i] == '?')
 	{
-		tmp = ft_join(tmp, ft_itoa(shell->exit_status));
+		tmp = ft_join(tmp, ft_itoa((uint8_t)shell->exit_status));
 		i++;
 	}
 	while (i < len)
@@ -67,16 +67,19 @@ void	expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 	char	*tmp;
 
 	tmp = ft_strdup("");
-	tmp = ft_strdup("");
 	if ((*token)->type == WC)
 		expand_wildcard(new_tkn, tmp);
-	else if ((*token)->type == DOLLAR && (*token)->next->type == CMD)
+		
+	else if ((*token)->type == DOLLAR && (*token)->next)
 	{
+		if ((*token)->next->type == CMD)
+		{	
 		*token = (*token)->next;
 		tmp = after_dollar(shell, (*token)->content, tmp, 0);
 		*new_tkn = create_token(*new_tkn, tmp, CMD);
+		}	
 	}
-	else if ((*token)->type == CMD)
+	else if ((*token)->type == CMD || (*token)->type == DOLLAR)
 	{
 		tmp = ft_join(tmp, (*token)->content);
 		*new_tkn = create_token(*new_tkn, tmp, CMD);

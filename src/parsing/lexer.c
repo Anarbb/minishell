@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/15 22:26:20 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 22:12:56 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_lexer(t_shell *shell)
 	{
 		add_history(shell->line);
 		parse_ops(shell);
-		if (!validate_syntax(shell->token, prev_tkn))
+		if (!validate_syntax(shell, shell->token, prev_tkn))
 		{
 			expander(shell, shell->token);
 			return (SUCCESS);

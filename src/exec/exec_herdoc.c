@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:11:52 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 16:28:40 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 22:44:48 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ int	handle_heredoc(t_shell *shell, t_exec *exec, int fd)
 	{
 		signal(SIGINT, sig_herdoc);
 		line = readline("> ");
-		if (g_gvars->herdoc == 0)
-			return (g_gvars->herdoc = 1, exec->limiter = NULL, free(line), \
+		if (g_sigflag == 0)
+			return (g_sigflag = 1, exec->limiter = NULL, free(line), \
 				signal(SIGINT, sig_handler), 1);
 		if (line == NULL)
 			return (close(fd), 0);
-		if (g_gvars->inside_quotes == WITHOUT_QUOTES)
+		if (shell->inside_quotes == WITHOUT_QUOTES)
 			line = expand_heredoc(shell, line, 0);
 		if (ft_strcmp(line, exec->limiter) == 0)
 		{

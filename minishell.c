@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/16 12:25:27 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/16 20:27:26 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ int	main(int ac, char **av, char **env)
 		shell->line = readline(GREEN "minishell[^,^]~> " RESET);
 		if (ft_lexer(shell) == SUCCESS)
 		{
-			parsing(shell);
-			run(shell);
+			if (parsing(shell) == SUCCESS)
+				run(shell);
+			// printf("%d\n", shell->exit_status);
 		}
 		free_all(shell);
 	}

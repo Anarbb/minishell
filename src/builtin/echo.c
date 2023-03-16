@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 20:07:55 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 15:48:13 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 20:56:22 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ int	ft_echo(t_exec *exec)
 		if (args[i][j] == '\0')
 		{
 			new_line = 0;
-			i++;
 		}
+		else
+			break;
+		i++;
 	}
 	while (args[i])
 	{

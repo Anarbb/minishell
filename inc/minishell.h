@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/16 17:32:43 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/16 22:44:07 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@
 # define UNDERLINE "\033[4m"
 # define BLINK "\033[5m"
 # define CLEAR_LINE "\033[A\033[K"
-# define EMPTY 1
-# define WITH_QUOTES 1
-# define WITHOUT_QUOTES 0
+# define FORK 100
+# define WITH_QUOTES 3
+# define WITHOUT_QUOTES 5
 # define CMD 2
 # define PIPE 4
 # define REDIR_OUT 8
@@ -59,15 +59,7 @@
 # define SUCCESS 0
 # define FAILURE 1
 
-typedef struct s_global
-{
-	int				herdoc;
-	int				exit_status;
-	int				inside_quotes;
-	char			*limiter_file;
-}					t_global;
-
-t_global			*g_gvars;
+int				g_sigflag;
 
 typedef struct s_token
 {
@@ -91,6 +83,7 @@ typedef struct s_exec
 	int				fd_in;
 	int				fd_out;
 	char			*limiter;
+	int				inside_quotes;
 	struct s_exec	*next;
 	struct s_exec	*prev;
 }					t_exec;
@@ -108,6 +101,7 @@ typedef struct s_shell
 	char			*cwd;
 	t_env			*env;
 	char			**tmp_env;
+	char			*limiter;
 	t_token			*token;
 
 }					t_shell;
@@ -145,12 +139,12 @@ void				control_d(char *line);
 void				sig_handl(int signum);
 void				sig_herdoc(int signum);
 //Syntax.analyser
-int					validate_syntax(t_token *token, t_token *prev_tkn);
+int					validate_syntax(t_shell *shell, t_token *token, t_token *prev_tkn);
 int					is_redirection(int type);
 //Execution
 char				*find_exec(t_shell *shell, char *cmd);
 void				exec_cmd(t_shell *shell, t_exec *exec, char *path);
-void				parsing(t_shell *shell);
+int					parsing(t_shell *shell);
 int					**pipe_handler(t_exec *exec);
 void				run(t_shell *shell);
 int					count_cmmds(t_exec *exec);
@@ -161,7 +155,7 @@ void				exec_add_b(t_shell *shell, char *tmp, int type);
 void				exec_create(t_shell *shell, char *tmp, int type);
 int					exec_size(t_exec *exec);
 void				exec_clear(t_exec **exec);
-char				*limiter_path(char *limiter);
+char				*limiter_path(char *limiter, t_shell *shell);
 int					count_commands(t_exec *exec);
 void				close_all(int **fd, int nbr, t_exec *exec);
 //Expander

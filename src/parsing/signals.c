@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 16:00:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 16:29:43 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 22:44:48 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	sig_handler(int signum)
 {
-	if (signum == SIGINT && g_gvars->herdoc == 1)
+	if (signum == SIGINT && g_sigflag == 1)
 	{
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
@@ -26,7 +26,7 @@ void	sig_handler(int signum)
 void	sig_herdoc(int signum)
 {
 	(void)signum;
-	g_gvars->herdoc = 0;
+	g_sigflag = 0;
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_replace_line("", 0);
 	rl_redisplay();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 17:36:16 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/16 22:44:48 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,28 @@ char	*find_exec(t_shell *shell, char *cmd)
 	return (NULL);
 }
 
+int	execute_Fbuiltins(t_exec *exec, t_shell *shell)
+{
+	if (ft_strcmp(exec->cmd, "cd") == 0)
+		ft_cd(shell, exec);
+	else if (ft_strcmp(exec->cmd, "echo") == 0)
+		ft_echo(exec);
+	else if (ft_strcmp(exec->cmd, "export") == 0)
+		ft_export(shell, exec);
+	else if (ft_strcmp(exec->cmd, "unset") == 0)
+		ft_unset(shell);
+	else if (ft_strcmp(exec->cmd, "env") == 0)
+		ft_env(shell);
+	else if (ft_strcmp(exec->cmd, "exit") == 0)
+		ft_exit(shell);
+	else
+		return (FAILURE);
+	return (SUCCESS);
+}
+
 int	execute_builtins(t_exec *exec, t_shell *shell)
 {
-	if (exec->fd_in != 0 || exec->fd_out != 1 || exec->next)
+	if (!(exec->fd_in != 0 || exec->fd_out != 1 || exec->next))
 	{
 		if (ft_strcmp(exec->cmd, "cd") == 0)
 			ft_cd(shell, exec);
@@ -58,14 +77,13 @@ int	execute_builtins(t_exec *exec, t_shell *shell)
 			ft_exit(shell);
 		else
 			return (FAILURE);
-		return (SUCCESS);
 	}
 	else
-		// printf("halaa\n");
-	return (FAILURE);
+		return (FORK);
+	return (SUCCESS);
 }
 
-void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j)
+void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j, pid_t **pids, int *pid_idx)
 {
 	pid_t	pid;
 	char	*path;
@@ -75,23 +93,24 @@ void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j)
 	else
 		path = find_exec(shell, exec->cmd);
 	if (exec->limiter)
-		exec->fd_in = open(g_gvars->limiter_file, O_CREAT | O_RDWR, 0777);
+		exec->fd_in = open(shell->limiter, O_CREAT | O_RDWR, 0777);
 	signal(SIGQUIT, sig_handl);
 	signal(SIGINT, sig_handl);
 	pid = fork();
+	*pids[*pid_idx++] = pid;
 	if (pid == -1)
 		exit(3);
 	if (pid == 0)
 	{
-		g_gvars->herdoc = 0;
+		g_sigflag = 0;
 		dup2(exec->fd_in, 0);
 		dup2(exec->fd_out, 1);
 		close_all(pipefd, j - 1, shell->exec);
-		if (execute_builtins(exec, shell) == FAILURE)
+		if (execute_Fbuiltins(exec, shell) == FAILURE)
 			execute_command(shell, exec, path);
 		exit(EXIT_FAILURE);
 	}
-	g_gvars->herdoc = 1;
+	g_sigflag = 1;
 }
 
 void	run(t_shell *shell)
@@ -99,9 +118,13 @@ void	run(t_shell *shell)
 	t_exec	*tmp;
 	int		j;
 	int		**pipefd;
+	pid_t	*pids;
+	int		pid_idx;
 
 	tmp = shell->exec;
 	j = count_commands(shell->exec);
+	pids = (pid_t *)ft_calloc(j, sizeof(pid_t));
+	pid_idx = 0;
 	pipefd = malloc(sizeof(int) * (j - 1));
 	if (!pipefd)
 		exit(1);
@@ -110,11 +133,14 @@ void	run(t_shell *shell)
 	{
 		if (tmp->cmd == NULL)
 			return ;
-		// if (execute_builtins(tmp, shell) == PIPE)
-			execute(shell, tmp, pipefd, j);
+		if (execute_builtins(tmp, shell) != SUCCESS)
+			execute(shell, tmp, pipefd, j, &pids, &pid_idx);
 		tmp = tmp->next;
 	}
 	close_all(pipefd, j - 1, shell->exec);
-	while (wait(NULL) != -1)
-		;
+	while (pid_idx >= 0)
+	{
+		waitpid(pids[pid_idx], &shell->exit_status, 0);
+		pid_idx--;
+	}
 }

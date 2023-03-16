@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 17:21:34 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 22:13:24 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ int	pipe_err(t_token *token, t_token *prev_tkn)
 	return (FAILURE);
 }
 
-int	redir_err(t_token *token)
+int	redir_err(t_shell *shell, t_token *token)
 {
 	skip_space(&token);
 	if (token->type == DQUOTE || token->type == SQUOTE)
-		g_gvars->inside_quotes = WITH_QUOTES;
+		shell->inside_quotes = WITH_QUOTES;
 	if (!token)
 		ft_putstr_fd("minishell: syntax error near unexpected \
 			token `newline'\n", STDERR_FILENO);
@@ -83,7 +83,7 @@ int	redir_err(t_token *token)
 	return (FAILURE);
 }
 
-int	validate_syntax(t_token *token, t_token *prev_tkn)
+int	validate_syntax(t_shell *shell, t_token *token, t_token *prev_tkn)
 {
 	while (token)
 	{
@@ -102,7 +102,7 @@ int	validate_syntax(t_token *token, t_token *prev_tkn)
 		}
 		else if (is_redirection(token->type))
 		{
-			if (redir_err(token->next) == FAILURE)
+			if (redir_err(shell, token->next) == FAILURE)
 				return (FAILURE);
 		}
 		prev_tkn = token;

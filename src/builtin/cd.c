@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/14 18:22:58 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 20:30:14 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ void	ft_cd(t_shell *shell, t_exec *exec)
 	}
 	else if (chdir(exec->args[1]) == -1)
 	{
-		ft_putstr_fd("cd: no such file or directory: ", 2);
-		ft_putendl_fd(exec->args[1], 2);
+		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd(exec->args[1], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		return ;
 	}
 	else

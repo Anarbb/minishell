@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 12:27:04 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/15 23:34:54 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 18:53:20 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	unset_env(t_shell *shell, char *key)
 			else
 				prev->next = tmp->next;
 			free(tmp->var);
-			free(tmp->value);
+			// free(tmp->value);
 			free(tmp);
 			return ;
 		}
