@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/15 23:29:46 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 12:03:45 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,7 @@ void	parsing(t_shell *shell)
 
 	i = 0;
 	tokens = shell->token;
-	tmp = (t_exec *)ft_calloc(1, sizeof(t_exec));
-	tmp->fd_in = 0;
-	tmp->fd_out = 1;
+	tmp = exec_new(NULL, 0);
 	shell->exec = tmp;
 	tmp->args = (char **)ft_calloc(count_cmds(tokens) + 1, sizeof(char *));
 	handle_redirs(shell, tokens);
@@ -87,9 +85,7 @@ void	parsing(t_shell *shell)
 			delete_one_token(&tokens);
 		if (tokens->type == PIPE)
 		{
-			tmp->next = (t_exec *)ft_calloc(1, sizeof(t_exec));
-			tmp->fd_in = 0;
-			tmp->fd_out = 1;
+			tmp->next = exec_new(NULL, 0);
 			tmp->next->prev = tmp;
 			tmp = tmp->next;
 			tmp->args = (char **)ft_calloc(count_cmds(tokens) + 1,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/15 23:34:09 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 13:16:04 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	execute_single_cmd(t_exec *tmp, t_shell *shell)
 		execute_command(shell, tmp, path);
 		exit(EXIT_FAILURE);
 	}
-	waitpid(-1, 0, 0);
+	waitpid(pid, 0, 0);
 }
 
 void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j)
@@ -80,6 +80,7 @@ void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j)
 		execute_command(shell, exec, path);
 		exit(EXIT_FAILURE);
 	}
+	
 }
 
 void	run(t_shell *shell)
@@ -109,6 +110,6 @@ void	run(t_shell *shell)
 		tmp = tmp->next;
 	}
 	close_all(pipefd, j - 1, tmp);
-	while (wait(NULL) != -1)
-		;
+	
+
 }
