@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 17:17:03 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 17:36:16 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	execute_builtins(t_exec *exec, t_shell *shell)
 		return (SUCCESS);
 	}
 	else
-		printf("halaa\n");
+		// printf("halaa\n");
 	return (FAILURE);
 }
 
@@ -70,9 +70,12 @@ void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j)
 	pid_t	pid;
 	char	*path;
 
-	path = find_exec(shell, exec->cmd);
+	if (exec->cmd[0] == '/' || exec->cmd[0] == '.')
+		path = ft_strdup(exec->cmd);
+	else
+		path = find_exec(shell, exec->cmd);
 	if (exec->limiter)
-			exec->fd_in = open(g_gvars->limiter_file, O_CREAT | O_RDWR, 0777);
+		exec->fd_in = open(g_gvars->limiter_file, O_CREAT | O_RDWR, 0777);
 	signal(SIGQUIT, sig_handl);
 	signal(SIGINT, sig_handl);
 	pid = fork();
