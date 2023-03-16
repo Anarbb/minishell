@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 20:07:55 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 12:58:01 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:48:13 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_echo(t_exec *exec)
 	i = 1;
 	new_line = 1;
 	args = exec->args;
-	if (args[i] && args[i][0] == '-' && args[i][1] == 'n')
+	while (args[i] && args[i][0] == '-' && args[i][1] == 'n')
 	{
 		int j = 1;
 		while (args[i][j] == 'n')

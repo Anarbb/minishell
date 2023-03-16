@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 15:46:23 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 15:49:04 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j)
 	char	*path;
 
 	path = find_exec(shell, exec->cmd);
+	if (exec->limiter)
+			exec->fd_in = open(g_gvars->limiter_file, O_CREAT | O_RDWR, 0777);
 	pid = fork();
 	if (pid == -1)
 		exit(3);
@@ -99,8 +101,6 @@ void	run(t_shell *shell)
 	{
 		if (tmp->cmd == NULL)
 			return ;
-		if (tmp->limiter)
-			tmp->fd_in = open(g_gvars->limiter_file, O_CREAT | O_RDWR, 0777);
 		// printf("cmd: %s, fd_in: %d, fd_out: %d\n", tmp->cmd, tmp->fd_in, tmp->fd_out);
 		execute(shell, tmp, pipefd, j);
 		tmp = tmp->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_herdoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:11:52 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 15:28:10 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:52:21 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ int	handle_heredoc(t_shell *shell, t_exec *exec, int fd)
 		signal(SIGINT, sig_handl);
 		line = readline("> ");
 		if (g_gvars->herdoc == 0)
-			return (g_gvars->herdoc = 1, free(line), \
-				signal(SIGINT, sig_handler),
-				1);
+			return (g_gvars->herdoc = 1, exec->limiter = NULL, free(line), \
+				signal(SIGINT, sig_handler), 1);
 		if (line == NULL)
 			return (close(fd), 0);
 		if (g_gvars->inside_quotes == WITHOUT_QUOTES)
