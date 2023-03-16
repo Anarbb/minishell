@@ -3,36 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 20:07:55 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/15 22:28:19 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 12:58:01 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// echo with the -n option that bahaves like the echo command in bash
 int	ft_echo(t_exec *exec)
 {
-	int	i;
-	int	n;
+	int		i;
+	int		new_line;
+	char	**args;
 
 	i = 1;
-	n = 0;
-	if (exec->args[1] && ft_strcmp(exec->args[1], "-n") == 0)
+	new_line = 1;
+	args = exec->args;
+	if (args[i] && args[i][0] == '-' && args[i][1] == 'n')
 	{
-		n = 1;
+		int j = 1;
+		while (args[i][j] == 'n')
+			j++;
+		if (args[i][j] == '\0')
+		{
+			new_line = 0;
+			i++;
+		}
+	}
+	while (args[i])
+	{
+		ft_putstr_fd(args[i], 1);
+		if (args[i + 1])
+			write(1, " ", 1);
 		i++;
 	}
-	while (exec->args[i])
-	{
-		ft_putstr_fd(exec->args[i], 1);
-		if (exec->args[i + 1])
-			ft_putchar_fd(' ', 1);
-		i++;
-	}
-	if (!n)
-		ft_putchar_fd('\n', 1);
+	if (new_line)
+		write(1, "\n", 1);
 	return (0);
 }

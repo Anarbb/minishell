@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 13:34:38 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 14:48:51 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	execute_single_cmd(t_exec *tmp, t_shell *shell)
 		execute_command(shell, tmp, path);
 		exit(EXIT_FAILURE);
 	}
-	waitpid(-1, 0, 0);
+	waitpid(pid, 0, 0);
 }
 
 void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j)
@@ -80,6 +80,7 @@ void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j)
 		execute_command(shell, exec, path);
 		exit(EXIT_FAILURE);
 	}
+	
 }
 
 void	run(t_shell *shell)
