@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_herdoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:11:52 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/15 23:33:55 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 15:28:10 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ char	*expand_heredoc(t_shell *shell, char *str, int j)
 	return (str);
 }
 
-int	handle_heredoc(t_shell *shell, int fd)
+int	handle_heredoc(t_shell *shell, t_exec *exec, int fd)
 {
 	char	*line;
 
-	shell->exec->fd_in = fd;
+	exec->fd_in = fd;
 	while (1)
 	{
 		signal(SIGINT, sig_handl);
@@ -56,7 +56,7 @@ int	handle_heredoc(t_shell *shell, int fd)
 			return (close(fd), 0);
 		if (g_gvars->inside_quotes == WITHOUT_QUOTES)
 			line = expand_heredoc(shell, line, 0);
-		if (ft_strcmp(line, shell->exec->limiter) == 0)
+		if (ft_strcmp(line, exec->limiter) == 0)
 		{
 			free(line);
 			break ;

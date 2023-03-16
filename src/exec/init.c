@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 15:20:44 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:36:40 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	run(t_shell *shell)
 		shell->exec->fd_in = open(g_gvars->limiter_file, O_CREAT | O_RDWR, 0777);
 	if (!tmp->next)
 	{
-		printf("fd_in: %d, fd_out: %d", tmp->fd_in, tmp->fd_out);
+		// printf("fd_in: %d, fd_out: %d", tmp->fd_in, tmp->fd_out);
 		execute_single_cmd(tmp, shell);
 		return ;
 	}
@@ -108,7 +108,7 @@ void	run(t_shell *shell)
 	{
 		if (tmp->cmd == NULL)
 			return ;
-		// printf("fd_in: %d, fd_out: %d", tmp->fd_in, tmp->fd_out);
+		// printf("cmd: %s, fd_in: %d, fd_out: %d\n", tmp->cmd, tmp->fd_in, tmp->fd_out);
 		execute(shell, tmp, pipefd, j);
 		tmp = tmp->next;
 	}

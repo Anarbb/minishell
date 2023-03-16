@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/15 23:30:14 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 15:28:43 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,6 @@ char				*get_env(t_shell *shell, char *key);
 void				ft_lstadd_back_env(t_env **alst, t_env *new);
 void				unset_env(t_shell *shell, char *key);
 // heredoc
-int					handle_heredoc(t_shell *shell, int fd);
+int					handle_heredoc(t_shell *shell, t_exec *exec, int fd);
 void				sig_handler(int signum);
 #endif
