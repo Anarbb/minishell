@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 14:48:51 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 14:54:20 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ void	run(t_shell *shell)
 	{
 		if (tmp->cmd == NULL)
 			return ;
-		printf("in %d,out %d\n",tmp->fd_in,tmp->fd_out);
 		execute(shell, tmp, pipefd, j);
 		tmp = tmp->next;
 	}
