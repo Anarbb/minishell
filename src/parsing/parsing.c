@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/15 23:29:46 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 13:57:10 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,30 +38,26 @@ int	checker(t_exec *tmp)
 		&& tmp->type != SPACE_MS);
 }
 
-void	handle_redirs(t_shell *shell, t_token *tokens)
+void	handle_redirs(t_shell *shell, t_token *tokens, t_exec *exec)
 {
 	int	fd;
 
-	while (tokens)
+	if (tokens->type == REDIR_OUT)
+		exec->fd_out = open(tokens->next->content, \
+		O_RDWR | O_CREAT | O_CLOEXEC | O_TRUNC, 0664);
+	if (tokens->type == REDIR_APPEND)
+		exec->fd_out = open(tokens->next->content, \
+		O_RDWR | O_CREAT | O_CLOEXEC | O_APPEND, 0664);
+	if (tokens->type == REDIR_IN)
+		exec->fd_in = open(tokens->next->content, O_RDONLY);
+	else if (tokens->type == HERDOC)
 	{
-		if (tokens->type == REDIR_OUT)
-			shell->exec->fd_out = open(tokens->next->content, \
-			O_RDWR | O_CREAT | O_CLOEXEC | O_TRUNC, 0664);
-		if (tokens->type == REDIR_APPEND)
-			shell->exec->fd_out = open(tokens->next->content, \
-			O_RDWR | O_CREAT | O_CLOEXEC | O_APPEND, 0664);
-		if (tokens->type == REDIR_IN)
-			shell->exec->fd_in = open(tokens->next->content, O_RDONLY);
-		else if (tokens->type == HERDOC)
-		{
-			fd = open(limiter_path(tokens->next->content), O_CREAT | O_RDWR, \
-					0777);
-			if (fd == -1)
-				printf("minishell: error: heredoc\n");
-			shell->exec->limiter = ft_strdup(tokens->next->content);
-			handle_heredoc(shell, fd);
-		}
-		tokens = tokens->next;
+		fd = open(limiter_path(tokens->next->content), O_CREAT | O_RDWR, \
+				0777);
+		if (fd == -1)
+			printf("minishell: error: heredoc\n");
+		exec->limiter = ft_strdup(tokens->next->content);
+		handle_heredoc(shell, fd);
 	}
 }
 
@@ -70,15 +66,15 @@ void	parsing(t_shell *shell)
 	t_exec	*tmp;
 	t_token	*tokens;
 	int		i;
+	int cmd_count;
 
 	i = 0;
 	tokens = shell->token;
-	tmp = (t_exec *)ft_calloc(1, sizeof(t_exec));
-	tmp->fd_in = 0;
-	tmp->fd_out = 1;
+	cmd_count = count_cmds(tokens);
+	tmp = exec_new(NULL, 0);
 	shell->exec = tmp;
-	tmp->args = (char **)ft_calloc(count_cmds(tokens) + 1, sizeof(char *));
-	handle_redirs(shell, tokens);
+	tmp->args = (char **)ft_calloc(cmd_count + 1, sizeof(char *));
+	handle_redirs(shell, tokens, tmp);
 	while (tokens)
 	{
 		if ((tokens->type == REDIR_OUT || tokens->type == REDIR_IN
@@ -87,14 +83,12 @@ void	parsing(t_shell *shell)
 			delete_one_token(&tokens);
 		if (tokens->type == PIPE)
 		{
-			tmp->next = (t_exec *)ft_calloc(1, sizeof(t_exec));
-			tmp->fd_in = 0;
-			tmp->fd_out = 1;
+			tmp->next = exec_new(NULL, 0);
 			tmp->next->prev = tmp;
 			tmp = tmp->next;
-			tmp->args = (char **)ft_calloc(count_cmds(tokens) + 1,
+			tmp->args = (char **)ft_calloc(cmd_count + 1,
 					sizeof(char *));
-			handle_redirs(shell, tokens);
+			handle_redirs(shell, tokens, tmp);
 			i = 0;
 		}
 		if (tokens->type == CMD)
@@ -103,7 +97,6 @@ void	parsing(t_shell *shell)
 				tmp->cmd = ft_strdup(tokens->content);
 			tmp->args[i] = ft_strdup(tokens->content);
 			tmp->type = tokens->type;
-			i++;
 		}
 		tokens = tokens->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/15 23:34:09 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 13:34:38 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j)
 	{
 		dup2(exec->fd_in, 0);
 		dup2(exec->fd_out, 1);
-		close_all(pipefd, j - 1, exec);
+		close_all(pipefd, j - 1, shell->exec);
 		execute_command(shell, exec, path);
 		exit(EXIT_FAILURE);
 	}
@@ -88,27 +88,28 @@ void	run(t_shell *shell)
 	int		j;
 	int		**pipefd;
 
-	tmp = shell->exec;
-	j = count_commands(tmp);
-	if (tmp->limiter)
-		tmp->fd_in = open(g_gvars->limiter_file, O_CREAT | O_RDWR, 0777);
-	if (!tmp->next)
+	j = count_commands(shell->exec);
+	if (shell->exec->limiter)
+		shell->exec->fd_in = open(g_gvars->limiter_file, O_CREAT | O_RDWR, 0777);
+	if (!shell->exec->next)
 	{
-		execute_single_cmd(tmp, shell);
+		execute_single_cmd(shell->exec, shell);
 		return ;
 	}
 	pipefd = malloc(sizeof(int) * (j - 1));
 	if (!pipefd)
 		exit(1);
-	pipefd = pipe_handler(tmp);
+	pipefd = pipe_handler(shell->exec);
+	tmp = shell->exec;
 	while (tmp)
 	{
 		if (tmp->cmd == NULL)
 			return ;
+		printf("in %d,out %d\n",tmp->fd_in,tmp->fd_out);
 		execute(shell, tmp, pipefd, j);
 		tmp = tmp->next;
 	}
-	close_all(pipefd, j - 1, tmp);
+	close_all(pipefd, j - 1, shell->exec);
 	while (wait(NULL) != -1)
 		;
 }

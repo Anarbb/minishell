@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:30:01 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/15 23:35:41 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 13:19:53 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ t_exec	*exec_new(char *tmp, int type)
 	t_exec	*exec;
 
 	exec = (t_exec *)ft_calloc(1, sizeof(t_exec));
-	exec->cmd = ft_strdup(tmp);
+	if (tmp)
+		exec->cmd = ft_strdup(tmp);
+	if (type)
+		exec->type = type;
+	
 	exec->limiter = NULL;
-	exec->type = type;
 	exec->fd_in = 0;
 	exec->fd_out = 1;
 	exec->next = NULL;
