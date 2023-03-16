@@ -1,6 +1,6 @@
 NAME        := minishell
 CC        := cc
-FLAGS    := -Wall -Wextra -Werror -I inc -g -fsanitize=address
+FLAGS    := -Wall -Wextra -Werror -I inc -g
 HEADERS    := inc/minishell.h inc/libft.h
 ifeq ($(USER), aarbaoui)
 	LDFLAGS="-L/Users/aarbaoui/goinfre/.brew/opt/readline/lib"

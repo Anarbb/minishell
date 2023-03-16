@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/15 23:29:46 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 17:21:34 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,7 @@ int	validate_syntax(t_token *token, t_token *prev_tkn)
 			if (pipe_err(token, prev_tkn))
 				return (FAILURE);
 		}
-		else if (token->type == DQUOTE)
-		{
-			if (unclosed_err(&token, token->type, prev_tkn) == FAILURE)
-				return (FAILURE);
-		}
-		else if (token->type == SQUOTE)
+		else if (token->type == DQUOTE || token->type == SQUOTE)
 		{
 			if (unclosed_err(&token, token->type, prev_tkn) == FAILURE)
 				return (FAILURE);

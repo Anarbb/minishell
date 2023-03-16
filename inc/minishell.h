@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/16 15:28:43 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:26:37 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void				ft_unset(t_shell *shell);
 void				init_signals(void);
 void				control_d(char *line);
 void				sig_handl(int signum);
+void				sig_herdoc(int signum);
 //Syntax.analyser
 int					validate_syntax(t_token *token, t_token *prev_tkn);
 int					is_redirection(int type);

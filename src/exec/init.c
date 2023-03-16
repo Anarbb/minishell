@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 15:49:04 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/16 17:17:03 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,29 @@ char	*find_exec(t_shell *shell, char *cmd)
 	return (NULL);
 }
 
-void	execute_single_cmd(t_exec *tmp, t_shell *shell)
+int	execute_builtins(t_exec *exec, t_shell *shell)
 {
-	pid_t	pid;
-	char	*path;
-
-	path = find_exec(shell, tmp->cmd);
-	pid = fork();
-	if (pid == -1)
-		exit(3);
-	if (pid == 0)
+	if (exec->fd_in != 0 || exec->fd_out != 1 || exec->next)
 	{
-		dup2(tmp->fd_in, 0);
-		dup2(tmp->fd_out, 1);
-		if (tmp->fd_in != 0)
-			close(tmp->fd_in);
-		if (tmp->fd_out != 1)
-			close(tmp->fd_out);
-		execute_command(shell, tmp, path);
-		exit(EXIT_FAILURE);
+		if (ft_strcmp(exec->cmd, "cd") == 0)
+			ft_cd(shell, exec);
+		else if (ft_strcmp(exec->cmd, "echo") == 0)
+			ft_echo(exec);
+		else if (ft_strcmp(exec->cmd, "export") == 0)
+			ft_export(shell, exec);
+		else if (ft_strcmp(exec->cmd, "unset") == 0)
+			ft_unset(shell);
+		else if (ft_strcmp(exec->cmd, "env") == 0)
+			ft_env(shell);
+		else if (ft_strcmp(exec->cmd, "exit") == 0)
+			ft_exit(shell);
+		else
+			return (FAILURE);
+		return (SUCCESS);
 	}
-	waitpid(pid, 0, 0);
+	else
+		printf("halaa\n");
+	return (FAILURE);
 }
 
 void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j)
@@ -71,18 +73,22 @@ void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j)
 	path = find_exec(shell, exec->cmd);
 	if (exec->limiter)
 			exec->fd_in = open(g_gvars->limiter_file, O_CREAT | O_RDWR, 0777);
+	signal(SIGQUIT, sig_handl);
+	signal(SIGINT, sig_handl);
 	pid = fork();
 	if (pid == -1)
 		exit(3);
 	if (pid == 0)
 	{
+		g_gvars->herdoc = 0;
 		dup2(exec->fd_in, 0);
 		dup2(exec->fd_out, 1);
 		close_all(pipefd, j - 1, shell->exec);
-		execute_command(shell, exec, path);
+		if (execute_builtins(exec, shell) == FAILURE)
+			execute_command(shell, exec, path);
 		exit(EXIT_FAILURE);
 	}
-	
+	g_gvars->herdoc = 1;
 }
 
 void	run(t_shell *shell)
@@ -101,8 +107,8 @@ void	run(t_shell *shell)
 	{
 		if (tmp->cmd == NULL)
 			return ;
-		// printf("cmd: %s, fd_in: %d, fd_out: %d\n", tmp->cmd, tmp->fd_in, tmp->fd_out);
-		execute(shell, tmp, pipefd, j);
+		// if (execute_builtins(tmp, shell) == PIPE)
+			execute(shell, tmp, pipefd, j);
 		tmp = tmp->next;
 	}
 	close_all(pipefd, j - 1, shell->exec);
