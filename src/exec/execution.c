@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 14:52:08 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 14:48:34 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/17 21:31:38 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,6 @@ void	execute_command(t_shell *shell, t_exec *exec, char *path)
 	if (execve(path, exec->args, shell->env_arr) == -1)
 	{
 		printf("minishell: %s: command not found\n", exec->args[0]);
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 }
