@@ -3,22 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/16 20:30:14 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/17 17:00:01 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_cd(t_shell *shell, t_exec *exec)
+int	ft_cd(t_shell *shell, t_exec *exec)
 {
 	char	*oldpwd;
 	char	*pwd;
+	char	*home;
 
+	home = get_env(shell, "HOME");
+	if (arg_count(exec->args) > 2)
+	{
+		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
+		return (shell->exit_status = 1);
+	}
 	if (!exec->args[1] || ft_strcmp(exec->args[1], "~") == 0)
-		chdir(get_env(shell, "HOME"));
+	{
+		if (home)
+		{
+			if (chdir(home) == -1)
+			{
+				printf("minishell: cd: %s: No such file or directory\n",
+						home);
+				return (shell->exit_status = 1);
+			}
+		}
+		else
+		{
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+			return (shell->exit_status = 1);
+		}
+	}
 	else if (ft_strcmp(exec->args[1], "-") == 0)
 	{
 		printf("%s\n", get_env(shell, "OLDPWD"));
@@ -26,16 +48,24 @@ void	ft_cd(t_shell *shell, t_exec *exec)
 	}
 	else if (chdir(exec->args[1]) == -1)
 	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(exec->args[1], 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		return ;
+		printf("minishell: cd: %s: No such file or directory\n", exec->args[1]);
+		return (shell->exit_status = 1);
 	}
 	else
 	{
 		oldpwd = get_env(shell, "PWD");
 		pwd = getcwd(NULL, 0);
+		if (!pwd)
+		{
+			printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+			chdir(home);
+			pwd = getcwd(NULL, 0);
+			set_env(shell, "OLDPWD", oldpwd);
+			set_env(shell, "PWD", pwd);
+			return (shell->exit_status = 1);
+		}
 		set_env(shell, "OLDPWD", oldpwd);
 		set_env(shell, "PWD", pwd);
 	}
+	return (shell->exit_status = 0);
 }

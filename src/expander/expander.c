@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 18:53:30 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/17 16:14:04 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*after_dollar(t_shell *shell, char *str, char *tmp, int i)
 	while (i < len)
 	{
 		if (i == 0)
-			return (value = expand_after_dollar(shell, str, &i, 0) \
+			return (value = expand_after_dollar(shell, str, &i) \
 				, ft_join(tmp, value));
 		else
 			tmp = ft_join(tmp, ft_substr(str, i, 1));

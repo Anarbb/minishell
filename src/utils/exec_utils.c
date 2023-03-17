@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:30:01 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/16 21:46:47 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/17 17:10:10 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ void	init_env(t_shell *shell)
 	{
 		new = (t_env *)malloc(sizeof(t_env));
 		new->var = ft_substr(*tmp_env, 0, ft_strchr(*tmp_env, '=') - *tmp_env);
-		new->value = ft_substr(*tmp_env,
-			ft_strchr(*tmp_env, '=') - *tmp_env + 1, ft_strlen(*tmp_env));
+		new->value = ft_strdup(ft_strchr(*tmp_env, '=') + 1);
 		new->next = NULL;
 		if (shell->env == NULL)
 			shell->env = new;

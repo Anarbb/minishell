@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/16 22:44:07 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/17 20:45:06 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,14 @@ void				delete_one_token(t_token **token);
 int					count_cmds(t_token *token);
 void				free_str_arr(char **str_arr);
 // builtins
-void				ft_cd(t_shell *shell, t_exec *exec);
+int					ft_cd(t_shell *shell, t_exec *exec);
 int					ft_echo(t_exec *exec);
 void				ft_export(t_shell *shell, t_exec *exec);
 int					ft_exit(t_shell *shell);
 void				ft_env(t_shell *shell);
 void				ft_unset(t_shell *shell);
+// builtins utils
+int					arg_count(char **args);
 //Signals
 void				init_signals(void);
 void				control_d(char *line);
@@ -143,6 +145,7 @@ int					validate_syntax(t_shell *shell, t_token *token, t_token *prev_tkn);
 int					is_redirection(int type);
 //Execution
 char				*find_exec(t_shell *shell, char *cmd);
+int					get_file_path(struct dirent **dp, DIR **dirp);
 void				exec_cmd(t_shell *shell, t_exec *exec, char *path);
 int					parsing(t_shell *shell);
 int					**pipe_handler(t_exec *exec);
@@ -163,8 +166,7 @@ void				expander(t_shell *shell, t_token *token);
 char				*ft_join(char *tmp, char *value);
 char				*after_dollar(t_shell *shell, char *str, char *tmp, int i);
 //Expander.utils
-char				*expand_after_dollar(t_shell *shell, char *str, int *i,
-						int j);
+char				*expand_after_dollar(t_shell *shell, char *str, int *i);
 void				expand_in_dquote(t_token **token, t_shell *shell,
 						t_token **new_tkn);
 void				expand_in_squote(t_token **token, t_token **new_tkn);

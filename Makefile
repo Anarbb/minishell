@@ -1,10 +1,10 @@
 NAME        := minishell
 CC        := cc
-FLAGS    := -Wall -Wextra -Werror -fsanitize=address -I inc -g
+FLAGS    := -Wall -Wextra -Werror -I inc -g
 HEADERS    := inc/minishell.h inc/libft.h
 ifeq ($(USER), aarbaoui)
-	LDFLAGS="-L/Users/aarbaoui/goinfre/.brew/opt/readline/lib"
-    CPPFLAGS="-I/Users/aarbaoui/goinfre/.brew/opt/readline/include"
+	LDFLAGS="-L/Volumes/Untitled/opt/readline/lib"
+    CPPFLAGS="-I/Volumes/Untitled/opt/readline/include"
 else ifeq ($(USER), lsabik)
 	LDFLAGS="-L/Users/lsabik/.brew/opt/readline/lib"
 	CPPFLAGS="-I/Users/lsabik/.brew/opt/readline/include"
@@ -76,6 +76,7 @@ SRCS        :=      minishell.c \
                         src/exec/execution_utils.c \
                         src/exec/exec_herdoc.c \
                         src/utils/token_utils2.c \
+                        src/utils/builtin_utils.c \
                           
 OBJS        := $(SRCS:.c=.o)
 

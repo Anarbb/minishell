@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 22:44:48 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/17 20:45:19 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ char	*find_exec(t_shell *shell, char *cmd)
 	while (shell->path[i] && shell->path[i][0] != '\0')
 	{
 		dirp = opendir(shell->path[i]);
-		while (dirp && (dp = readdir(dirp)) != NULL)
+		dp = NULL;
+		while (dirp != NULL && get_file_path(&dp, &dirp))
 		{
 			if (ft_strcmp(dp->d_name, cmd) == 0)
 			{
@@ -32,6 +33,8 @@ char	*find_exec(t_shell *shell, char *cmd)
 				closedir(dirp);
 				return (path);
 			}
+			if (dp == NULL)
+				break ;
 		}
 		i++;
 		if (dirp)

@@ -3,41 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utis.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:18:45 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/14 20:48:57 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/17 16:22:04 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand_after_dollar(t_shell *shell, char *str, int *i, int j)
+char	*expand_after_dollar(t_shell *shell, char *str, int *i)
 {
-	char	*tmp;
-	char	*tmp2;
 	char	*value;
-	char	**env;
+	char	*tmp;
 
-	env = shell->env_arr;
-	j = *i;
-	if (ft_isalpha(str[j++]) || str[j++] == '_')
-		while (ft_isalnum(str[j]) || str[j] == '_')
-			(j)++;
-	tmp = ft_strndup(str, j);
-	tmp2 = ft_substr(str, j, ft_strlen(str));
-	while (*env != NULL)
+	tmp = ft_strdup("");
+	while (str[*i] && ft_isalnum(str[*i]))
 	{
-		if (ft_strncmp(*env, tmp, j) == 0 && (*env)[j] == '=')
-		{
-			value = ft_strdup(*env + (j + 1));
-			free(tmp);
-				tmp = ft_join(value, tmp2);
-			return (tmp);
-		}
-		env++;
+		tmp = ft_join(tmp, ft_substr(str, *i, 1));
+		(*i)++;
 	}
-	return (*i = j, ft_strdup(""));
+	if (ft_strlen(tmp) == 0)
+		return (tmp);
+	value = get_env(shell, tmp);
+	if (value == NULL)
+		return (ft_strdup(""));
+	else
+	{
+		tmp = ft_strdup(value);
+		return (tmp);
+	}
 }
 
 void	expand_in_dquote(t_token **token, t_shell *shell, t_token **new_tkn)

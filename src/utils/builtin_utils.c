@@ -1,37 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 15:34:51 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/17 20:44:47 by aarbaoui         ###   ########.fr       */
+/*   Created: 2023/03/17 16:17:30 by aarbaoui          #+#    #+#             */
+/*   Updated: 2023/03/17 16:17:49 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_cmds(t_token *token)
+int	arg_count(char **args)
 {
-	t_token	*tmp;
-	int		count;
+	int	i;
 
-	count = 0;
-	tmp = token;
-	while (tmp)
-	{
-		if (tmp->type == CMD)
-			count++;
-		tmp = tmp->next;
-	}
-	return (count);
-}
-
-int	get_file_path(struct dirent **dp, DIR **dirp)
-{
-	*dp = readdir(*dirp);
-	if (*dp == NULL)
-		return (0);
-	return (1);
+	i = 0;
+	while (args[i])
+		i++;
+	return (i);
 }
