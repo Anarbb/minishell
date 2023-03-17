@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/17 20:45:19 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/17 21:04:16 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,8 @@ void	run(t_shell *shell)
 	while (pid_idx >= 0)
 	{
 		waitpid(pids[pid_idx], &shell->exit_status, 0);
+		if (WIFEXITED(shell->exit_status))
+			shell->exit_status = WEXITSTATUS(shell->exit_status);
 		pid_idx--;
 	}
 }
