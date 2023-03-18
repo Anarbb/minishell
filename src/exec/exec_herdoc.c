@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_herdoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:11:52 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 22:44:48 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 13:51:55 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ char	*expand_heredoc(t_shell *shell, char *str, int j)
 			while (ft_isalnum(str[j]) || str[j] == '_')
 				(j)++;
 		tmp = ft_strdup(str + 1);
-		while (*env != NULL)
+		tmp[j - 1] = '\0';
+		value = get_env(shell, tmp);
+		free(tmp);
+		if (value)
 		{
-			if (ft_strncmp(*env, tmp, j - 1) == 0 && (*env)[j - 1] == '=')
-			{
-				value = ft_strdup(*env + j);
-				return (value);
-			}
-			env++;
+			tmp = ft_strjoin(value, str + j);
+			free(str);
+			str = tmp;
 		}
 	}
 	return (str);
