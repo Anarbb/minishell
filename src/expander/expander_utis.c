@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:18:45 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 18:11:49 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 22:48:31 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,10 @@ char	*expand_after_dollar(t_shell *shell, char *str, int *i)
 	}
 }
 
-void	expand_in_dquote(t_token **token, t_shell *shell, t_token **new_tkn)
+char	*expand_in_dquote(t_token **token, t_shell *shell)
 {
-	int		i;
 	char	*tmp;
 
-	i = 0;
 	tmp = ft_strdup("");
 	*token = (*token)->next;
 	while (*token && (*token)->type != DQUOTE)
@@ -48,7 +46,7 @@ void	expand_in_dquote(t_token **token, t_shell *shell, t_token **new_tkn)
 		if ((*token)->type == DOLLAR && (*token)->next->type == CMD)
 		{
 			*token = (*token)->next;
-			tmp = after_dollar(shell, (*token)->content, tmp, i);
+			tmp = after_dollar(shell, (*token)->content, tmp, 0);
 		}
 		else
 			tmp = ft_join(tmp, (*token)->content);
@@ -64,13 +62,11 @@ void	expand_in_dquote(t_token **token, t_shell *shell, t_token **new_tkn)
 				tmp = ft_join(tmp, (*token)->content);
 			}
 		}
-		*new_tkn = create_token(*new_tkn, tmp, CMD);
-		(*new_tkn)->inside_quotes = WITH_DQUOTES;
-		tmp = NULL;
 	}
+	return (tmp);
 }
 
-void	expand_in_squote(t_token **token, t_token **new_tkn)
+char	*expand_in_squote(t_token **token)
 {
 	int		i;
 	char	*tmp;
@@ -85,17 +81,14 @@ void	expand_in_squote(t_token **token, t_token **new_tkn)
 	}
 	if ((*token)->type == SQUOTE)
 	{
-		*new_tkn = create_token(*new_tkn, tmp, CMD);
-		(*new_tkn)->inside_quotes = WITH_DQUOTES;
-		tmp = NULL;
+		if ((*token)->next)
+		{
+			if ((*token)->next->type == CMD)
+			{
+				*token = (*token)->next;
+				tmp = ft_join(tmp, (*token)->content);
+			}
+		}
 	}
-}
-
-void	skip_spaces(t_token **token, t_token **new_tkn, char *tmp)
-{
-	if ((*token)->type != SPACE_MS)
-	{
-		tmp = ft_join(tmp, (*token)->content);
-		*new_tkn = create_token(*new_tkn, tmp, (*token)->type);
-	}
+	return (tmp);
 }

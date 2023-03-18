@@ -6,17 +6,43 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/16 22:12:56 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 21:34:36 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*get_echo_arg(char *echo_start, char quote, char *cmd)
+{
+	int		i;
+	char	*echo_end;
+	char	*arg;
+	(void)cmd;
+	echo_end = ft_strchr(echo_start + 1, quote);
+	if (!echo_end)
+		echo_end = ft_strchr(echo_start + 1, '\0');
+	arg = ft_substr(echo_start, 0, echo_end - echo_start);
+	i = 0;
+	while (arg[i])
+	{
+		if ((arg[i] == '<' || arg[i] == '>' || arg[i] == '|' || arg[i] == ' '))
+			arg[i] = '\0';
+		i++;
+	}
+	return (arg);
+}
+
+// void	pre_parse_echo(char *cmd, t_shell *shell)
+// {
+
+// }
 
 void	parse_ops(t_shell *shell)
 {
 	char	*cmd;
 
 	cmd = shell->line;
+	// pre_parse_echo(cmd, shell);
 	split_by_ops(shell, cmd);
 }
 

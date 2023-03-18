@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 16:47:32 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 22:49:53 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ void	expand_wildcard(t_token **new_tkn, char *tmp)
 	closedir(dirp);
 }
 
-void	expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
+char	*expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 {
 	char	*tmp;
-
+	
 	tmp = ft_strdup("");
 	if ((*token)->type == WC)
 		expand_wildcard(new_tkn, tmp);
@@ -74,34 +74,61 @@ void	expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 	{
 		*token = (*token)->next;
 		tmp = after_dollar(shell, (*token)->content, tmp, 0);
-		*new_tkn = create_token(*new_tkn, tmp, CMD);
 	}
 	else if ((*token)->type == CMD || (*token)->type == DOLLAR)
-	{
 		tmp = ft_join(tmp, (*token)->content);
-		*new_tkn = create_token(*new_tkn, tmp, CMD);
-	}
 	else
-		skip_spaces(token, new_tkn, tmp);
-		
-	tmp = NULL;
+	{
+		if ((*token)->type != SPACE_MS)
+			tmp = ft_join(tmp, (*token)->content);
+	}
+	return (tmp);
 }
 
 void	expander(t_shell *shell, t_token *token)
 {
 	t_token	*new_tkn;
+	char	*tmp;
 
+	tmp = ft_strdup("");
 	new_tkn = NULL;
 	while (token)
 	{
-		if (token->type == DQUOTE)
-			expand_in_dquote(&token, shell, &new_tkn);
+		if (!token)
+			break;
+		if (token->next && token->type == CMD && token->next->type == DQUOTE)
+		{
+			tmp = ft_strjoin(tmp, expand_cmd(&token, shell, &new_tkn));
+			token = token->next;
+			tmp = ft_strjoin(tmp, expand_in_dquote(&token, shell));
+			new_tkn = create_token(new_tkn, tmp, CMD);
+			tmp =	ft_strdup("");
+			
+		}
+		else if (token->type == DQUOTE)
+		{
+			tmp = ft_strjoin(tmp, expand_in_dquote(&token, shell));
+			new_tkn = create_token(new_tkn, tmp, CMD);
+			tmp =	ft_strdup("");
+			new_tkn->inside_quotes = WITH_DQUOTES;
+		}
 		else
 		{
 			if (token->type == SQUOTE)
-				expand_in_squote(&token, &new_tkn);
+			{
+				tmp = ft_strjoin(tmp, expand_in_squote(&token));
+				new_tkn = create_token(new_tkn, tmp, CMD);
+				tmp =	ft_strdup("");
+				new_tkn->inside_quotes = WITH_SQUOTES;
+			}
 			else
-				expand_cmd(&token, shell, &new_tkn);
+			{
+				tmp = ft_strjoin(tmp, expand_cmd(&token, shell, &new_tkn));
+				if (tmp[0] != '\0')
+					new_tkn = create_token(new_tkn, tmp, token->type);
+				tmp = ft_strdup("");
+			}
+			
 		}
 		token = token->next;
 	}

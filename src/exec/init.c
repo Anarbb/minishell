@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 17:00:40 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/18 20:24:27 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,6 @@ char	*find_exec(t_shell *shell, char *cmd)
 			closedir(dirp);
 	}
 	return (NULL);
-}
-
-int	execute_Fbuiltins(t_exec *exec, t_shell *shell)
-{
-	if (ft_strcmp(exec->cmd, "cd") == 0)
-		ft_cd(shell, exec);
-	else if (ft_strcmp(exec->cmd, "echo") == 0)
-		ft_echo(exec);
-	else if (ft_strcmp(exec->cmd, "export") == 0)
-		ft_export(shell, exec);
-	else if (ft_strcmp(exec->cmd, "unset") == 0)
-		ft_unset(shell);
-	else if (ft_strcmp(exec->cmd, "env") == 0)
-		ft_env(shell);
-	else if (ft_strcmp(exec->cmd, "exit") == 0)
-		ft_exit(shell);
-	else
-		return (FAILURE);
-	return (SUCCESS);
 }
 
 int	execute_builtins(t_exec *exec, t_shell *shell)
@@ -121,9 +102,6 @@ void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j, pid_t **pids,
 			execute_command(shell, exec, path);
 		exit(EXIT_FAILURE);
 	}
-	if (g_sigflag == 20)
-		shell->exit_status = 135;
-	// printf("-->%d, %d\n",shell->exit_status, g_sigflag);	
 	g_sigflag = 1;
 }
 
@@ -154,14 +132,11 @@ void	run(t_shell *shell)
 	close_all(pipefd, j - 1, shell->exec);
 	while (pid_idx >= 0)
 	{
-		if (shell->exit_status != 135)
-		{
-			waitpid(pids[pid_idx], &shell->exit_status, 0);
-			if (WIFEXITED(shell->exit_status))
+		waitpid(pids[pid_idx], &shell->exit_status, 0);
+		if (!WIFSIGNALED(shell->exit_status))
 				shell->exit_status = WEXITSTATUS(shell->exit_status);
-		}
-		else
-			waitpid(pids[pid_idx], NULL, 0);
+			else
+				shell->exit_status = 128 + WTERMSIG(shell->exit_status);
 		pid_idx--;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/18 16:57:18 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 22:49:24 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ typedef struct s_shell
 	char			*line;
 	int				inside_quotes;
 	char			*cwd;
+	char			**echo;
+	int				echo_count;
 	t_env			*env;
 	char			**tmp_env;
 	char			*limiter;
@@ -157,6 +159,7 @@ int					**pipe_handler(t_exec *exec);
 void				run(t_shell *shell);
 int					count_cmmds(t_exec *exec);
 void				execute_command(t_shell *shell, t_exec *exec, char *path);
+int					execute_Fbuiltins(t_exec *exec, t_shell *shell);
 //Execution.utils
 t_exec				*exec_new(char *tmp, int type);
 void				exec_add_b(t_shell *shell, char *tmp, int type);
@@ -172,10 +175,9 @@ char				*ft_join(char *tmp, char *value);
 char				*after_dollar(t_shell *shell, char *str, char *tmp, int i);
 //Expander.utils
 char				*expand_after_dollar(t_shell *shell, char *str, int *i);
-void				expand_in_dquote(t_token **token, t_shell *shell,
-						t_token **new_tkn);
-void				expand_in_squote(t_token **token, t_token **new_tkn);
-void				skip_spaces(t_token **token, t_token **new_tkn, char *tmp);
+char				*expand_in_dquote(t_token **token, t_shell *shell);
+char				*expand_in_squote(t_token **token);
+void				skip_spaces(t_token **token, t_token **new_tkn, char **tmp);
 // env
 void				init_env(t_shell *shell);
 void				add_env(t_shell *shell, char *key, char *value);
