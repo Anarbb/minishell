@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/18 16:04:13 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/18 16:53:02 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	ft_cd(t_shell *shell, t_exec *exec)
 		printf("%s\n", get_env(shell, "OLDPWD"));
 		chdir(get_env(shell, "OLDPWD"));
 	}
-	else if (chdir(exec->args[1]) == -)
 	else if (chdir(exec->args[1]) == -1)
 	{
 		printf("minishell: cd: %s: No such file or directory\n", exec->args[1]);
