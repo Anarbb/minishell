@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 16:57:40 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 17:00:40 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,8 @@ void	run(t_shell *shell)
 		if (shell->exit_status != 135)
 		{
 			waitpid(pids[pid_idx], &shell->exit_status, 0);
-			// if (WIFEXITED(shell->exit_status))
-			// 	shell->exit_status = WEXITSTATUS(shell->exit_status);
+			if (WIFEXITED(shell->exit_status))
+				shell->exit_status = WEXITSTATUS(shell->exit_status);
 		}
 		else
 			waitpid(pids[pid_idx], NULL, 0);
