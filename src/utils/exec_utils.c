@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:30:01 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/17 17:10:10 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/18 12:46:07 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	init_env(t_shell *shell)
 	tmp_env = shell->env_arr;
 	while (*tmp_env)
 	{
-		new = (t_env *)malloc(sizeof(t_env));
+		new = (t_env *)ft_calloc(1, sizeof(t_env));
 		new->var = ft_substr(*tmp_env, 0, ft_strchr(*tmp_env, '=') - *tmp_env);
 		new->value = ft_strdup(ft_strchr(*tmp_env, '=') + 1);
 		new->next = NULL;

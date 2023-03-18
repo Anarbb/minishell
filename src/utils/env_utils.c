@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 12:27:04 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/16 18:53:20 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 13:33:05 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,19 @@ void	ft_lstadd_back_env(t_env **alst, t_env *new)
 
 void	set_env(t_shell *shell, char *name, char *value)
 {
-	t_env	*tmp;
-
-	tmp = shell->env;
-	while (tmp)
+	t_env *env;
+	
+	env = shell->env;
+	while (env)
 	{
-		if (ft_strcmp(tmp->var, name) == 0)
+		if (ft_strcmp(env->var, name) == 0)
 		{
-			free(tmp->value);
-			tmp->value = ft_strdup(value);
+			free(env->value);
+			env->value = ft_strdup(value);
 			return ;
 		}
-		tmp = tmp->next;
+		env = env->next;
 	}
-	add_env(shell, name, value);
 }
 
 char	*get_env(t_shell *shell, char *key)
@@ -70,7 +69,7 @@ void	unset_env(t_shell *shell, char *key)
 			else
 				prev->next = tmp->next;
 			free(tmp->var);
-			// free(tmp->value);
+			free(tmp->value);
 			free(tmp);
 			return ;
 		}

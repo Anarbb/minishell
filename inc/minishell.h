@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/17 20:45:06 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/18 12:58:01 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ typedef struct s_shell
 
 // parsing.init
 void				init_shell(t_shell *shell, char **env);
-int					find_path(t_shell *shell);
+int					find_path(t_shell *shell, int flaunch);
 // parsing.lexer
 int					ft_lexer(t_shell *shell);
 void				split_by_ops(t_shell *shell, char *cmd);
