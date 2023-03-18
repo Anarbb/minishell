@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 13:43:25 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 14:30:48 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int	execute_builtins(t_exec *exec, t_shell *shell)
 			ft_unset(shell);
 		else if (ft_strcmp(exec->cmd, "env") == 0)
 			ft_env(shell);
+		else if (ft_strcmp(exec->cmd, "pwd") == 0)
+			ft_pwd(shell);
 		else if (ft_strcmp(exec->cmd, "exit") == 0)
 			ft_exit(shell);
 		else

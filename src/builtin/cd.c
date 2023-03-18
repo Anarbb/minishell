@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/17 17:00:01 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/18 16:04:13 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@ int	ft_cd(t_shell *shell, t_exec *exec)
 	char	*home;
 
 	home = get_env(shell, "HOME");
-	if (arg_count(exec->args) > 2)
-	{
-		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
-		return (shell->exit_status = 1);
-	}
 	if (!exec->args[1] || ft_strcmp(exec->args[1], "~") == 0)
 	{
 		if (home)
@@ -46,6 +41,7 @@ int	ft_cd(t_shell *shell, t_exec *exec)
 		printf("%s\n", get_env(shell, "OLDPWD"));
 		chdir(get_env(shell, "OLDPWD"));
 	}
+	else if (chdir(exec->args[1]) == -)
 	else if (chdir(exec->args[1]) == -1)
 	{
 		printf("minishell: cd: %s: No such file or directory\n", exec->args[1]);

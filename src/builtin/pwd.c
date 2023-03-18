@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/22 15:13:41 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/18 15:44:11 by aarbaoui         ###   ########.fr       */
+/*   Created: 2023/03/18 14:29:37 by aarbaoui          #+#    #+#             */
+/*   Updated: 2023/03/18 14:29:48 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_unset(t_shell *shell)
+void	ft_pwd(t_shell *shell)
 {
-	t_exec	*exec;
-	int		i;
+	char	*pwd;
 
-	exec = shell->exec;
-	i = 1;
-	while (exec->args[i])
-	{
-		if (get_env(shell, exec->args[i]))
-			unset_env(shell, exec->args[i]);
-		else
-			printf("minishell: unset: `%s': not a valid identifier\n",
-					exec->args[i]);
-		i++;
-	}
+	(void)shell;
+	pwd = getcwd(NULL, 0);
+	printf("%s\n", pwd);
+	free(pwd);
 }

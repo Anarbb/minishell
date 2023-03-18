@@ -77,6 +77,7 @@ SRCS        :=      minishell.c \
                         src/exec/exec_herdoc.c \
                         src/utils/token_utils2.c \
                         src/utils/builtin_utils.c \
+                        src/builtin/pwd.c \
                           
 OBJS        := $(SRCS:.c=.o)
 

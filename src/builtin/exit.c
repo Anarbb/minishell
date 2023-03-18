@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 21:01:34 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/12 18:10:34 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/18 14:50:46 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,31 @@
 int	ft_exit(t_shell *shell)
 {
 	t_exec	*exec;
+	int		i;
+	int		flag;
 
+	flag = 0;
+	i = 0;
 	exec = shell->exec;
+	if (arg_count(exec->args) > 2)
+	{
+		printf("exit\nminishell: exit: too many arguments\n");
+		return (1);
+	}
 	if (exec->args[1])
 	{
-		if (ft_isdigit(exec->args[1][0]))
-			exit(ft_atoi(exec->args[1]));
-		else
+		if (exec->args[1][0] == '-' && !exec->args[1][1])
+			exit(255);
+		while (ft_isdigit(exec->args[1][i]) || exec->args[1][i] == '-')
 		{
-			ft_putstr_fd("exit: ", 2);
-			ft_putstr_fd(exec->args[1], 2);
-			ft_putendl_fd(": numeric argument required", 2);
-			return (1);
+			if (!ft_isdigit(exec->args[1][i]) && exec->args[1][i] != '-')
+				flag++;
+			i++;
 		}
+		if (exec->args[1][i] || flag > 1)
+			exit(255);
+		else
+			exit(ft_atoi(exec->args[1]));
 	}
 	else
 		exit(0);

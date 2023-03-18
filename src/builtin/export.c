@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:07:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 18:10:30 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/18 15:32:09 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,45 @@ void	print_env(t_shell *shell)
 	}
 }
 
+// use add_env to add a new env variable and set_env to update an existing one if arg is of the form "$key=value"
 void	ft_export(t_shell *shell, t_exec *exec)
 {
 	int		i;
-	int		j;
-	char	*var;
+	char	*key;
 	char	*value;
 
 	i = 1;
-	if (!exec->args[1])
+	if (exec->args[1] == NULL)
+	{
 		print_env(shell);
+		return ;
+	}
 	while (exec->args[i])
 	{
-		j = 0;
-		while (exec->args[i][j] && exec->args[i][j] != '=')
-			j++;
-		var = ft_substr(exec->args[i], 0, j);
-		if (exec->args[i][j] == '=')
-			value = ft_substr(exec->args[i], j + 1, ft_strlen(exec->args[i]));
-		else
-			value = ft_strdup("");
-		set_env(shell, var, value);
-		free(var);
+		key = ft_strdup(exec->args[i]);
+		value = ft_strdup(exec->args[i]);
+		if (ft_strchr(exec->args[i], '='))
+		{
+			key = ft_substr(exec->args[i], 0, ft_strchr(exec->args[i], '=')
+					- exec->args[i]);
+			value = ft_substr(exec->args[i], ft_strchr(exec->args[i], '=')
+					- exec->args[i] + 1, ft_strlen(exec->args[i]));
+		}
+		if (get_env(shell, key) != NULL)
+		{
+			set_env(shell, key, value);
+			free(key);
+			free(value);
+			i++;
+			continue;
+		}
+		if (ft_isdigit(key[0]))
+		{
+			printf("minishell: export: `%s': not a valid identifier\n", key);
+			return ;
+		}
+		add_env(shell, key, value);
+		free(key);
 		free(value);
 		i++;
 	}
