@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/17 21:04:16 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/18 13:43:25 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int	execute_builtins(t_exec *exec, t_shell *shell)
 	return (SUCCESS);
 }
 
-void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j, pid_t **pids, int *pid_idx)
+void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j, pid_t **pids,
+		int *pid_idx)
 {
 	pid_t	pid;
 	char	*path;
@@ -106,9 +107,12 @@ void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j, pid_t **pids, in
 	if (pid == 0)
 	{
 		g_sigflag = 0;
-		dup2(exec->fd_in, 0);
-		dup2(exec->fd_out, 1);
-		close_all(pipefd, j - 1, shell->exec);
+		if (find_exec(shell, exec->cmd) != NULL)
+		{
+			dup2(exec->fd_in, 0);
+			dup2(exec->fd_out, 1);
+			close_all(pipefd, j - 1, shell->exec);
+		}
 		if (execute_Fbuiltins(exec, shell) == FAILURE)
 			execute_command(shell, exec, path);
 		exit(EXIT_FAILURE);
