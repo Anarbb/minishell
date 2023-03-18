@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 13:53:07 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 16:17:56 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,11 @@ int	pipe_err(t_token *token, t_token *prev_tkn)
 	if (!prev_tkn || !token->next)
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n" \
 		, STDERR_FILENO);
-	else if ((prev_tkn->type != CMD && prev_tkn->type != WC)
+	else if ((prev_tkn->type != CMD && prev_tkn->type != WC
+		&& prev_tkn->type != DQUOTE && prev_tkn->type != SQUOTE)
 		|| (token->next->type != CMD && token->next->type != WC \
-		&& token->next->type != SPACE_MS && !is_redirection(token->next->type)))
+		&& token->next->type != SPACE_MS && !is_redirection(token->next->type)
+		&& token->next->type != DQUOTE && token->next->type != SQUOTE))
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n" \
 			, STDERR_FILENO);
 	else
@@ -79,12 +81,28 @@ int	redir_err(t_shell *shell, t_token *token)
 	else
 	{
 		if (token->type == DQUOTE || token->type == SQUOTE)
-			shell->inside_quotes = WITH_QUOTES;
+			shell->inside_quotes = WITH_DQUOTES;
 		else
 			shell->inside_quotes = WITHOUT_QUOTES;
 		return (SUCCESS);
 	}
 	return (FAILURE);
+}
+
+int	inred_outred(t_token **token)
+{
+	t_token	*current;
+	t_token	*next;
+	
+	if ((*token)->type == REDIR_IN && (*token)->next && (*token)->next->type == REDIR_OUT)
+	{
+		current = (*token)->next;
+		next = current->next;
+		free(current);
+		(*token)->next = next;
+			return (0);
+	}
+	return (1);
 }
 
 int	validate_syntax(t_shell *shell, t_token *token, t_token *prev_tkn)
@@ -106,8 +124,9 @@ int	validate_syntax(t_shell *shell, t_token *token, t_token *prev_tkn)
 		}
 		else if (is_redirection(token->type))
 		{
-			if (redir_err(shell, token->next) == FAILURE)
-				return (FAILURE);
+			if (inred_outred(&token))
+				if (redir_err(shell, token->next) == FAILURE)
+					return (FAILURE);
 		}
 		prev_tkn = token;
 		token = token->next;

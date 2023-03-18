@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:33:10 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/16 22:08:16 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 16:18:43 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_token	*token_new(char *cmd, int type)
 	if (!new)
 		return (NULL);
 	new->content = cmd;
+	new->inside_quotes = WITHOUT_QUOTES;
 	new->type = type;
 	new->next = NULL;
 	return (new);

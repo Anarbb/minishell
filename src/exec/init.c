@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 16:53:35 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/18 16:57:40 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,10 @@ void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j, pid_t **pids,
 		path = ft_strdup(exec->cmd);
 	else
 		path = find_exec(shell, exec->cmd);
+	if (exec->limiter)
+		exec->fd_in = open(exec->file_limiter, O_CREAT | O_RDWR, 0777);
+	if (fd_error(exec->fd_in, exec->limiter) == FAILURE)
+			return ;
 	signal(SIGINT, sig_handl);
 	signal(SIGQUIT, sig_handl);
 	pid = fork();
@@ -117,9 +121,9 @@ void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j, pid_t **pids,
 			execute_command(shell, exec, path);
 		exit(EXIT_FAILURE);
 	}
-	if (g_sigflag == 5)
-		shell->exit_status = 130;
-	printf("-->%d, %d\n",shell->exit_status, g_sigflag);	
+	if (g_sigflag == 20)
+		shell->exit_status = 135;
+	// printf("-->%d, %d\n",shell->exit_status, g_sigflag);	
 	g_sigflag = 1;
 }
 
@@ -150,11 +154,11 @@ void	run(t_shell *shell)
 	close_all(pipefd, j - 1, shell->exec);
 	while (pid_idx >= 0)
 	{
-		if (shell->exit_status != 130)
+		if (shell->exit_status != 135)
 		{
 			waitpid(pids[pid_idx], &shell->exit_status, 0);
-			if (WIFEXITED(shell->exit_status))
-				shell->exit_status = WEXITSTATUS(shell->exit_status);
+			// if (WIFEXITED(shell->exit_status))
+			// 	shell->exit_status = WEXITSTATUS(shell->exit_status);
 		}
 		else
 			waitpid(pids[pid_idx], NULL, 0);

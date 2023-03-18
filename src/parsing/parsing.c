@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/18 13:58:35 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 16:59:30 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,12 @@ int	handle_redirs(t_shell *shell, t_token *tokens, t_exec *exec)
 	}
 	else if (tokens->type == HERDOC)
 	{
-		exec->limiter = limiter_path(tokens->next->content, shell);
-		exec->fd_in = open(exec->limiter, O_CREAT | O_RDWR, 0777);
+		exec->limiter = tokens->next->content;
+		exec->file_limiter = limiter_path(exec->limiter, shell);
+		exec->fd_in = open(exec->file_limiter, O_CREAT | O_RDWR, 0777);
 		if (fd_error(exec->fd_in, exec->limiter) == FAILURE)
 			return (FAILURE);
 		handle_heredoc(shell, exec, exec->fd_in);
-		if (exec->limiter)
-		exec->fd_in = open(exec->limiter, O_CREAT | O_RDWR, 0777);
-		if (fd_error(exec->fd_in, exec->limiter) == FAILURE)
-			return (FAILURE);
 	}
 	return (SUCCESS);
 }
@@ -90,7 +87,8 @@ int	parsing(t_shell *shell)
 	t_exec *tmp;
 	t_token *tokens;
 	int i;
-
+	// ["echo", "ks", "s", "ls"]
+	// ["0", "1"]
 	i = 0;
 	tokens = shell->token;
 	tmp = exec_new(NULL, 0);
@@ -121,6 +119,7 @@ int	parsing(t_shell *shell)
 				tmp->cmd = ft_strdup(tokens->content);
 			tmp->args[i] = ft_strdup(tokens->content);
 			tmp->type = tokens->type;
+			tmp->inside_quotes = tokens->inside_quotes;
 			i++;
 		}
 		tmp->args[i] = NULL;

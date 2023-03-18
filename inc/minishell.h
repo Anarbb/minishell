@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/18 14:30:20 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/18 16:57:18 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@
 # define BLINK "\033[5m"
 # define CLEAR_LINE "\033[A\033[K"
 # define FORK 100
-# define WITH_QUOTES 3
+# define WITH_DQUOTES 3
+# define WITH_SQUOTES 1
 # define WITHOUT_QUOTES 5
 # define CMD 2
 # define PIPE 4
@@ -65,6 +66,7 @@ typedef struct s_token
 {
 	char			*content;
 	int				type;
+	int				inside_quotes;
 	struct s_token	*next;
 }					t_token;
 
@@ -82,6 +84,7 @@ typedef struct s_exec
 	int				type;
 	int				fd_in;
 	int				fd_out;
+	char			*file_limiter;
 	char			*limiter;
 	int				inside_quotes;
 	struct s_exec	*next;
@@ -116,6 +119,7 @@ void				parse_ops(t_shell *shell);
 void				add_token(t_shell *shell, char *str, int type);
 t_token				*create_token(t_token *token, char *cmd, int type);
 int					is_cmd(char *cmd);
+int					fd_error(int fd, char *content);
 // utils
 int					is_arg(char *str);
 t_token				*token_new(char *cmd, int type);

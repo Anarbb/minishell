@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/17 16:14:04 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/18 16:47:32 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,11 @@ void	expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 	if ((*token)->type == WC)
 		expand_wildcard(new_tkn, tmp);
 		
-	else if ((*token)->type == DOLLAR && (*token)->next)
+	else if ((*token)->next && (*token)->type == DOLLAR && (*token)->next->type == CMD)
 	{
-		if ((*token)->next->type == CMD)
-		{	
 		*token = (*token)->next;
 		tmp = after_dollar(shell, (*token)->content, tmp, 0);
 		*new_tkn = create_token(*new_tkn, tmp, CMD);
-		}	
 	}
 	else if ((*token)->type == CMD || (*token)->type == DOLLAR)
 	{
@@ -86,6 +83,7 @@ void	expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 	}
 	else
 		skip_spaces(token, new_tkn, tmp);
+		
 	tmp = NULL;
 }
 

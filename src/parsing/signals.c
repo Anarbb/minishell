@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 16:00:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 11:47:00 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 15:07:17 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,16 @@ void	sig_handl(int signum)
 	g_sigflag = 0;
 	if (signum == SIGINT)
 	{
+		g_sigflag = 10;
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	if (signum == SIGQUIT)
+	{
+		g_sigflag = 20;
 		write(1, "Quit: 3\n", 8);
+	}
 }
 
 void	control_d(char *line)

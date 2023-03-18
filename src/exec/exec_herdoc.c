@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:11:52 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 14:02:32 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 14:35:42 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,10 @@ int	handle_heredoc(t_shell *shell, t_exec *exec, int fd)
 		if (ft_strcmp(line, exec->limiter) == 0)
 		{
 			free(line);
-			break ;
+			return (SUCCESS);
 		}
 		ft_putstr_fd(line, fd);
 		ft_putchar_fd('\n', fd);
 	}
-	close(fd);
-	return (1);
+	return (close(fd), SUCCESS);
 }
