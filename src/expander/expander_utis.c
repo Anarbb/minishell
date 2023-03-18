@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utis.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:18:45 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 16:19:06 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 17:15:00 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,14 @@ void	expand_in_dquote(t_token **token, t_shell *shell, t_token **new_tkn)
 	}
 	if ((*token)->type == DQUOTE)
 	{
+		if ((*token)->next)
+		{
+			if ((*token)->next->type == CMD)
+			{
+				*token = (*token)->next;
+				tmp = ft_join(tmp, (*token)->content);
+			}
+		}
 		*new_tkn = create_token(*new_tkn, tmp, CMD);
 		(*new_tkn)->inside_quotes = WITH_DQUOTES;
 		tmp = NULL;
