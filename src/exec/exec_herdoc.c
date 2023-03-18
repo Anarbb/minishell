@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_herdoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:11:52 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 13:51:55 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/18 14:02:32 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	handle_heredoc(t_shell *shell, t_exec *exec, int fd)
 {
 	char	*line;
 
-	exec->fd_in = fd;
 	while (1)
 	{
 		signal(SIGINT, sig_herdoc);

@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 16:00:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/16 22:44:48 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 11:47:00 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	sig_herdoc(int signum)
 
 void	sig_handl(int signum)
 {
+	g_sigflag = 0;
 	if (signum == SIGINT)
 	{
 		write(1, "\n", 1);
@@ -60,3 +61,4 @@ void	init_signals(void)
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
+

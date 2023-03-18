@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 13:43:25 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 14:03:23 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,8 @@ void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j, pid_t **pids,
 		path = ft_strdup(exec->cmd);
 	else
 		path = find_exec(shell, exec->cmd);
-	if (exec->limiter)
-		exec->fd_in = open(shell->limiter, O_CREAT | O_RDWR, 0777);
-	signal(SIGQUIT, sig_handl);
 	signal(SIGINT, sig_handl);
+	signal(SIGQUIT, sig_handl);
 	pid = fork();
 	*pids[*pid_idx++] = pid;
 	if (pid == -1)
@@ -117,6 +115,9 @@ void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j, pid_t **pids,
 			execute_command(shell, exec, path);
 		exit(EXIT_FAILURE);
 	}
+	if (g_sigflag == 5)
+		shell->exit_status = 130;
+	printf("-->%d, %d\n",shell->exit_status, g_sigflag);	
 	g_sigflag = 1;
 }
 
@@ -147,9 +148,14 @@ void	run(t_shell *shell)
 	close_all(pipefd, j - 1, shell->exec);
 	while (pid_idx >= 0)
 	{
-		waitpid(pids[pid_idx], &shell->exit_status, 0);
-		if (WIFEXITED(shell->exit_status))
-			shell->exit_status = WEXITSTATUS(shell->exit_status);
+		if (shell->exit_status != 130)
+		{
+			waitpid(pids[pid_idx], &shell->exit_status, 0);
+			if (WIFEXITED(shell->exit_status))
+				shell->exit_status = WEXITSTATUS(shell->exit_status);
+		}
+		else
+			waitpid(pids[pid_idx], NULL, 0);
 		pid_idx--;
 	}
 }

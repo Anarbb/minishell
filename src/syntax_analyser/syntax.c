@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 15:47:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/17 20:52:27 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/18 13:53:07 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,9 @@ int	pipe_err(t_token *token, t_token *prev_tkn)
 int	redir_err(t_shell *shell, t_token *token)
 {
 	skip_space(&token);
-	if (token->type == DQUOTE || token->type == SQUOTE)
-		shell->inside_quotes = WITH_QUOTES;
 	if (!token)
-		ft_putstr_fd("minishell: syntax error near unexpected \
-			token `newline'\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: syntax error near unexpected" \
+			"token `newline'\n", STDERR_FILENO);
 	else if (token->type != CMD && token->type != DOLLAR
 		&& token->type != DQUOTE && token->type != SQUOTE
 		&& token->type != WC)
@@ -79,7 +77,13 @@ int	redir_err(t_shell *shell, t_token *token)
 		ft_putstr_fd("'\n", STDERR_FILENO);
 	}
 	else
+	{
+		if (token->type == DQUOTE || token->type == SQUOTE)
+			shell->inside_quotes = WITH_QUOTES;
+		else
+			shell->inside_quotes = WITHOUT_QUOTES;
 		return (SUCCESS);
+	}
 	return (FAILURE);
 }
 

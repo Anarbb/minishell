@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/16 22:39:48 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/18 13:58:35 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,48 +38,49 @@ int	checker(t_exec *tmp)
 		&& tmp->type != SPACE_MS);
 }
 
+int	fd_error(int fd, char *content)
+{
+	if (fd == -1)
+	{
+		printf("minishell: %s: No such file or directory\n", content);
+		return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
 int	handle_redirs(t_shell *shell, t_token *tokens, t_exec *exec)
 {
-	int	fd;
-
 	if (tokens->type == REDIR_OUT)
 	{
 		exec->fd_out = open(tokens->next->content,
-							O_RDWR | O_CREAT | O_CLOEXEC | O_TRUNC,
-							0664);
-		if (exec->fd_out == -1)
-		{
-			printf("minishell: %s: No such file or directory\n", tokens->next->content);
+				O_RDWR | O_CREAT | O_CLOEXEC | O_TRUNC, 0664);
+		if (fd_error(exec->fd_out, tokens->next->content) == FAILURE)
 			return (FAILURE);
-		}
 	}
 	if (tokens->type == REDIR_APPEND)
 	{
 		exec->fd_out = open(tokens->next->content,
-							O_RDWR | O_CREAT | O_CLOEXEC | O_APPEND,
-							0664);
-		if (exec->fd_out == -1)
-		{
-			printf("minishell: %s: No such file or directory\n", tokens->next->content);
+				O_RDWR | O_CREAT | O_CLOEXEC | O_APPEND, 0664);
+		if (fd_error(exec->fd_out, tokens->next->content) == FAILURE)
 			return (FAILURE);
-		}
 	}
 	if (tokens->type == REDIR_IN)
 	{
 		exec->fd_in = open(tokens->next->content, O_RDONLY);
-		if (exec->fd_in == -1)
-		{
-			printf("minishell: %s: No such file or directory\n", tokens->next->content);
+		if (fd_error(exec->fd_in, tokens->next->content) == FAILURE)
 			return (FAILURE);
-		}
 	}
 	else if (tokens->type == HERDOC)
 	{
-		fd = open(limiter_path(tokens->next->content, shell), O_CREAT | O_RDWR, 0777);
-		if (fd == -1)
-			printf("minishell: error: heredoc\n");
-		exec->limiter = ft_strdup(tokens->next->content);
-		handle_heredoc(shell, exec, fd);
+		exec->limiter = limiter_path(tokens->next->content, shell);
+		exec->fd_in = open(exec->limiter, O_CREAT | O_RDWR, 0777);
+		if (fd_error(exec->fd_in, exec->limiter) == FAILURE)
+			return (FAILURE);
+		handle_heredoc(shell, exec, exec->fd_in);
+		if (exec->limiter)
+		exec->fd_in = open(exec->limiter, O_CREAT | O_RDWR, 0777);
+		if (fd_error(exec->fd_in, exec->limiter) == FAILURE)
+			return (FAILURE);
 	}
 	return (SUCCESS);
 }
