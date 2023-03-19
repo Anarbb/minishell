@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 17:01:03 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:47:27 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	open_herd(t_exec *exec)
+{
+	signal(SIGINT, sig_handl);
+	signal(SIGQUIT, sig_handl);
+	if (exec->limiter)
+		exec->fd_in = open(exec->file_limiter, O_CREAT | O_RDWR, 0777);
+	if (fd_error(exec->fd_in, exec->limiter) == FAILURE)
+		return (FAILURE);
+	return (SUCCESS);
+}
 
 char	*find_exec(t_shell *shell, char *cmd)
 {
@@ -27,12 +38,8 @@ char	*find_exec(t_shell *shell, char *cmd)
 		while (dirp != NULL && get_file_path(&dp, &dirp))
 		{
 			if (ft_strcmp(dp->d_name, cmd) == 0)
-			{
-				path = ft_strjoin(shell->path[i], "/");
-				path = ft_strjoin(path, cmd);
-				closedir(dirp);
-				return (path);
-			}
+				return (path = ft_strjoin(shell->path[i], "/"), \
+				path = ft_strjoin(path, cmd), closedir(dirp), path);
 			if (dp == NULL)
 				break ;
 		}
@@ -43,100 +50,71 @@ char	*find_exec(t_shell *shell, char *cmd)
 	return (NULL);
 }
 
-int	execute_builtins(t_exec *exec, t_shell *shell)
+char	*run_minishell(char *cmd, t_shell *shell)
 {
-	if (!(exec->fd_in != 0 || exec->fd_out != 1 || exec->next))
-	{
-		if (ft_strcmp(exec->cmd, "cd") == 0)
-			ft_cd(shell, exec);
-		else if (ft_strcmp(exec->cmd, "echo") == 0)
-			ft_echo(exec);
-		else if (ft_strcmp(exec->cmd, "export") == 0)
-			ft_export(shell, exec);
-		else if (ft_strcmp(exec->cmd, "unset") == 0)
-			ft_unset(shell);
-		else if (ft_strcmp(exec->cmd, "env") == 0)
-			ft_env(shell);
-		else if (ft_strcmp(exec->cmd, "pwd") == 0)
-			ft_pwd(shell);
-		else if (ft_strcmp(exec->cmd, "exit") == 0)
-			ft_exit(shell);
-		else
-			return (FAILURE);
-	}
+	char	*path;
+
+	if (cmd[0] == '/' || cmd[0] == '.')
+		return (cmd);
 	else
-		return (FORK);
-	return (SUCCESS);
+		path = find_exec(shell, cmd);
+	return (path);
 }
 
-void	execute(t_shell *shell, t_exec *exec, int **pipefd, int j, pid_t **pids,
-		int *pid_idx)
+int	execute(t_shell *shell, t_exec *exec, int j)
 {
 	pid_t	pid;
 	char	*path;
 
-	if (exec->cmd[0] == '/' || exec->cmd[0] == '.')
-		path = ft_strdup(exec->cmd);
-	else
-		path = find_exec(shell, exec->cmd);
-	if (exec->limiter)
-		exec->fd_in = open(exec->file_limiter, O_CREAT | O_RDWR, 0777);
-	if (fd_error(exec->fd_in, exec->limiter) == FAILURE)
-			return ;
-	signal(SIGINT, sig_handl);
-	signal(SIGQUIT, sig_handl);
+	path = run_minishell(exec->cmd, shell);
+	if (open_herd(exec) == FAILURE)
+		return (FAILURE);
 	pid = fork();
-	*pids[*pid_idx++] = pid;
 	if (pid == -1)
-		exit(3);
+		return (3);
+	shell->pids[shell->pid_idx++] = pid;
 	if (pid == 0)
 	{
 		g_sigflag = 0;
 		if (find_exec(shell, exec->cmd) != NULL)
 		{
-			dup2(exec->fd_in, 0);
+			if (exec->fd_in != 0)
+				dup2(exec->fd_in, 0);
 			dup2(exec->fd_out, 1);
-			close_all(pipefd, j - 1, shell->exec);
+			close_all(shell->pipefd, j - 1, shell->exec);
 		}
-		if (execute_Fbuiltins(exec, shell) == FAILURE)
+		if (execute_fbuiltins(exec, shell) == FAILURE)
 			execute_command(shell, exec, path);
 		exit(EXIT_FAILURE);
 	}
-	g_sigflag = 1;
+	return (g_sigflag = 1, SUCCESS);
 }
 
-void	run(t_shell *shell)
+void	run(t_shell *shell, int j)
 {
 	t_exec	*tmp;
-	int		j;
-	int		**pipefd;
-	pid_t	*pids;
-	int		pid_idx;
 
 	tmp = shell->exec;
-	j = count_commands(shell->exec);
-	pids = (pid_t *)ft_calloc(j, sizeof(pid_t));
-	pid_idx = 0;
-	pipefd = malloc(sizeof(int) * (j - 1));
-	if (!pipefd)
-		exit(1);
-	pipefd = pipe_handler(shell->exec);
+	allocation(shell, j);
 	while (tmp)
 	{
 		if (tmp->cmd == NULL)
 			return ;
 		if (execute_builtins(tmp, shell) != SUCCESS)
-			execute(shell, tmp, pipefd, j, &pids, &pid_idx);
+		{
+			if (execute(shell, tmp, j) == 3)
+			{
+				printf("fork: Resource temporarily unavailable\n");
+				return ;
+			}
+		}
 		tmp = tmp->next;
 	}
-	close_all(pipefd, j - 1, shell->exec);
-	while (pid_idx >= 0)
+	close_all(shell->pipefd, j - 1, shell->exec);
+	while (shell->pid_idx >= 0)
 	{
-		waitpid(pids[pid_idx], &shell->exit_status, 0);
-		if (!WIFSIGNALED(shell->exit_status))
-				shell->exit_status = WEXITSTATUS(shell->exit_status);
-			else
-				shell->exit_status = 128 + WTERMSIG(shell->exit_status);
-		pid_idx--;
+		waitpid(shell->pids[shell->pid_idx], &shell->exit_status, 0);
+		exit_status(shell);
+		shell->pid_idx--;
 	}
 }

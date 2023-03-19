@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 14:51:46 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:41:17 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,9 @@ typedef struct s_shell
 	char			*line;
 	int				inside_quotes;
 	char			*cwd;
-	char			**echo;
-	int				echo_count;
+	pid_t			*pids;
+	int				pid_idx;
+	int				**pipefd;
 	t_env			*env;
 	char			**tmp_env;
 	char			*limiter;
@@ -114,10 +115,14 @@ typedef struct s_shell
 
 // parsing.init
 void				init_shell(t_shell *shell, char **env);
-int					find_path(t_shell *shell, int flaunch);
+int					find_path(t_shell *shell, int flaunch, int i);
+//parsing.utilis
+char				*limiter_path(char *limiter, t_shell *shell);
+int					checker(t_exec *tmp);
+int					fd_error(int fd, char *content);
 // parsing.lexer
 int					ft_lexer(t_shell *shell);
-void				split_by_ops(t_shell *shell, char *cmd);
+void				split_by_ops(t_shell *shell, char *cmd, int i, int len);
 void				parse_ops(t_shell *shell);
 void				add_token(t_shell *shell, char *str, int type);
 t_token				*create_token(t_token *token, char *cmd, int type);
@@ -134,10 +139,10 @@ void				delete_one_token(t_token **token);
 int					count_cmds(t_token *token);
 void				free_str_arr(char **str_arr);
 // builtins
-int					ft_cd(t_shell *shell, t_exec *exec);
-int					ft_echo(t_exec *exec);
+int					ft_cd(t_shell *shell, t_exec *exec, char *home, char *pwd);
+int					ft_echo(t_exec *exec, int i, int new_line);
 void				ft_export(t_shell *shell, t_exec *exec);
-int					ft_exit(t_shell *shell);
+int					ft_exit(t_shell *shell, int flag);
 void				ft_env(t_shell *shell);
 void				ft_unset(t_shell *shell);
 void				ft_pwd(t_shell *shell);
@@ -149,25 +154,32 @@ void				control_d(char *line);
 void				sig_handl(int signum);
 void				sig_herdoc(int signum);
 //Syntax.analyser
-int					validate_syntax(t_shell *shell, t_token *token, t_token *prev_tkn);
+int					validate_syntax(t_shell *shell, t_token *token, \
+					t_token *prev_tkn);
 int					is_redirection(int type);
+int					unclosed_err(t_token **token, int type, t_token *prev_tkn);
+int					pipe_err(t_token *token, t_token *prev_tkn);
+int					redir_err(t_shell *shell, t_token *token);
+int					skip_space(t_token **token);
 //Execution
 char				*find_exec(t_shell *shell, char *cmd);
 int					get_file_path(struct dirent **dp, DIR **dirp);
 void				exec_cmd(t_shell *shell, t_exec *exec, char *path);
 int					parsing(t_shell *shell);
 int					**pipe_handler(t_exec *exec);
-void				run(t_shell *shell);
+void				run(t_shell *shell, int i);
 int					count_cmmds(t_exec *exec);
 void				execute_command(t_shell *shell, t_exec *exec, char *path);
-int					execute_Fbuiltins(t_exec *exec, t_shell *shell);
+int					execute_fbuiltins(t_exec *exec, t_shell *shell);
+int					allocation(t_shell *shell, int j);
+void				exit_status(t_shell *shell);
+int					execute_builtins(t_exec *exec, t_shell *shell);
 //Execution.utils
 t_exec				*exec_new(char *tmp, int type);
 void				exec_add_b(t_shell *shell, char *tmp, int type);
 void				exec_create(t_shell *shell, char *tmp, int type);
 int					exec_size(t_exec *exec);
 void				exec_clear(t_exec **exec);
-char				*limiter_path(char *limiter, t_shell *shell);
 int					count_commands(t_exec *exec);
 void				close_all(int **fd, int nbr, t_exec *exec);
 //Expander

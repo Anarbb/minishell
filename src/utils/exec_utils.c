@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:30:01 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/18 16:21:15 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 15:26:22 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	exec_create(t_shell *shell, char *tmp, int type)
 	else
 		exec_add_b(shell, tmp, type);
 }
-
 
 void	init_env(t_shell *shell)
 {

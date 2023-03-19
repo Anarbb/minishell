@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 16:00:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 20:07:18 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 18:20:21 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	control_d(char *line)
 {
 	if (!line)
 	{
-		ft_putstr_fd(CLEAR_LINE, 1);
-		ft_putstr_fd(GREEN "minishell[^,^]~>" RESET " exit\n", 1);
+		ft_putstr(CLEAR_LINE, 1);
+		ft_putstr(GREEN "minishell[^,^]~>" RESET " exit\n", 1);
 		exit(EXIT_SUCCESS);
 	}
 }
@@ -61,4 +61,3 @@ void	init_signals(void)
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
-

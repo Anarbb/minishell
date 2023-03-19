@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 17:05:34 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:49:57 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 	if ((*token)->type == WC)
 		expand_wildcard(new_tkn);
 	else if ((*token)->next && (*token)->type == DOLLAR
-			&& (*token)->next->type == CMD)
+		&& (*token)->next->type == CMD)
 	{
 		*token = (*token)->next;
 		tmp = after_dollar(shell, (*token)->content, tmp, 0);

@@ -3,29 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 21:01:34 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 14:50:46 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:27:54 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_exit(t_shell *shell)
+int	ft_exit(t_shell *shell, int flag)
 {
 	t_exec	*exec;
 	int		i;
-	int		flag;
 
-	flag = 0;
 	i = 0;
 	exec = shell->exec;
 	if (arg_count(exec->args) > 2)
-	{
-		printf("exit\nminishell: exit: too many arguments\n");
-		return (1);
-	}
+		return (printf("exit\nminishell: exit: too many arguments\n"), 1);
 	if (exec->args[1])
 	{
 		if (exec->args[1][0] == '-' && !exec->args[1][1])

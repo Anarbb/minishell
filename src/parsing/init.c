@@ -6,17 +6,17 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 14:07:50 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 17:01:22 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	find_path(t_shell *shell, int flaunch)
+int	find_path(t_shell *shell, int flaunch, int i)
 {
 	char	*path;
 	char	**paths;
-	int		i;
+	char	*tmp;
 
 	path = get_env(shell, "PATH");
 	if (path == NULL)
@@ -31,8 +31,6 @@ int	find_path(t_shell *shell, int flaunch)
 		add_env(shell, "PATH", path);
 	}
 	paths = ft_split(path, ':');
-	i = 0;
-	char *tmp;
 	while (paths[i])
 	{
 		tmp = paths[i];
@@ -40,8 +38,7 @@ int	find_path(t_shell *shell, int flaunch)
 		free(tmp);
 		i++;
 	}
-	shell->path = paths;
-	return (1);
+	return (shell->path = paths, 1);
 }
 
 char	*get_shlvl(t_shell *shell)
@@ -74,9 +71,9 @@ void	init_shell(t_shell *shell, char **env)
 
 	g_sigflag = 1;
 	shell->env_arr = env;
+	shell->pid_idx = 0;
 	shell->inside_quotes = WITHOUT_QUOTES;
 	init_env(shell);
-	// find_path(shell, 1);
 	shlvl = get_shlvl(shell);
 	set_env(shell, "SHLVL", shlvl);
 	free(shlvl);

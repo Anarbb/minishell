@@ -6,37 +6,32 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 20:07:55 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 16:48:09 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 18:40:42 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_echo(t_exec *exec)
+int	ft_echo(t_exec *exec, int i, int new_line)
 {
-	int		i;
-	int		new_line;
+	int		j;
 	char	**args;
 
-	i = 1;
-	new_line = 1;
 	args = exec->args;
 	while (args[i] && args[i][0] == '-' && args[i][1] == 'n')
 	{
-		int j = 1;
+		j = 1;
 		while (args[i][j] == 'n')
 			j++;
 		if (args[i][j] == '\0')
-		{
 			new_line = 0;
-		}
 		else
-			break;
+			break ;
 		i++;
 	}
 	while (args[i])
 	{
-		ft_putstr_fd(args[i], 1);
+		ft_putstr(args[i], 1);
 		if (args[i + 1])
 			write(1, " ", 1);
 		i++;

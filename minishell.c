@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/18 14:04:14 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 16:58:43 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	main(int ac, char **av, char **env)
 	{
 		init_signals();
 		shell->line = readline(GREEN "minishell[^,^]~> " RESET);
-		find_path(shell, 0);
+		find_path(shell, 0, 0);
 		if (ft_lexer(shell) == SUCCESS)
 		{
 			if (parsing(shell) == SUCCESS)
-				run(shell);
+				run(shell, 0);
 		}
 		free_all(shell);
 	}

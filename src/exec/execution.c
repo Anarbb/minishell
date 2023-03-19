@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 14:52:08 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 14:03:55 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 18:09:57 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	pipesfd(t_exec *exec, int **fd)
 		{
 			if (exec->fd_in == 0)
 				exec->fd_in = fd[i - 1][0];
-			// exec->fd_out = 1;
 		}
 		i++;
 		exec = exec->next;

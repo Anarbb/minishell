@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:35:12 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/17 17:01:57 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:20:21 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ft_env(t_shell *shell)
 	env = shell->env;
 	while (env)
 	{
-		ft_putstr_fd(env->var, 1);
-		ft_putstr_fd("=", 1);
+		ft_putstr(env->var, 1);
+		ft_putstr("=", 1);
 		ft_putendl_fd(env->value, 1);
 		env = env->next;
 	}

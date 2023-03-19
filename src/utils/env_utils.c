@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 12:27:04 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 14:49:36 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 15:26:42 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	ft_lstadd_back_env(t_env **alst, t_env *new)
 
 void	set_env(t_shell *shell, char *name, char *value)
 {
-	t_env *env;
-	
+	t_env	*env;
+
 	env = shell->env;
 	while (env)
 	{
@@ -91,4 +91,3 @@ void	add_env(t_shell *shell, char *key, char *value)
 	else
 		ft_lstadd_back_env(&shell->env, new);
 }
-

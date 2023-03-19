@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:07:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 13:03:00 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:44:16 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	ft_export(t_shell *shell, t_exec *exec)
 		{
 			shell->exit_status = 1;
 			printf("minishell: export: `%s': not a valid identifier\n",
-					exec->args[i]);
+				exec->args[i]);
 			i++;
 			continue ;
 		}

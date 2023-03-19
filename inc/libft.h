@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:31:45 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/15 23:26:28 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 18:20:21 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 void	ft_putchar_fd(char c, int fd);
 void	ft_putendl_fd(char *s, int fd);
-void	ft_putstr_fd(char *s, int fd);
+void	ft_putstr(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	*ft_realloc(void *ptr, size_t size);
 #endif
