@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/18 21:34:36 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 17:36:05 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void	parse_ops(t_shell *shell)
 
 void	split_by_ops(t_shell *shell, char *cmd)
 {
-	int	i;
-	int	start;
-	int	len;
+	int		i;
+	int		start;
+	int		len;
 
 	i = 0;
 	start = 0;
@@ -59,30 +59,30 @@ void	split_by_ops(t_shell *shell, char *cmd)
 	{
 		if (cmd[i] == '<' && cmd[i + 1] == '<')
 		{
-			add_token(shell, "<<", HERDOC);
+			add_token(shell, ft_strdup("<<"), HERDOC);
 			i++;
 		}
 		else if (cmd[i] == '>' && cmd[i + 1] == '>')
 		{
-			add_token(shell, ">>", REDIR_APPEND);
+			add_token(shell, ft_strdup(">>"), REDIR_APPEND);
 			i++;
 		}
 		else if (cmd[i] == '>')
-			add_token(shell, ">", REDIR_OUT);
+			add_token(shell, ft_strdup(">"), REDIR_OUT);
 		else if (cmd[i] == '<')
-			add_token(shell, "<", REDIR_IN);
+			add_token(shell, ft_strdup("<"), REDIR_IN);
 		else if (cmd[i] == '|')
-			add_token(shell, "|", PIPE);
+			add_token(shell, ft_strdup("|"), PIPE);
 		else if (cmd[i] == '\'')
-			add_token(shell, "\'", SQUOTE);
+			add_token(shell, ft_strdup("\'"), SQUOTE);
 		else if (cmd[i] == '\"')
-			add_token(shell, "\"", DQUOTE);
+			add_token(shell, ft_strdup("\""), DQUOTE);
 		else if (cmd[i] == '*')
-			add_token(shell, "*", WC);
+			add_token(shell, ft_strdup("*"), WC);
 		else if (cmd[i] == '$')
-			add_token(shell, "$", DOLLAR);
+			add_token(shell, ft_strdup("$"), DOLLAR);
 		else if (cmd[i] == ' ')
-			add_token(shell, " ", SPACE_MS);
+			add_token(shell, ft_strdup(" "), SPACE_MS);
 		else if (is_cmd_c(cmd[i]))
 		{
 			start = i;

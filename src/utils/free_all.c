@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:08:43 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/15 22:31:26 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 17:36:30 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 
 void	free_tokens(t_token **tokens)
 {
-	t_token	*ptr;
-	t_token	*next;
+	t_token	*aux_lst;
 
-	if (!tokens)
-		return ;
-	ptr = *tokens;
-	while (ptr)
+	if (*tokens)
 	{
-		next = ptr->next;
-		free(ptr);
-		ptr = next;
+		while (*tokens)
+		{
+			aux_lst = (*tokens)->next;
+			free((*tokens)->content);
+			free(*tokens);
+			*tokens = aux_lst;
+		}
+		*tokens = NULL;
 	}
-	*tokens = NULL;
 }
+
+
 
 void	exec_clear(t_exec **exec)
 {
