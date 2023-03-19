@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 11:36:33 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 14:07:50 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,12 @@ int	find_path(t_shell *shell, int flaunch)
 	}
 	paths = ft_split(path, ':');
 	i = 0;
+	char *tmp;
 	while (paths[i])
 	{
+		tmp = paths[i];
 		paths[i] = ft_strjoin(paths[i], "/");
+		free(tmp);
 		i++;
 	}
 	shell->path = paths;
@@ -73,7 +76,7 @@ void	init_shell(t_shell *shell, char **env)
 	shell->env_arr = env;
 	shell->inside_quotes = WITHOUT_QUOTES;
 	init_env(shell);
-	find_path(shell, 1);
+	// find_path(shell, 1);
 	shlvl = get_shlvl(shell);
 	set_env(shell, "SHLVL", shlvl);
 	free(shlvl);
