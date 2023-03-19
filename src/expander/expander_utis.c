@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:18:45 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 12:53:32 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:52:54 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@ char	*expand_after_dollar(t_shell *shell, char *str, int *i)
 {
 	char	*value;
 	char	*tmp;
+	char	*tmp2;
 
 	tmp = ft_strdup("");
 	while ((str[*i] && ft_isalnum(str[*i])) || str[*i] == '_')
 	{
-		tmp = ft_join(tmp, ft_substr(str, *i, 1));
+		tmp2 = ft_substr(str, *i, 1);
+		tmp = ft_join(tmp, tmp2);
+		free(tmp2);
 		(*i)++;
 	}
 	if (ft_strlen(tmp) == 0)
@@ -30,15 +33,15 @@ char	*expand_after_dollar(t_shell *shell, char *str, int *i)
 		return (ft_strdup(""));
 	else
 	{
-		tmp = ft_strdup(value);
-		return (tmp);
+		free(tmp);
+		return (value);
 	}
 }
 
 char	*expand_in_dquote(t_token **token, t_shell *shell)
 {
 	char	*tmp;
-
+	// char	*tmpecho
 	tmp = ft_strdup("");
 	*token = (*token)->next;
 	while (*token && (*token)->type != DQUOTE)

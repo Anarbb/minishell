@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 17:01:22 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 19:40:08 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,10 @@ int	find_path(t_shell *shell, int flaunch, int i)
 		add_env(shell, "PATH", path);
 	}
 	paths = ft_split(path, ':');
+	i = 0;
 	while (paths[i])
 	{
-		tmp = paths[i];
-		paths[i] = ft_strjoin(paths[i], "/");
-		free(tmp);
+		paths[i] = ft_join(paths[i], "/");
 		i++;
 	}
 	return (shell->path = paths, 1);
