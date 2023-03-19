@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 14:08:27 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 15:21:35 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 char	*ft_join(char *tmp, char *value)
 {
-	tmp = ft_strjoin(tmp, value);
-	return (tmp);
+	char	*tmp2;
+
+	tmp2 = ft_strjoin(tmp, value);
+	free(tmp);
+	// free(value);
+	return (tmp2);
 }
 
 char	*after_dollar(t_shell *shell, char *str, char *tmp, int i)
@@ -89,6 +93,7 @@ void	expander(t_shell *shell, t_token *token)
 {
 	t_token	*new_tkn;
 	char	*tmp;
+	char	*expanded;
 
 	tmp = ft_strdup("");
 	new_tkn = NULL;
@@ -99,7 +104,9 @@ void	expander(t_shell *shell, t_token *token)
 		if (token->next && token->type == CMD && (token->next->type == DQUOTE
 				|| token->next->type == SQUOTE))
 		{
-			tmp = ft_strjoin(tmp, expand_cmd(&token, shell, &new_tkn));
+			expanded = expand_cmd(&token, shell, &new_tkn);
+			tmp = ft_strjoin(tmp, expanded);
+			free(expanded);
 			token = token->next;
 			if (token->type == DQUOTE)
 				tmp = ft_strjoin(tmp, expand_in_dquote(&token, shell));
@@ -124,13 +131,19 @@ void	expander(t_shell *shell, t_token *token)
 		}
 		else
 		{
-			tmp = ft_strjoin(tmp, expand_cmd(&token, shell, &new_tkn));
+			expanded = expand_cmd(&token, shell, &new_tkn);
+			tmp = ft_join(tmp, expanded);
+			if (expanded)
+				free(expanded);
 			if (tmp[0] != '\0')
+			{
 				new_tkn = create_token(new_tkn, tmp, token->type);
-			tmp = ft_strdup("");
+				tmp = ft_strdup("");
+			}
 		}
 		token = token->next;
 	}
 	free(shell->token);
 	shell->token = new_tkn;
+	free(tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/18 16:53:02 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 14:53:58 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int	ft_cd(t_shell *shell, t_exec *exec)
 		pwd = getcwd(NULL, 0);
 		if (!pwd)
 		{
-			printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+			printf("cd: error retrieving current directory: getcwd: cannot \
+				access parent directories: No such file or directory\n");
 			chdir(home);
 			pwd = getcwd(NULL, 0);
 			set_env(shell, "OLDPWD", oldpwd);

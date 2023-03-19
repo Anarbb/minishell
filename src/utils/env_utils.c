@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 12:27:04 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 11:56:26 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 14:49:36 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	set_env(t_shell *shell, char *name, char *value)
 	{
 		if (ft_strcmp(env->var, name) == 0)
 		{
-			env->value = NULL;
+			free(env->value);
 			env->value = ft_strdup(value);
 			return ;
 		}
