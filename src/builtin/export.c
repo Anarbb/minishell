@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:07:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/18 15:32:09 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 13:03:00 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,46 +24,102 @@ void	print_env(t_shell *shell)
 	}
 }
 
-// use add_env to add a new env variable and set_env to update an existing one if arg is of the form "$key=value"
+int	has_plus(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '+' && str[i + 1] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*append_to_var(char *var, char *value)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin(var, value);
+	free(var);
+	return (tmp);
+}
+
+int is_invalid_identifier(char *str)
+{
+	int i;
+
+	i = 0;
+	if (ft_isdigit(str[i]))
+		return (1);
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_' && str[i] != '=' && str[i] != '+')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	ft_export(t_shell *shell, t_exec *exec)
 {
 	int		i;
 	char	*key;
 	char	*value;
+	int		plus;
 
+	plus = 0;
 	i = 1;
-	if (exec->args[1] == NULL)
+	if (exec->args[i] == NULL)
 	{
 		print_env(shell);
+		shell->exit_status = 0;
 		return ;
 	}
 	while (exec->args[i])
 	{
-		key = ft_strdup(exec->args[i]);
-		value = ft_strdup(exec->args[i]);
-		if (ft_strchr(exec->args[i], '='))
+		if (is_invalid_identifier(exec->args[i]))
 		{
-			key = ft_substr(exec->args[i], 0, ft_strchr(exec->args[i], '=')
-					- exec->args[i]);
-			value = ft_substr(exec->args[i], ft_strchr(exec->args[i], '=')
-					- exec->args[i] + 1, ft_strlen(exec->args[i]));
+			shell->exit_status = 1;
+			printf("minishell: export: `%s': not a valid identifier\n",
+					exec->args[i]);
+			i++;
+			continue ;
 		}
-		if (get_env(shell, key) != NULL)
+		if (has_plus(exec->args[i]))
+			plus = 1;
+		if (!plus)
+			key = ft_strndup(exec->args[i], ft_strchr(exec->args[i], '=')
+					- exec->args[i]);
+		else
+			key = ft_strndup(exec->args[i], ft_strchr(exec->args[i], '+')
+					- exec->args[i]);
+		value = ft_strchr(exec->args[i], '=') + 1;
+		if (get_env(shell, key) && !plus)
 		{
 			set_env(shell, key, value);
 			free(key);
-			free(value);
 			i++;
-			continue;
+			continue ;
 		}
-		if (ft_isdigit(key[0]))
+		else
 		{
-			printf("minishell: export: `%s': not a valid identifier\n", key);
-			return ;
+			if (get_env(shell, key))
+				set_env(shell, key, append_to_var(get_env(shell, key), value));
+			else
+				add_env(shell, key, value);
+			i++;
+			free(key);
+			continue ;
 		}
-		add_env(shell, key, value);
+		if (plus)
+			set_env(shell, key, append_to_var(get_env(shell, key), value));
+		else
+			add_env(shell, key, value);
 		free(key);
-		free(value);
 		i++;
 	}
+	shell->exit_status = 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 12:27:04 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/18 14:03:41 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 11:56:26 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	set_env(t_shell *shell, char *name, char *value)
 	{
 		if (ft_strcmp(env->var, name) == 0)
 		{
-			free(env->value);
+			env->value = NULL;
 			env->value = ft_strdup(value);
 			return ;
 		}

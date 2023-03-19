@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utis.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:18:45 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 22:48:31 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 12:53:32 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ char	*expand_after_dollar(t_shell *shell, char *str, int *i)
 	char	*tmp;
 
 	tmp = ft_strdup("");
-	while (str[*i] && ft_isalnum(str[*i]))
+	while ((str[*i] && ft_isalnum(str[*i])) || str[*i] == '_')
 	{
 		tmp = ft_join(tmp, ft_substr(str, *i, 1));
 		(*i)++;
 	}
 	if (ft_strlen(tmp) == 0)
 		return (tmp);
-	value = get_env(shell, tmp);
+	value = get_env(shell, str);
 	if (value == NULL)
 		return (ft_strdup(""));
 	else

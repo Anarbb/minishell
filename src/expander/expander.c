@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 09:42:50 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 12:28:43 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ char	*after_dollar(t_shell *shell, char *str, char *tmp, int i)
 	while (i < len)
 	{
 		if (i == 0)
-			return (value = expand_after_dollar(shell, str, &i) \
-				, ft_join(tmp, value));
+			return (value = expand_after_dollar(shell, str, &i), ft_join(tmp,
+					value));
 		else
 			tmp = ft_join(tmp, ft_substr(str, i, 1));
 		i++;
@@ -65,12 +65,12 @@ void	expand_wildcard(t_token **new_tkn, char *tmp)
 char	*expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 {
 	char	*tmp;
-	
+
 	tmp = ft_strdup("");
 	if ((*token)->type == WC)
 		expand_wildcard(new_tkn, tmp);
-		
-	else if ((*token)->next && (*token)->type == DOLLAR && (*token)->next->type == CMD)
+	else if ((*token)->next && (*token)->type == DOLLAR
+			&& (*token)->next->type == CMD)
 	{
 		*token = (*token)->next;
 		tmp = after_dollar(shell, (*token)->content, tmp, 0);
@@ -95,40 +95,39 @@ void	expander(t_shell *shell, t_token *token)
 	while (token)
 	{
 		if (!token)
-			break;
-		if (token->next && token->type == CMD && token->next->type == DQUOTE)
+			break ;
+		if (token->next && token->type == CMD && (token->next->type == DQUOTE
+				|| token->next->type == SQUOTE))
 		{
 			tmp = ft_strjoin(tmp, expand_cmd(&token, shell, &new_tkn));
 			token = token->next;
-			tmp = ft_strjoin(tmp, expand_in_dquote(&token, shell));
+			if (token->type == DQUOTE)
+				tmp = ft_strjoin(tmp, expand_in_dquote(&token, shell));
+			else if (token->type == SQUOTE)
+				tmp = ft_strjoin(tmp, expand_in_squote(&token));
 			new_tkn = create_token(new_tkn, tmp, CMD);
-			tmp =	ft_strdup("");
-			
+			tmp = ft_strdup("");
 		}
 		else if (token->type == DQUOTE)
 		{
 			tmp = ft_strjoin(tmp, expand_in_dquote(&token, shell));
 			new_tkn = create_token(new_tkn, tmp, CMD);
-			tmp =	ft_strdup("");
+			tmp = ft_strdup("");
 			new_tkn->inside_quotes = WITH_DQUOTES;
+		}
+		else if (token->type == SQUOTE)
+		{
+			tmp = ft_strjoin(tmp, expand_in_squote(&token));
+			new_tkn = create_token(new_tkn, tmp, CMD);
+			tmp = ft_strdup("");
+			new_tkn->inside_quotes = WITH_SQUOTES;
 		}
 		else
 		{
-			if (token->type == SQUOTE)
-			{
-				tmp = ft_strjoin(tmp, expand_in_squote(&token));
-				new_tkn = create_token(new_tkn, tmp, CMD);
-				tmp =	ft_strdup("");
-				new_tkn->inside_quotes = WITH_SQUOTES;
-			}
-			else
-			{
-				tmp = ft_strjoin(tmp, expand_cmd(&token, shell, &new_tkn));
-				if (tmp[0] != '\0')
-					new_tkn = create_token(new_tkn, tmp, token->type);
-				tmp = ft_strdup("");
-			}
-			
+			tmp = ft_strjoin(tmp, expand_cmd(&token, shell, &new_tkn));
+			if (tmp[0] != '\0')
+				new_tkn = create_token(new_tkn, tmp, token->type);
+			tmp = ft_strdup("");
 		}
 		token = token->next;
 	}
