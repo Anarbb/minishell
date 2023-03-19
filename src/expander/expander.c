@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 15:21:35 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 16:21:51 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*ft_join(char *tmp, char *value)
 
 	tmp2 = ft_strjoin(tmp, value);
 	free(tmp);
-	// free(value);
 	return (tmp2);
 }
 
@@ -47,24 +46,38 @@ char	*after_dollar(t_shell *shell, char *str, char *tmp, int i)
 	return (tmp);
 }
 
-void	expand_wildcard(t_token **new_tkn, char *tmp)
+void	expand_wildcard(t_token **new_tkn)
 {
 	DIR				*dirp;
 	struct dirent	*direc_p;
+	char 			*tmp;
+	char			*path;
 
-	dirp = opendir(getcwd(NULL, 0));
-	while ((direc_p = readdir(dirp)) != NULL)
+	path = getcwd(NULL, 0);
+	dirp = opendir(path);
+	tmp = NULL;
+	while (get_file_path(&direc_p, &dirp))
 	{
-		if (ft_strncmp(direc_p->d_name, ".", 1))
+		if (ft_strncmp(direc_p->d_name, ".", 1) == 0)
+			continue;
+		
+		tmp = ft_strdup(direc_p->d_name);
+		if (tmp == NULL)
 		{
-			tmp = ft_join(tmp, direc_p->d_name);
-			*new_tkn = create_token(*new_tkn, tmp, CMD);
-			tmp = NULL;
-			tmp = ft_strdup("");
+			printf("Error: failed to allocate memory for tmp.\n");
+			exit(EXIT_FAILURE);
+		}
+		*new_tkn = create_token(*new_tkn, tmp, CMD);
+		if (*new_tkn == NULL)
+		{
+			printf("Error: failed to allocate memory for new_tkn.\n");
+			exit(EXIT_FAILURE);
 		}
 	}
+	free(path);
 	closedir(dirp);
 }
+
 
 char	*expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 {
@@ -72,7 +85,7 @@ char	*expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 
 	tmp = ft_strdup("");
 	if ((*token)->type == WC)
-		expand_wildcard(new_tkn, tmp);
+		expand_wildcard(new_tkn);
 	else if ((*token)->next && (*token)->type == DOLLAR
 			&& (*token)->next->type == CMD)
 	{
@@ -143,7 +156,7 @@ void	expander(t_shell *shell, t_token *token)
 		}
 		token = token->next;
 	}
-	free(shell->token);
+	free_tokens(&shell->token);
 	shell->token = new_tkn;
 	free(tmp);
 }
