@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 18:46:53 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 19:33:57 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ void	split_by_ops(t_shell *shell, char *cmd, int i, int len)
 			add_token(shell, ft_strdup("|"), PIPE);
 		else if (cmd[i] == '\'')
 			add_token(shell, ft_strdup("\'"), SQUOTE);
+		// else
+		// {
+		// 	split_by_ops_2(cmd, &i, shell, &start);
+		// }
 		else if (cmd[i] == '\"')
 			add_token(shell, ft_strdup("\""), DQUOTE);
 		else if (cmd[i] == '*')

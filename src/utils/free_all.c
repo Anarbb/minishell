@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:08:43 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 17:36:30 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:51:14 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	free_tokens(t_token **tokens)
 		*tokens = NULL;
 	}
 }
-
-
 
 void	exec_clear(t_exec **exec)
 {
