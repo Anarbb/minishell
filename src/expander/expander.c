@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 19:40:27 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 22:40:33 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*after_dollar(t_shell *shell, char *str, char *tmp, int i)
 			value = expand_after_dollar(shell, str, &i);
 			tmp = ft_join(tmp, value);
 			free(value);
-
 		}
 		else
 			tmp = ft_join(tmp, ft_substr(str, i, 1));
@@ -54,7 +53,7 @@ void	expand_wildcard(t_token **new_tkn)
 {
 	DIR				*dirp;
 	struct dirent	*direc_p;
-	char 			*tmp;
+	char			*tmp;
 	char			*path;
 
 	path = getcwd(NULL, 0);
@@ -63,25 +62,17 @@ void	expand_wildcard(t_token **new_tkn)
 	while (get_file_path(&direc_p, &dirp))
 	{
 		if (ft_strncmp(direc_p->d_name, ".", 1) == 0)
-			continue;
-		
+			continue ;
 		tmp = ft_strdup(direc_p->d_name);
 		if (tmp == NULL)
-		{
-			printf("Error: failed to allocate memory for tmp.\n");
-			exit(EXIT_FAILURE);
-		}
+			alloc_error();
 		*new_tkn = create_token(*new_tkn, tmp, CMD);
 		if (*new_tkn == NULL)
-		{
-			printf("Error: failed to allocate memory for new_tkn.\n");
-			exit(EXIT_FAILURE);
-		}
+			alloc_error();
 	}
 	free(path);
 	closedir(dirp);
 }
-
 
 char	*expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 {
@@ -106,14 +97,13 @@ char	*expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 	return (tmp);
 }
 
-void	expander(t_shell *shell, t_token *token)
+void	expander(t_shell *shell, t_token *token, t_token *new_tkn)
 {
-	t_token	*new_tkn;
 	char	*tmp;
 	char	*expanded;
+	t_token	*tmp_tkn;
 
 	tmp = ft_strdup("");
-	new_tkn = NULL;
 	while (token)
 	{
 		if (!token)
@@ -128,7 +118,7 @@ void	expander(t_shell *shell, t_token *token)
 			token = token->next;
 			if (token->type == DQUOTE)
 			{
-				expanded = expand_in_dquote(&token, shell);
+				expanded = expand_in_dquote(&token, shell, NULL);
 				tmp = ft_join(tmp, expanded);
 				if (expanded)
 					free(expanded);
@@ -145,7 +135,7 @@ void	expander(t_shell *shell, t_token *token)
 		}
 		else if (token->type == DQUOTE)
 		{
-			expanded = expand_in_dquote(&token, shell);
+			expanded = expand_in_dquote(&token, shell, NULL);
 			tmp = ft_join(tmp, expanded);
 			if (expanded)
 				free(expanded);
@@ -177,7 +167,7 @@ void	expander(t_shell *shell, t_token *token)
 		}
 		token = token->next;
 	}
-	t_token *tmp_tkn = shell->token;
+	tmp_tkn = shell->token;
 	shell->token = new_tkn;
 	free(tmp);
 	free_tokens(&tmp_tkn);

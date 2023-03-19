@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 19:33:57 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 22:40:25 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,33 @@ void	parse_ops(t_shell *shell)
 	split_by_ops(shell, cmd, 0, 0);
 }
 
-void	split_by_ops(t_shell *shell, char *cmd, int i, int len)
+void	split_by_ops_2(char *cmd, int *i, t_shell *shell, int *start)
 {
-	int	start;
+	int	len;
 
-	start = 0;
+	if (cmd[*i] == '\"')
+		add_token(shell, ft_strdup("\""), DQUOTE);
+	else if (cmd[*i] == '*')
+		add_token(shell, ft_strdup("*"), WC);
+	else if (cmd[*i] == '$')
+		add_token(shell, ft_strdup("$"), DOLLAR);
+	else if (cmd[*i] == ' ')
+		add_token(shell, ft_strdup(" "), SPACE_MS);
+	else if (is_cmd_c(cmd[*i]))
+	{
+		*start = *i;
+		len = 1;
+		while (cmd[(*i) + 1] && is_cmd_c(cmd[(*i) + 1]))
+		{
+			len++;
+			(*i)++;
+		}
+		add_token(shell, ft_substr(cmd, *start, len), CMD);
+	}
+}
+
+void	split_by_ops(t_shell *shell, char *cmd, int i, int start)
+{
 	while (cmd[i])
 	{
 		if (cmd[i] == '<' && cmd[i + 1] == '<')
@@ -45,29 +67,8 @@ void	split_by_ops(t_shell *shell, char *cmd, int i, int len)
 			add_token(shell, ft_strdup("|"), PIPE);
 		else if (cmd[i] == '\'')
 			add_token(shell, ft_strdup("\'"), SQUOTE);
-		// else
-		// {
-		// 	split_by_ops_2(cmd, &i, shell, &start);
-		// }
-		else if (cmd[i] == '\"')
-			add_token(shell, ft_strdup("\""), DQUOTE);
-		else if (cmd[i] == '*')
-			add_token(shell, ft_strdup("*"), WC);
-		else if (cmd[i] == '$')
-			add_token(shell, ft_strdup("$"), DOLLAR);
-		else if (cmd[i] == ' ')
-			add_token(shell, ft_strdup(" "), SPACE_MS);
-		else if (is_cmd_c(cmd[i]))
-		{
-			start = i;
-			len = 1;
-			while (cmd[i + 1] && is_cmd_c(cmd[i + 1]))
-			{
-				len++;
-				i++;
-			}
-			add_token(shell, ft_substr(cmd, start, len), CMD);
-		}
+		else
+			split_by_ops_2(cmd, &i, shell, &start);
 		i++;
 	}
 }
@@ -84,7 +85,7 @@ int	ft_lexer(t_shell *shell)
 		parse_ops(shell);
 		if (!validate_syntax(shell, shell->token, prev_tkn))
 		{
-			expander(shell, shell->token);
+			expander(shell, shell->token, NULL);
 			return (SUCCESS);
 		}
 	}

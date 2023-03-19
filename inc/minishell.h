@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 18:41:17 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 22:47:26 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ int					find_path(t_shell *shell, int flaunch, int i);
 char				*limiter_path(char *limiter, t_shell *shell);
 int					checker(t_exec *tmp);
 int					fd_error(int fd, char *content);
+void				pipe_token(t_exec **tmp, t_token *tokens, int *i);
+void				cmd_token(t_exec **tmp, t_token *tokens, int *i);
 // parsing.lexer
 int					ft_lexer(t_shell *shell);
 void				split_by_ops(t_shell *shell, char *cmd, int i, int len);
@@ -141,7 +143,7 @@ void				free_str_arr(char **str_arr);
 // builtins
 int					ft_cd(t_shell *shell, t_exec *exec, char *home, char *pwd);
 int					ft_echo(t_exec *exec, int i, int new_line);
-void				ft_export(t_shell *shell, t_exec *exec);
+void				ft_export(t_shell *shell, t_exec *exec, int l, int i);
 int					ft_exit(t_shell *shell, int flag);
 void				ft_env(t_shell *shell);
 void				ft_unset(t_shell *shell);
@@ -165,13 +167,13 @@ int					skip_space(t_token **token);
 char				*find_exec(t_shell *shell, char *cmd);
 int					get_file_path(struct dirent **dp, DIR **dirp);
 void				exec_cmd(t_shell *shell, t_exec *exec, char *path);
-int					parsing(t_shell *shell);
+int					parsing(t_shell *shell, int i);
 int					**pipe_handler(t_exec *exec);
 void				run(t_shell *shell, int i);
 int					count_cmmds(t_exec *exec);
 void				execute_command(t_shell *shell, t_exec *exec, char *path);
 int					execute_fbuiltins(t_exec *exec, t_shell *shell);
-int					allocation(t_shell *shell, int j);
+int					allocation(t_shell *shell, int *j);
 void				exit_status(t_shell *shell);
 int					execute_builtins(t_exec *exec, t_shell *shell);
 //Execution.utils
@@ -183,14 +185,16 @@ void				exec_clear(t_exec **exec);
 int					count_commands(t_exec *exec);
 void				close_all(int **fd, int nbr, t_exec *exec);
 //Expander
-void				expander(t_shell *shell, t_token *token);
+void				expander(t_shell *shell, t_token *token, t_token *new_tkn);
 char				*ft_join(char *tmp, char *value);
 char				*after_dollar(t_shell *shell, char *str, char *tmp, int i);
 //Expander.utils
 char				*expand_after_dollar(t_shell *shell, char *str, int *i);
-char				*expand_in_dquote(t_token **token, t_shell *shell);
+char				*expand_in_dquote(t_token **token, t_shell *shell, \
+						char *tmp);
 char				*expand_in_squote(t_token **token);
 void				skip_spaces(t_token **token, t_token **new_tkn, char **tmp);
+void				alloc_error(void);
 // env
 void				init_env(t_shell *shell);
 void				add_env(t_shell *shell, char *key, char *value);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:07:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 19:41:34 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 22:43:14 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,31 +47,28 @@ char	*append_to_var(char *var, char *value)
 	return (tmp);
 }
 
-int is_invalid_identifier(char *str)
+int	is_invalid_identifier(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (ft_isdigit(str[i]))
 		return (1);
 	while (str[i])
 	{
-		if (!ft_isalnum(str[i]) && str[i] != '_' && str[i] != '=' && str[i] != '+')
+		if (!ft_isalnum(str[i]) && str[i] != '_' && str[i] != '=' \
+			&& str[i] != '+')
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-void	ft_export(t_shell *shell, t_exec *exec)
+void	ft_export(t_shell *shell, t_exec *exec, int plus, int i)
 {
-	int		i;
 	char	*key;
 	char	*value;
-	int		plus;
 
-	plus = 0;
-	i = 1;
 	if (exec->args[i] == NULL)
 	{
 		print_env(shell);

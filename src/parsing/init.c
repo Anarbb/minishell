@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 19:40:08 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 21:26:36 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	find_path(t_shell *shell, int flaunch, int i)
 {
 	char	*path;
 	char	**paths;
-	char	*tmp;
 
 	path = get_env(shell, "PATH");
 	if (path == NULL)

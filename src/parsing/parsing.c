@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 16:29:57 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 21:46:52 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,20 @@ int	handle_redirs(t_shell *shell, t_token *tokens, t_exec *exec)
 	return (SUCCESS);
 }
 
-int	parsing(t_shell *shell)
+void	init_parsing(t_shell *shell, t_exec **tmp, t_token **tokens)
+{
+	*tokens = shell->token;
+	*tmp = exec_new(NULL, 0);
+	shell->exec = *tmp;
+	(*tmp)->args = (char **)ft_calloc(count_cmds(*tokens) + 1, sizeof(char *));
+}
+
+int	parsing(t_shell *shell, int i)
 {
 	t_exec	*tmp;
 	t_token	*tokens;
-	int		i;
 
-	i = 0;
-	tokens = shell->token;
-	tmp = exec_new(NULL, 0);
-	shell->exec = tmp;
-	tmp->args = (char **)ft_calloc(count_cmds(tokens) + 1, sizeof(char *));
+	init_parsing(shell, &tmp, &tokens);
 	while (tokens)
 	{
 		if (handle_redirs(shell, tokens, tmp))
@@ -71,24 +74,12 @@ int	parsing(t_shell *shell)
 			delete_one_token(&tokens);
 		if (tokens->type == PIPE)
 		{
-			tmp->next = exec_new(NULL, 0);
-			tmp->next->prev = tmp;
-			tmp = tmp->next;
-			tmp->args = (char **)ft_calloc(count_cmds(tokens) + 1, \
-			sizeof(char *));
+			pipe_token(&tmp, tokens, &i);
 			if (handle_redirs(shell, tokens, tmp))
 				return (FAILURE);
-			i = 0;
 		}
 		if (tokens->type == CMD)
-		{
-			if (!tmp->cmd)
-				tmp->cmd = ft_strdup(tokens->content);
-			tmp->args[i] = ft_strdup(tokens->content);
-			tmp->type = tokens->type;
-			tmp->inside_quotes = tokens->inside_quotes;
-			i++;
-		}
+			cmd_token(&tmp, tokens, &i);
 		tmp->args[i] = NULL;
 		tokens = tokens->next;
 	}

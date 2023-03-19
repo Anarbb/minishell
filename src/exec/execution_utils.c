@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 12:53:34 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 18:41:32 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 22:42:55 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	execute_fbuiltins(t_exec *exec, t_shell *shell)
 	else if (ft_strcmp(exec->cmd, "echo") == 0)
 		ft_echo(exec, 1, 1);
 	else if (ft_strcmp(exec->cmd, "export") == 0)
-		ft_export(shell, exec);
+		ft_export(shell, exec, 0, 1);
 	else if (ft_strcmp(exec->cmd, "unset") == 0)
 		ft_unset(shell);
 	else if (ft_strcmp(exec->cmd, "env") == 0)
@@ -61,7 +61,7 @@ int	execute_builtins(t_exec *exec, t_shell *shell)
 		else if (ft_strcmp(exec->cmd, "echo") == 0)
 			ft_echo(exec, 1, 1);
 		else if (ft_strcmp(exec->cmd, "export") == 0)
-			ft_export(shell, exec);
+			ft_export(shell, exec, 0, 1);
 		else if (ft_strcmp(exec->cmd, "unset") == 0)
 			ft_unset(shell);
 		else if (ft_strcmp(exec->cmd, "env") == 0)
@@ -78,13 +78,13 @@ int	execute_builtins(t_exec *exec, t_shell *shell)
 	return (SUCCESS);
 }
 
-int	allocation(t_shell *shell, int j)
+int	allocation(t_shell *shell, int *j)
 {
-	j = count_commands(shell->exec);
-	shell->pids = (pid_t *)ft_calloc(j, sizeof(pid_t));
-	shell->pipefd = malloc(sizeof(int) * (j - 1));
+	*j = count_commands(shell->exec);
+	shell->pids = (pid_t *)ft_calloc(*j, sizeof(pid_t));
+	shell->pipefd = malloc(sizeof(int) * (*j - 1));
 	if (!shell->pipefd)
 		exit(1);
 	shell->pipefd = pipe_handler(shell->exec);
-	return (j);
+	return (*j);
 }

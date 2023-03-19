@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 19:41:21 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 22:33:03 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	run(t_shell *shell, int j)
 	t_exec	*tmp;
 
 	tmp = shell->exec;
-	allocation(shell, j);
+	allocation(shell, &j);
 	while (tmp)
 	{
 		if (tmp->cmd == NULL)

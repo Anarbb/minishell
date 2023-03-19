@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 14:52:08 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 18:09:57 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 22:33:58 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	close_all(int **fd, int nbr, t_exec *exec)
 	int		i;
 	t_exec	*tmp;
 
-	i = 0;
 	tmp = exec;
 	while (tmp)
 	{
@@ -95,6 +94,7 @@ void	close_all(int **fd, int nbr, t_exec *exec)
 			close(tmp->fd_out);
 		tmp = tmp->next;
 	}
+	i = 0;
 	while (i < nbr)
 	{
 		close(fd[i][1]);

@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:35:27 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 15:40:44 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/19 21:46:57 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,24 @@ int	fd_error(int fd, char *content)
 		return (FAILURE);
 	}
 	return (SUCCESS);
+}
+
+void	cmd_token(t_exec **tmp, t_token *tokens, int *i)
+{
+	if (!(*tmp)->cmd)
+		(*tmp)->cmd = ft_strdup(tokens->content);
+	(*tmp)->args[*i] = ft_strdup(tokens->content);
+	(*tmp)->type = tokens->type;
+	(*tmp)->inside_quotes = tokens->inside_quotes;
+	(*i)++;
+}
+
+void	pipe_token(t_exec **tmp, t_token *tokens, int *i)
+{
+	(*tmp)->next = exec_new(NULL, 0);
+	(*tmp)->next->prev = *tmp;
+	*tmp = (*tmp)->next;
+	(*tmp)->args = (char **)ft_calloc(count_cmds(tokens) + 1, \
+	sizeof(char *));
+	*i = 0;
 }

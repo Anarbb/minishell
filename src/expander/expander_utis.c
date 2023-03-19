@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utis.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:18:45 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 18:52:54 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/19 22:38:00 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	alloc_error(void)
+{
+	printf("Error: failed to allocate memory.\n");
+	exit(EXIT_FAILURE);
+}
 
 char	*expand_after_dollar(t_shell *shell, char *str, int *i)
 {
@@ -38,10 +44,8 @@ char	*expand_after_dollar(t_shell *shell, char *str, int *i)
 	}
 }
 
-char	*expand_in_dquote(t_token **token, t_shell *shell)
+char	*expand_in_dquote(t_token **token, t_shell *shell, char *tmp)
 {
-	char	*tmp;
-	// char	*tmpecho
 	tmp = ft_strdup("");
 	*token = (*token)->next;
 	while (*token && (*token)->type != DQUOTE)
