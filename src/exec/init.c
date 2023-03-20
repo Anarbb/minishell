@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 22:33:03 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/20 13:36:01 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,11 @@ int	execute(t_shell *shell, t_exec *exec, int j)
 	return (g_sigflag = 1, SUCCESS);
 }
 
-void	run(t_shell *shell, int j)
+void	run(t_shell *shell, int j, t_exec *tmp)
 {
-	t_exec	*tmp;
-
 	tmp = shell->exec;
-	allocation(shell, &j);
+	if (allocation(shell, &j) == FAILURE)
+		return ;
 	while (tmp)
 	{
 		if (tmp->cmd == NULL)

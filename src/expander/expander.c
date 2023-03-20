@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/20 14:39:09 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:43:20 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ char	*expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 	free(tmp);
 	return (NULL);
 }
+
 
 void	expander(t_shell *shell, t_token *token, t_token *new_tkn)
 {

@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 22:47:26 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/20 13:36:33 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,9 @@ void				ft_unset(t_shell *shell);
 void				ft_pwd(t_shell *shell);
 // builtins utils
 int					arg_count(char **args);
+char				*append_to_var(char *var, char *value);
+int					has_plus(char *str);
+void				print_env(t_shell *shell);
 //Signals
 void				init_signals(void);
 void				control_d(char *line);
@@ -169,7 +172,7 @@ int					get_file_path(struct dirent **dp, DIR **dirp);
 void				exec_cmd(t_shell *shell, t_exec *exec, char *path);
 int					parsing(t_shell *shell, int i);
 int					**pipe_handler(t_exec *exec);
-void				run(t_shell *shell, int i);
+void				run(t_shell *shell, int i, t_exec *exec);
 int					count_cmmds(t_exec *exec);
 void				execute_command(t_shell *shell, t_exec *exec, char *path);
 int					execute_fbuiltins(t_exec *exec, t_shell *shell);

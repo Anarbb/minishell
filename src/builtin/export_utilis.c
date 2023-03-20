@@ -1,37 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   export_utilis.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/20 14:43:45 by lsabik           ###   ########.fr       */
+/*   Created: 2023/03/20 12:33:20 by lsabik            #+#    #+#             */
+/*   Updated: 2023/03/20 12:51:56 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+void	print_env(t_shell *shell)
 {
-	t_shell	*shell;
+	t_env	*tmp;
 
-	(void)ac;
-	(void)av;
-	shell = ft_calloc(1, sizeof(t_shell));
-	init_shell(shell, env);
-	while (1337)
+	tmp = shell->env;
+	while (tmp)
 	{
-		init_signals();
-		shell->line = readline(GREEN "minishell[^,^]~> " RESET);
-		find_path(shell, 0, 0);
-		if (ft_lexer(shell) == SUCCESS)
-		{
-			if (parsing(shell, 0) == SUCCESS)
-				run(shell, 0, NULL);
-		}
-		free_all(shell);
+		printf("declare -x %s=\"%s\"\n", tmp->var, tmp->value);
+		tmp = tmp->next;
 	}
-	clear_history();
-	return (SUCCESS);
+}
+
+int	has_plus(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '+' && str[i + 1] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*append_to_var(char *var, char *value)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin(var, value);
+	return (tmp);
 }

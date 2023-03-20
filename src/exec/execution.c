@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 14:52:08 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 22:33:58 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/20 13:47:36 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	**pipe_handler(t_exec *exec)
 	{
 		fd[j] = malloc(sizeof(int) * 2);
 		if (!fd[j])
-			exit(1);
+			exit(EXIT_FAILURE);
 		if (pipe(fd[j]) == -1)
 			exit(EXIT_FAILURE);
 		j++;
