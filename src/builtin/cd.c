@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 18:38:04 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/20 15:04:51 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,17 @@ int	ft_cd(t_shell *shell, t_exec *exec, char *home, char *pwd)
 		chdir(get_env(shell, "OLDPWD"));
 	}
 	else if (chdir(exec->args[1]) == -1)
-		return (printf("minishell: cd: %s: No such file or directory\n", \
-			exec->args[1]), shell->exit_status = 1);
+	{
+		if (errno == ENOTDIR)
+			return (printf("minishell: cd: %s: Not a directory\n", \
+				exec->args[1]), shell->exit_status = 1);
+		else if (errno == EACCES)
+			return (printf("minishell: cd: %s: Permission denied\n", \
+				exec->args[1]), shell->exit_status = 1);
+		else
+			return (printf("minishell: cd: %s: No such file or directory\n", \
+				exec->args[1]), shell->exit_status = 1);
+	}
 	else
 		return (ft_cd2(shell, home, pwd));
 	return (shell->exit_status = 0);

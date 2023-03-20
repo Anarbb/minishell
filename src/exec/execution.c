@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 14:52:08 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/20 13:47:36 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/20 15:28:55 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,10 @@ void	execute_command(t_shell *shell, t_exec *exec, char *path)
 {
 	if (execve(path, exec->args, shell->env_arr) == -1)
 	{
-		printf("minishell: %s: command not found\n", exec->args[0]);
+		if (errno == EACCES)
+			printf("minishell: %s: Permission denied\n", exec->args[0]);
+		else
+			printf("minishell: %s: command not found\n", exec->args[0]);
 		exit(127);
 	}
 }

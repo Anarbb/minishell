@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 12:53:34 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/20 13:35:19 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/20 15:29:10 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,8 @@ int	execute_builtins(t_exec *exec, t_shell *shell)
 int	allocation(t_shell *shell, int *j)
 {
 	*j = count_commands(shell->exec);
+	shell->pipefd = NULL;
 	shell->pids = (pid_t *)ft_calloc(*j, sizeof(pid_t));
-	shell->pipefd = malloc(sizeof(int) * (*j - 1));
-	if (!shell->pipefd)
-	{
-		printf("Error: malloc failed\n");
-		return (FAILURE);
-	}
 	shell->pipefd = pipe_handler(shell->exec);
 	return (SUCCESS);
 }
