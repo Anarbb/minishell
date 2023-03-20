@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:29:46 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/20 18:42:06 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/20 20:20:54 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ void	delete_one_token(t_token **prev)
 
 	current = (*prev)->next;
 	next = current->next;
-	// if (current->content)
-	// 	free(current->content);
+	free(current->content);
 	free(current);
 	(*prev)->next = next;
 }

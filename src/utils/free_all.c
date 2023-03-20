@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:08:43 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/20 19:17:38 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/20 21:17:29 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,11 @@ void	exec_clear(t_exec **exec)
 	{
 		next = ptr->next;
 		free(ptr->cmd);
-		free(ptr->file_limiter);
+		if (ptr->limiter)
+		{
+			free(ptr->limiter);
+			free(ptr->file_limiter);
+		}
 		ft_free(&ptr->args);
 		free(ptr);
 		ptr = next;
@@ -81,7 +85,6 @@ void	free_cmd(t_shell *shell)
 void	free_all(t_shell *shell)
 {
 	free(shell->line);
-	free(shell->pids);
 	ft_free(&shell->path);
 	exec_clear(&shell->exec);
 	free_tokens(&shell->token);

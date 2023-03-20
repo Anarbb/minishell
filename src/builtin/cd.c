@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/20 18:05:52 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/20 20:38:48 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	ft_cd2(t_shell *shell, char *home, char *pwd)
 	}
 	set_env(shell, "OLDPWD", oldpwd);
 	set_env(shell, "PWD", pwd);
+	free(pwd);
 	return (shell->exit_status = 0);
 }
 

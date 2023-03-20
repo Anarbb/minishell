@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/20 19:15:27 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/20 20:48:51 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 int	heredoc_parser(t_token *tokens, t_shell *shell, t_exec *exec)
 {
-	exec->limiter = tokens->next->content;
+	exec->limiter = ft_strdup(tokens->next->content);
 	exec->file_limiter = limiter_path(exec->limiter, shell);
 	exec->fd_in = open(exec->file_limiter, O_CREAT | O_RDWR, 0777);
 	if (fd_error(exec->fd_in, exec->limiter) == FAILURE)
 		return (FAILURE);
 	handle_heredoc(shell, exec, exec->fd_in);
-	free(exec->limiter);
 	return (SUCCESS);
 }
 

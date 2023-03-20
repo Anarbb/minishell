@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/20 18:25:52 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/20 21:19:12 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,14 @@ int	execute(t_shell *shell, t_exec *exec, int j)
 	pid_t	pid;
 	char	*path;
 
+	shell->pid_idx++;
 	path = run_minishell(exec->cmd, shell);
 	if (open_herd(exec) == FAILURE)
 		return (FAILURE);
 	pid = fork();
 	if (pid == -1)
 		return (3);
-	shell->pids[shell->pid_idx++] = pid;
+	shell->pids[shell->pid_idx] = pid;
 	if (pid == 0)
 	{
 		g_sigflag = 0;
