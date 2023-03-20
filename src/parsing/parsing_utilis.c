@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utilis.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:35:27 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 21:46:57 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/20 19:22:20 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,20 @@
 char	*limiter_path(char *limiter, t_shell *shell)
 {
 	char		*new_limtr;
+	char		*tmp;
 	static int	i;
 
+	tmp = ft_itoa(i);
 	new_limtr = (char *)malloc(sizeof(char) * (ft_strlen(limiter) + 8));
 	if (!new_limtr)
 		return (NULL);
 	ft_strcpy(new_limtr, "/tmp/.");
 	ft_strcat(new_limtr, limiter);
-	ft_strcat(new_limtr, ft_itoa(i));
+	ft_strcat(new_limtr, tmp);
 	i++;
+	free(tmp);
+	if (shell->limiter)
+		free(shell->limiter);
 	shell->limiter = ft_strdup(new_limtr);
 	return (new_limtr);
 }

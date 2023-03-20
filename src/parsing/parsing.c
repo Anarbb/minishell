@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:49:02 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/19 21:46:52 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/20 19:15:27 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	heredoc_parser(t_token *tokens, t_shell *shell, t_exec *exec)
 	if (fd_error(exec->fd_in, exec->limiter) == FAILURE)
 		return (FAILURE);
 	handle_heredoc(shell, exec, exec->fd_in);
+	free(exec->limiter);
 	return (SUCCESS);
 }
 

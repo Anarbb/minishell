@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:08:43 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/20 18:25:13 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/20 19:17:38 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	exec_clear(t_exec **exec)
 	{
 		next = ptr->next;
 		free(ptr->cmd);
+		free(ptr->file_limiter);
 		ft_free(&ptr->args);
 		free(ptr);
 		ptr = next;

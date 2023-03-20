@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_herdoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:11:52 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 18:20:21 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/20 18:35:49 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*expand_heredoc(t_shell *shell, char *str, int j)
 		free(tmp);
 		if (value)
 		{
-			tmp = ft_strjoin(value, str + j);
+			tmp = ft_join(value, str + j);
 			free(str);
 			str = tmp;
 		}
@@ -43,12 +43,13 @@ int	handle_heredoc(t_shell *shell, t_exec *exec, int fd)
 {
 	char	*line;
 
+	line = NULL;
 	while (1)
 	{
 		signal(SIGINT, sig_herdoc);
 		line = readline("> ");
 		if (g_sigflag == 0)
-			return (g_sigflag = 1, exec->limiter = NULL, free(line), \
+			return (g_sigflag = 1, exec->limiter = NULL, \
 				signal(SIGINT, sig_handler), 1);
 		if (line == NULL)
 			return (close(fd), 0);
@@ -61,6 +62,7 @@ int	handle_heredoc(t_shell *shell, t_exec *exec, int fd)
 		}
 		ft_putstr(line, fd);
 		ft_putchar_fd('\n', fd);
+		free(line);
 	}
 	return (close(fd), SUCCESS);
 }

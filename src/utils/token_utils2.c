@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:29:46 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/18 15:14:11 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/20 18:42:06 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	delete_one_token(t_token **prev)
 
 	current = (*prev)->next;
 	next = current->next;
-	free(current->content);
+	// if (current->content)
+	// 	free(current->content);
 	free(current);
 	(*prev)->next = next;
 }
