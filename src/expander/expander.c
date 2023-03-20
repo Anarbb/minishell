@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 22:40:33 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/20 14:39:09 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,29 +49,47 @@ char	*after_dollar(t_shell *shell, char *str, char *tmp, int i)
 	return (tmp);
 }
 
-void	expand_wildcard(t_token **new_tkn)
+char	*expand_wildcard(t_token **new_tkn)
 {
 	DIR				*dirp;
 	struct dirent	*direc_p;
 	char			*tmp;
-	char			*path;
+	char			*return_value;
 
-	path = getcwd(NULL, 0);
-	dirp = opendir(path);
-	tmp = NULL;
+	dirp = opendir(".");
+	tmp = ft_strdup("");
+	return_value = NULL;
+	if (!dirp)
+		return (tmp);
 	while (get_file_path(&direc_p, &dirp))
 	{
 		if (ft_strncmp(direc_p->d_name, ".", 1) == 0)
 			continue ;
-		tmp = ft_strdup(direc_p->d_name);
-		if (tmp == NULL)
-			alloc_error();
-		*new_tkn = create_token(*new_tkn, tmp, CMD);
-		if (*new_tkn == NULL)
-			alloc_error();
+		tmp = ft_join(tmp, direc_p->d_name);
+		tmp = ft_join(tmp, " ");
 	}
-	free(path);
+	if (tmp[0] == '\0')
+		tmp = ft_strjoin(tmp, (*new_tkn)->content);
 	closedir(dirp);
+	return_value = ft_strdup(tmp);
+	free(tmp);
+	return (return_value);
+}
+
+void	add_wc_tokens(char *tmp, t_token **new_tkn)
+{
+	char	**arr;
+	int		i;
+
+	i = 0;
+	arr = ft_split(tmp, ' ');
+	while (arr[i])
+	{
+		create_token(*new_tkn, arr[i], CMD);
+		i++;
+	}
+	free(tmp);
+	free(arr);
 }
 
 char	*expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
@@ -80,9 +98,9 @@ char	*expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 
 	tmp = ft_strdup("");
 	if ((*token)->type == WC)
-		expand_wildcard(new_tkn);
+		add_wc_tokens(expand_wildcard(new_tkn), new_tkn);
 	else if ((*token)->next && (*token)->type == DOLLAR
-		&& (*token)->next->type == CMD)
+			&& (*token)->next->type == CMD)
 	{
 		*token = (*token)->next;
 		tmp = after_dollar(shell, (*token)->content, tmp, 0);
@@ -94,7 +112,10 @@ char	*expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 		if ((*token)->type != SPACE_MS)
 			tmp = ft_join(tmp, (*token)->content);
 	}
-	return (tmp);
+	if (*tmp)
+		return (tmp);
+	free(tmp);
+	return (NULL);
 }
 
 void	expander(t_shell *shell, t_token *token, t_token *new_tkn)
@@ -156,9 +177,11 @@ void	expander(t_shell *shell, t_token *token, t_token *new_tkn)
 		else
 		{
 			expanded = expand_cmd(&token, shell, &new_tkn);
-			tmp = ft_join(tmp, expanded);
 			if (expanded)
+			{
+				tmp = ft_join(tmp, expanded);
 				free(expanded);
+			}
 			if (tmp[0] != '\0')
 			{
 				new_tkn = create_token(new_tkn, tmp, token->type);
