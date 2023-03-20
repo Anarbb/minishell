@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/20 15:04:51 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:05:52 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,12 @@ int	ft_cd(t_shell *shell, t_exec *exec, char *home, char *pwd)
 		if (home)
 		{
 			if (chdir(home) == -1)
-				return (printf("minishell:cd:%s: No such file or directory\n", \
-					home), shell->exit_status = 1);
+			{
+				perror("minishell: cd");
+				return (shell->exit_status = 1);	
+			}
+			else
+				return (ft_cd2(shell, home, pwd));
 		}
 		else
 			return (ft_putstr("minishell: cd: HOME not set\n", 2), \
@@ -55,15 +59,8 @@ int	ft_cd(t_shell *shell, t_exec *exec, char *home, char *pwd)
 	}
 	else if (chdir(exec->args[1]) == -1)
 	{
-		if (errno == ENOTDIR)
-			return (printf("minishell: cd: %s: Not a directory\n", \
-				exec->args[1]), shell->exit_status = 1);
-		else if (errno == EACCES)
-			return (printf("minishell: cd: %s: Permission denied\n", \
-				exec->args[1]), shell->exit_status = 1);
-		else
-			return (printf("minishell: cd: %s: No such file or directory\n", \
-				exec->args[1]), shell->exit_status = 1);
+		perror("minishell: cd");
+		return (shell->exit_status = 1);
 	}
 	else
 		return (ft_cd2(shell, home, pwd));

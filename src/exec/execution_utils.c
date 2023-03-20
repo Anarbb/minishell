@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 12:53:34 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/20 15:29:10 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:15:10 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,10 @@ int	allocation(t_shell *shell, int *j)
 	*j = count_commands(shell->exec);
 	shell->pipefd = NULL;
 	shell->pids = (pid_t *)ft_calloc(*j, sizeof(pid_t));
-	shell->pipefd = pipe_handler(shell->exec);
+	shell->pid_idx = -1;
+	if (*j > 1)
+	{
+		shell->pipefd = pipe_handler(shell->exec);
+	}
 	return (SUCCESS);
 }

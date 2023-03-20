@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 14:52:08 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/20 15:28:55 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:17:24 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ void	execute_command(t_shell *shell, t_exec *exec, char *path)
 	{
 		if (errno == EACCES)
 			printf("minishell: %s: Permission denied\n", exec->args[0]);
+		if (errno == ENOENT)
+			printf("minishell: %s: No such file or directory\n", exec->args[0]);
 		else
 			printf("minishell: %s: command not found\n", exec->args[0]);
 		exit(127);

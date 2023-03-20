@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/20 13:36:01 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/20 18:25:52 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ char	*find_exec(t_shell *shell, char *cmd)
 		while (dirp != NULL && get_file_path(&dp, &dirp))
 		{
 			if (ft_strcmp(dp->d_name, cmd) == 0)
-				return (path = ft_strjoin(shell->path[i], "/"), \
-				path = ft_strjoin(path, cmd), closedir(dirp), path);
+			{
+				closedir(dirp);
+				path = ft_strjoin(shell->path[i], cmd);
+				return (path);
+			}
 			if (dp == NULL)
 				break ;
 		}
@@ -54,8 +57,12 @@ char	*run_minishell(char *cmd, t_shell *shell)
 {
 	char	*path;
 
+	path = NULL;
 	if (cmd[0] == '/' || cmd[0] == '.')
-		return (cmd);
+	{
+		path = ft_strdup(cmd);
+		return (path);
+	}
 	else
 		path = find_exec(shell, cmd);
 	return (path);
@@ -87,6 +94,7 @@ int	execute(t_shell *shell, t_exec *exec, int j)
 			execute_command(shell, exec, path);
 		exit(EXIT_FAILURE);
 	}
+	free(path);
 	return (g_sigflag = 1, SUCCESS);
 }
 
