@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:18:45 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/21 23:51:37 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/21 23:55:32 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,8 @@ char	*expand_in_dquote(t_token **token, t_shell *shell, char *tmp)
 
 char	*expand_in_squote(t_token **token)
 {
-	int		i;
 	char	*tmp;
 
-	i = 0;
 	tmp = ft_strdup("");
 	*token = (*token)->next;
 	while (*token && (*token)->type != SQUOTE)
