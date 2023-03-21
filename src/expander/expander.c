@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/20 21:37:13 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:16:20 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ char	*after_dollar(t_shell *shell, char *str, char *tmp, int i)
 			free(value);
 		}
 		else
-			tmp = ft_join(tmp, ft_substr(str, i, 1));
+		{
+			tmp2 = ft_substr(str, i, 1);
+			tmp = ft_join(tmp, tmp2);
+			free(tmp2);
+		}
 		i++;
 	}
 	return (tmp);
