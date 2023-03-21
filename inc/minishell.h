@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 15:53:12 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:29:33 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ void				expander(t_shell *shell, t_token *token, t_token *new_tkn, \
 char				*ft_join(char *tmp, char *value);
 char				*after_dollar(t_shell *shell, char *str, char *tmp, int i);
 void				question_mark(char **tmp2, char **tmp, t_shell *shell);
+void				join_and_free(char **tmp, char **tmp2, char *str, int *i);
 //Expander.utils
 char				*expand_after_dollar(t_shell *shell, char *str, int *i);
 char				*expand_in_dquote(t_token **token, t_shell *shell,
