@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 14:34:34 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:01:34 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ char	*get_shlvl(t_shell *shell)
 void	init_shell(t_shell *shell, char **env)
 {
 	char	*shlvl;
-
+	char	*pwd;
+	
+	pwd = getcwd(NULL, 0);
 	g_sigflag = 1;
 	shell->env_arr = env;
 	shell->pid_idx = 0;
@@ -78,7 +80,8 @@ void	init_shell(t_shell *shell, char **env)
 	{
 		add_env(shell, "PATH", "/bin");
 		add_env(shell, "SHLVL", "1");
-		add_env(shell, "PWD", getcwd(NULL, 0));
+		add_env(shell, "PWD", pwd);
 	}
+	free(pwd);
 	free(shlvl);
 }

@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/20 20:38:48 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:02:16 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ int	ft_cd2(t_shell *shell, char *home, char *pwd)
 		set_env(shell, "PWD", pwd);
 		return (shell->exit_status = 1);
 	}
-	set_env(shell, "OLDPWD", oldpwd);
+	if (check_key_exists("OLDPWD", shell))
+		set_env(shell, "OLDPWD", oldpwd);
+	else
+		add_env(shell, "OLDPWD", oldpwd);
 	set_env(shell, "PWD", pwd);
 	free(pwd);
 	return (shell->exit_status = 0);
@@ -36,7 +39,10 @@ int	ft_cd2(t_shell *shell, char *home, char *pwd)
 
 int	ft_cd(t_shell *shell, t_exec *exec, char *home, char *pwd)
 {
-	home = get_env(shell, "HOME");
+	char	*oldpwd;
+
+	oldpwd = get_env(shell, "PWD");
+	home = get_env(shell, "HOME");;
 	if (!exec->args[1] || ft_strcmp(exec->args[1], "~") == 0)
 	{
 		if (home)
