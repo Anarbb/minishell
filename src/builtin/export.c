@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:07:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 11:49:12 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/21 12:48:43 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	export_env(char *str, t_shell *shell, int plus)
 		else
 			add_env(shell, key, value);
 	}
+	free(value);
 	free(key);
 }
 
@@ -96,6 +97,8 @@ void	ft_export(t_shell *shell, t_exec *exec, int plus, int i)
 		key = get_key(exec->args[i], plus);
 		value = get_value(exec->args[i]);
 		export_env(exec->args[i], shell, plus);
+		free(key);
+		free(value);
 		i++;
 	}
 	shell->exit_status = 0;
