@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_herdoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:11:52 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/21 14:48:17 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 23:56:44 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ char	*expand_heredoc(t_shell *shell, char *str, int j)
 {
 	char	*tmp;
 	char	*value;
-	char	**env;
 
-	env = shell->env_arr;
 	if (str[0] == '$')
 	{
 		j = 1;
