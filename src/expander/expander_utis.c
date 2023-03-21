@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utis.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:18:45 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/21 20:20:55 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 23:51:37 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,7 @@ char	*expand_after_dollar(t_shell *shell, char *str, int *i)
 		return (ft_strdup(""));
 	}
 	else
-	{
-		free(tmp);
-		return (value);
-	}
+		return (free(tmp), value);
 }
 
 char	*expand_in_dquote(t_token **token, t_shell *shell, char *tmp)

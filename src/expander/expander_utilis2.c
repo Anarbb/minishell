@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utilis2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:35:47 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/21 19:40:11 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 23:40:04 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char	*expand_cmd(t_token **token, t_shell *shell, t_token **new_tkn)
 		tmp = after_dollar(shell, (*token)->content, tmp, 0);
 		after_dollar2(token, shell, &tmp);
 	}
+	else if ((*token)->type == DOLLAR && !(*token)->next)
+		return (tmp);
 	else if ((*token)->type == CMD || (*token)->type == DOLLAR)
 		tmp = ft_join(tmp, (*token)->content);
 	else
