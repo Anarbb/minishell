@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 18:44:19 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/21 20:17:49 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_env
 {
 	char			*var;
 	char			*value;
+	int				shown;
 	struct s_env	*next;
 }					t_env;
 
@@ -218,8 +219,8 @@ void				add_wc_tokens(char *tmp, t_token **new_tkn);
 char				*expand_wildcard(t_token **new_tkn);
 // env
 void				init_env(t_shell *shell);
-void				add_env(t_shell *shell, char *key, char *value);
-void				set_env(t_shell *shell, char *key, char *value);
+void				add_env(t_shell *shell, char *key, char *value, int shown);
+void				set_env(t_shell *shell, char *key, char *value, int shown);
 char				*get_env(t_shell *shell, char *key);
 int					check_key_exists(char *key, t_shell *shell);
 void				ft_lstadd_back_env(t_env **alst, t_env *new);

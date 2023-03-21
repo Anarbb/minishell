@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utilis.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 12:33:20 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/21 16:35:16 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 20:20:54 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ void	print_env(t_shell *shell)
 	tmp = shell->env;
 	while (tmp)
 	{
-		if (tmp->value)
-			printf("declare -x %s=\"%s\"\n", tmp->var, tmp->value);
-		else
-			printf("declare -x %s\n", tmp->var);
+		if (tmp->shown)
+		{
+			if (tmp->value)
+				printf("declare -x %s=\"%s\"\n", tmp->var, tmp->value);
+			else
+				printf("declare -x %s\n", tmp->var);
+		}
 		tmp = tmp->next;
 	}
 }

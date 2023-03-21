@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 18:30:58 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/21 20:28:29 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	find_path(t_shell *shell, int flaunch, int i)
 			return (0);
 		}
 		path = ft_strdup("/bin");
-		add_env(shell, "PATH", path);
+		add_env(shell, "PATH", path, 1);
 	}
 	paths = ft_split(path, ':');
 	i = 0;
@@ -51,7 +51,7 @@ char	*get_shlvl(t_shell *shell)
 	if (shlvl == NULL)
 	{
 		shlvlc = ft_itoa(1);
-		set_env(shell, "SHLVL", shlvlc);
+		set_env(shell, "SHLVL", shlvlc, 1);
 		free(shlvlc);
 		return (ft_strdup("1"));
 	}
@@ -76,12 +76,12 @@ void	init_shell(t_shell *shell, char **env)
 	shell->inside_quotes = WITHOUT_QUOTES;
 	init_env(shell);
 	shlvl = get_shlvl(shell);
-	set_env(shell, "SHLVL", shlvl);
+	set_env(shell, "SHLVL", shlvl, 1);
 	if (!env[0])
 	{
-		add_env(shell, "PATH", "/bin");
-		add_env(shell, "SHLVL", "1");
-		add_env(shell, "PWD", pwd);
+		add_env(shell, "PATH", "/bin", 0);
+		add_env(shell, "SHLVL", "1", 1);
+		add_env(shell, "PWD", pwd, 1);
 	}
 	free(pwd);
 	free(shlvl);

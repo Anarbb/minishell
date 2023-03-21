@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 12:27:04 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 20:21:05 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 20:30:55 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_lstadd_back_env(t_env **alst, t_env *new)
 	tmp->next = new;
 }
 
-void	set_env(t_shell *shell, char *name, char *value)
+void	set_env(t_shell *shell, char *name, char *value, int shown)
 {
 	t_env	*env;
 
@@ -33,6 +33,7 @@ void	set_env(t_shell *shell, char *name, char *value)
 		{
 			free(env->value);
 			env->value = ft_strdup(value);
+			env->shown = shown;
 			return ;
 		}
 		env = env->next;
@@ -78,13 +79,14 @@ void	unset_env(t_shell *shell, char *key)
 	}
 }
 
-void	add_env(t_shell *shell, char *key, char *value)
+void	add_env(t_shell *shell, char *key, char *value, int shown)
 {
 	t_env	*new;
 
 	new = (t_env *)malloc(sizeof(t_env));
 	new->var = ft_strdup(key);
 	new->value = ft_strdup(value);
+	new->shown = shown;
 	new->next = NULL;
 	if (shell->env == NULL)
 		shell->env = new;

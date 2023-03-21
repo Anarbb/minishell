@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:07:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 15:54:37 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 20:19:59 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,18 @@ void	export_env(char *str, t_shell *shell, int plus, char *tmp)
 		if (plus)
 		{
 			tmp = append_to_var(get_env(shell, key), value);
-			set_env(shell, key, tmp);
+			set_env(shell, key, tmp, 1);
 			free(tmp);
 		}
 		else
-			set_env(shell, key, value);
+			set_env(shell, key, value, 1);
 	}
 	else
 	{
 		if (plus)
-			add_env(shell, key, value);
+			add_env(shell, key, value, 1);
 		else
-			add_env(shell, key, value);
+			add_env(shell, key, value, 1);
 	}
 	free(value);
 	free(key);

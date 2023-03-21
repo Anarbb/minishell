@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:35:12 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 18:38:58 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/21 20:20:28 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_env(t_shell *shell)
 	}
 	while (env)
 	{
-		if (env->value)
+		if (env->value && env->shown)
 		{
 			ft_putstr(env->var, 1);
 			ft_putstr("=", 1);

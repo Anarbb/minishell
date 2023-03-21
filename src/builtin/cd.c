@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 18:41:27 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/21 20:19:30 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ int	ft_cd2(t_shell *shell, char *home, char *pwd)
 			"access parent directories: No such file or directory\n");
 		chdir(home);
 		pwd = getcwd(NULL, 0);
-		set_env(shell, "OLDPWD", oldpwd);
-		set_env(shell, "PWD", pwd);
+		set_env(shell, "OLDPWD", oldpwd, 1);
+		set_env(shell, "PWD", pwd, 1);
 		free(pwd);
 		return (shell->exit_status = 1);
 	}
 	if (check_key_exists("OLDPWD", shell))
-		set_env(shell, "OLDPWD", oldpwd);
+		set_env(shell, "OLDPWD", oldpwd, 1);
 	else
-		add_env(shell, "OLDPWD", oldpwd);
-	set_env(shell, "PWD", pwd);
+		add_env(shell, "OLDPWD", oldpwd, 1);
+	set_env(shell, "PWD", pwd, 1);
 	free(pwd);
 	return (shell->exit_status = 0);
 }
