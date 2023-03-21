@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 15:43:48 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 16:38:49 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ int	ft_cd2(t_shell *shell, char *home, char *pwd)
 
 int	ft_cd(t_shell *shell, t_exec *exec, char *home, char *pwd)
 {
-	char	*oldpwd;
-
-	oldpwd = get_env(shell, "PWD");
 	home = get_env(shell, "HOME");
 	if (!exec->args[1] || ft_strcmp(exec->args[1], "~") == 0)
 	{

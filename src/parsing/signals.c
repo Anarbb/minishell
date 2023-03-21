@@ -6,12 +6,15 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 16:00:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 18:20:21 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 16:51:16 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+// rl_on_new_line  : tells that we moved to a nl
+// rl_replace_line : replace the content of the rl buffer 
+// rl_redisplay    : change what is on the screen with
+//  the actual content of the buffer
 void	sig_handler(int signum)
 {
 	if (signum == SIGINT && g_sigflag == 1)

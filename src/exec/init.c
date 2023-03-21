@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/21 14:55:05 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 16:51:03 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,10 @@ int	execute(t_shell *shell, t_exec *exec, int j, char *path)
 	if (pid == 0)
 	{
 		g_sigflag = 0;
-		if (find_exec(shell, exec->cmd, 0) != NULL)
-		{
-			if (exec->fd_in != 0)
-				dup2(exec->fd_in, 0);
-			dup2(exec->fd_out, 1);
-			close_all(shell->pipefd, j - 1, shell->exec);
-		}
+		if (exec->fd_in != 0)
+			dup2(exec->fd_in, 0);
+		dup2(exec->fd_out, 1);
+		close_all(shell->pipefd, j - 1, shell->exec);
 		if (execute_fbuiltins(exec, shell) == FAILURE)
 			execute_command(shell, exec, path);
 		exit(EXIT_FAILURE);
