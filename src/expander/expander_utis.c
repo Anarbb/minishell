@@ -6,7 +6,7 @@
 /*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:18:45 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/21 15:39:43 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 20:20:55 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,17 @@ char	*expand_after_dollar(t_shell *shell, char *str, int *i)
 	char	*tmp2;
 
 	tmp = ft_strdup("");
-	while ((str[*i] && ft_isalnum(str[*i])) || str[*i] == '_')
+	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
 	{
 		tmp2 = ft_substr(str, *i, 1);
 		tmp = ft_join(tmp, tmp2);
 		free(tmp2);
 		(*i)++;
 	}
+	(*i)--;
 	if (ft_strlen(tmp) == 0)
 		return (tmp);
-	value = get_env(shell, str);
+	value = get_env(shell, tmp);
 	if (value == NULL)
 	{
 		free(tmp);
