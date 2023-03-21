@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   export_utilis2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/06 21:29:11 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/20 22:59:10 by aarbaoui         ###   ########.fr       */
+/*   Created: 2023/03/20 23:37:18 by aarbaoui          #+#    #+#             */
+/*   Updated: 2023/03/20 23:57:01 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strchr(const char *s, int c)
+
+int	ft_strfind(char *str, char c)
 {
-	while (*s != (char)c)
+	int	i;
+
+	i = 0;
+	if (!str || !c)
+		return (-1);
+	while (str[i])
 	{
-		if (!*s++)
-			return (NULL);
+		if (str[i] == c)
+			return (i);
+		i++;
 	}
-	return ((char *)s);
+	return (-1);
 }

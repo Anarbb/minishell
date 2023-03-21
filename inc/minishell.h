@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/20 20:20:31 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/20 23:57:10 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include <curses.h>
 # include <dirent.h>
+# include <errno.h>
 # include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
@@ -31,7 +32,6 @@
 # include <term.h>
 # include <termios.h>
 # include <unistd.h>
-# include <errno.h>
 # define RESET "\033[0m"
 # define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
@@ -61,7 +61,7 @@
 # define SUCCESS 0
 # define FAILURE 1
 
-int				g_sigflag;
+int					g_sigflag;
 
 typedef struct s_token
 {
@@ -153,14 +153,17 @@ int					arg_count(char **args);
 char				*append_to_var(char *var, char *value);
 int					has_plus(char *str);
 void				print_env(t_shell *shell);
+int					is_invalid_identifier(char *str);
+int					is_special_char(char c);
+int					ft_strfind(char *str, char c);
 //Signals
 void				init_signals(void);
 void				control_d(char *line);
 void				sig_handl(int signum);
 void				sig_herdoc(int signum);
 //Syntax.analyser
-int					validate_syntax(t_shell *shell, t_token *token, \
-					t_token *prev_tkn);
+int					validate_syntax(t_shell *shell, t_token *token,
+						t_token *prev_tkn);
 int					is_redirection(int type);
 int					unclosed_err(t_token **token, int type, t_token *prev_tkn);
 int					pipe_err(t_token *token, t_token *prev_tkn);
@@ -193,7 +196,7 @@ char				*ft_join(char *tmp, char *value);
 char				*after_dollar(t_shell *shell, char *str, char *tmp, int i);
 //Expander.utils
 char				*expand_after_dollar(t_shell *shell, char *str, int *i);
-char				*expand_in_dquote(t_token **token, t_shell *shell, \
+char				*expand_in_dquote(t_token **token, t_shell *shell,
 						char *tmp);
 char				*expand_in_squote(t_token **token);
 void				skip_spaces(t_token **token, t_token **new_tkn, char **tmp);

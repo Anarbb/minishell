@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 13:39:20 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/12 18:09:30 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/20 23:01:56 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strndup(const char *s1, size_t n)
 	size_t	i;
 
 	i = 0;
-	s2 = (char *)malloc(sizeof(char) * (n + 1));
+	s2 = (char *)ft_calloc(n + 1, sizeof(char));
 	if (s2 == NULL)
 		return (NULL);
 	while (i < n && s1[i])

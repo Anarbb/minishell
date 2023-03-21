@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/20 14:43:20 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/20 21:37:13 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,16 @@ char	*after_dollar(t_shell *shell, char *str, char *tmp, int i)
 {
 	int		len;
 	char	*value;
+	char	*tmp2;
 
 	len = ft_strlen(str);
 	if (ft_isdigit(str[i]))
 		i++;
 	else if (str[i] == '?')
 	{
-		tmp = ft_join(tmp, ft_itoa((uint8_t)shell->exit_status));
+		tmp2 = ft_itoa(shell->exit_status);
+		tmp = ft_join(tmp, tmp2);
+		free(tmp2);
 		i++;
 	}
 	while (i < len)
