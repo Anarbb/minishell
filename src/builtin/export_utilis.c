@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 12:33:20 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/21 00:03:38 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/21 11:50:07 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	print_env(t_shell *shell)
 	tmp = shell->env;
 	while (tmp)
 	{
-		printf("declare -x %s=\"%s\"\n", tmp->var, tmp->value);
+		if (tmp->value)
+			printf("declare -x %s=\"%s\"\n", tmp->var, tmp->value);
+		else
+			printf("declare -x %s\n", tmp->var);
 		tmp = tmp->next;
 	}
 }
@@ -43,7 +46,6 @@ char	*append_to_var(char *var, char *value)
 	char	*tmp;
 
 	tmp = ft_strjoin(var, value);
-	printf("tmp = %s", tmp);
 	return (tmp);
 }
 

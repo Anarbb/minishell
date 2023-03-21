@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/20 13:17:39 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/21 12:12:30 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,11 @@ void	init_shell(t_shell *shell, char **env)
 	init_env(shell);
 	shlvl = get_shlvl(shell);
 	set_env(shell, "SHLVL", shlvl);
+	if (!env[0])
+	{
+		add_env(shell, "PATH", "/bin");
+		add_env(shell, "SHLVL", "1");
+		add_env(shell, "PWD", getcwd(NULL, 0));
+	}
 	free(shlvl);
 }

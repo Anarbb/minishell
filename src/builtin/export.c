@@ -6,20 +6,24 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:07:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 00:04:38 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/21 11:49:12 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_key(char *str)
+char	*get_key(char *str, int plus)
 {
 	int		i;
 	char	*key;
 
 	i = 0;
-	while (str[i] && (str[i] != '=' || str[i] != '+'))
-		i++;
+	if (plus)
+		i = ft_strfind(str, '+');
+	else
+		i = ft_strfind(str, '=');
+	if (i == -1)
+		i = ft_strlen(str);
 	key = ft_strndup(str, i);
 	return (key);
 }
@@ -31,7 +35,7 @@ char	*get_value(char *str)
 
 	i = ft_strfind(str, '=');
 	if (i == -1)
-		value = ft_strdup("");
+		value = NULL;
 	else
 		value = ft_strdup(str + i + 1);
 	return (value);
@@ -43,9 +47,9 @@ void	export_env(char *str, t_shell *shell, int plus)
 	char	*value;
 	char	*tmp;
 
-	key = get_key(str);
+	key = get_key(str, plus);
 	value = get_value(str);
-	if (get_env(shell, key))
+	if (check_key_exists(key, shell))
 	{
 		if (plus)
 		{
@@ -64,7 +68,6 @@ void	export_env(char *str, t_shell *shell, int plus)
 			add_env(shell, key, value);
 	}
 	free(key);
-	// free(value);
 }
 
 void	ft_export(t_shell *shell, t_exec *exec, int plus, int i)
@@ -80,20 +83,18 @@ void	ft_export(t_shell *shell, t_exec *exec, int plus, int i)
 	}
 	while (exec->args[i])
 	{
-		// if (is_invalid_identifier(exec->args[i]))
-		// {
-		// 	shell->exit_status = 1;
-		// 	printf("minishell: export: `%s': not a valid identifier\n",
-		// 		exec->args[i]);
-		// 	i++;
-		// 	continue ;
-		// }
+		if (is_invalid_identifier(exec->args[i]))
+		{
+			shell->exit_status = 1;
+			printf("minishell: export: `%s': not a valid identifier\n",
+				exec->args[i]);
+			i++;
+			continue ;
+		}
 		if (has_plus(exec->args[i]))
 			plus = 1;
-		key = get_key(exec->args[i]);
+		key = get_key(exec->args[i], plus);
 		value = get_value(exec->args[i]);
-		if (!value)
-			value = "";
 		export_env(exec->args[i], shell, plus);
 		i++;
 	}
