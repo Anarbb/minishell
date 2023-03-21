@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 18:32:27 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 17:52:09 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:41:27 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,20 @@ int	go_home(t_shell *shell, char *home, char *pwd)
 
 int	ft_cd(t_shell *shell, t_exec *exec, char *home, char *pwd)
 {
+	char	*dir;
+
+	dir = NULL;
 	home = get_env(shell, "HOME");
 	if (!exec->args[1] || ft_strcmp(exec->args[1], "~") == 0)
 		return (go_home(shell, home, pwd));
 	else if (ft_strcmp(exec->args[1], "-") == 0)
 	{
+		dir = get_env(shell, "OLDPWD");
+		if (!dir)
+		{
+			printf("minishell: cd: OLDPWD not set\n");
+			return (shell->exit_status = 1);
+		}
 		printf("%s\n", get_env(shell, "OLDPWD"));
 		chdir(get_env(shell, "OLDPWD"));
 	}

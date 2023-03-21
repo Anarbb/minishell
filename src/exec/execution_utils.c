@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 12:53:34 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/21 16:35:42 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:35:57 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	execute_fbuiltins(t_exec *exec, t_shell *shell)
 	if (ft_strcmp(exec->cmd, "cd") == 0)
 		ft_cd(shell, exec, NULL, NULL);
 	else if (ft_strcmp(exec->cmd, "echo") == 0)
-		ft_echo(exec, 1, 1);
+		ft_echo(shell, exec, 1, 1);
 	else if (ft_strcmp(exec->cmd, "export") == 0)
 		ft_export(shell, exec, 0, 1);
 	else if (ft_strcmp(exec->cmd, "unset") == 0)
@@ -59,7 +59,7 @@ int	execute_builtins(t_exec *exec, t_shell *shell)
 		if (ft_strcmp(exec->cmd, "cd") == 0)
 			ft_cd(shell, exec, NULL, NULL);
 		else if (ft_strcmp(exec->cmd, "echo") == 0)
-			ft_echo(exec, 1, 1);
+			ft_echo(shell, exec, 1, 1);
 		else if (ft_strcmp(exec->cmd, "export") == 0)
 			ft_export(shell, exec, 0, 1);
 		else if (ft_strcmp(exec->cmd, "unset") == 0)

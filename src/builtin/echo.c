@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 20:07:55 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/21 18:09:41 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:44:11 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_echo(t_exec *exec, int i, int new_line)
+int	ft_echo(t_shell *shell, t_exec *exec, int i, int new_line)
 {
 	int		j;
 	char	**args;
@@ -38,5 +38,5 @@ int	ft_echo(t_exec *exec, int i, int new_line)
 	}
 	if (new_line)
 		write(1, "\n", 1);
-	return (0);
+	return (shell->exit_status = 0, 0);
 }

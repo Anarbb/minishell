@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:42:55 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 15:42:43 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:30:58 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	find_path(t_shell *shell, int flaunch, int i)
 		{
 			path = ft_strdup("");
 			shell->path = ft_split(path, ':');
+			free(path);
 			return (0);
 		}
 		path = ft_strdup("/bin");

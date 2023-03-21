@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 18:29:33 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:44:19 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int					count_cmds(t_token *token);
 void				free_str_arr(char **str_arr);
 // builtins
 int					ft_cd(t_shell *shell, t_exec *exec, char *home, char *pwd);
-int					ft_echo(t_exec *exec, int i, int new_line);
+int					ft_echo(t_shell *shell, t_exec *exec, int i, int new_line);
 int					ft_export(t_shell *shell, t_exec *exec, int l, int i);
 int					ft_exit(t_shell *shell, int flag);
 void				ft_env(t_shell *shell);
