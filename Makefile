@@ -81,6 +81,7 @@ SRCS        :=      minishell.c \
                         src/parsing/parsing_utilis.c \
                         src/builtin/export_utilis.c \
                         src/builtin/export_utilis2.c \
+                        src/expander/expander_utilis2.c \
                           
 OBJS        := $(SRCS:.c=.o)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 11:43:56 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:53:12 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_shell
 	char			*cwd;
 	pid_t			*pids;
 	int				pid_idx;
+	char			*tmp;
 	int				**pipefd;
 	t_env			*env;
 	char			**tmp_env;
@@ -143,7 +144,7 @@ void				free_str_arr(char **str_arr);
 // builtins
 int					ft_cd(t_shell *shell, t_exec *exec, char *home, char *pwd);
 int					ft_echo(t_exec *exec, int i, int new_line);
-void				ft_export(t_shell *shell, t_exec *exec, int l, int i);
+int					ft_export(t_shell *shell, t_exec *exec, int l, int i);
 int					ft_exit(t_shell *shell, int flag);
 void				ft_env(t_shell *shell);
 void				ft_unset(t_shell *shell);
@@ -170,7 +171,7 @@ int					pipe_err(t_token *token, t_token *prev_tkn);
 int					redir_err(t_shell *shell, t_token *token);
 int					skip_space(t_token **token);
 //Execution
-char				*find_exec(t_shell *shell, char *cmd);
+char				*find_exec(t_shell *shell, char *cmd, int i);
 int					get_file_path(struct dirent **dp, DIR **dirp);
 void				exec_cmd(t_shell *shell, t_exec *exec, char *path);
 int					parsing(t_shell *shell, int i);
@@ -191,9 +192,11 @@ void				exec_clear(t_exec **exec);
 int					count_commands(t_exec *exec);
 void				close_all(int **fd, int nbr, t_exec *exec);
 //Expander
-void				expander(t_shell *shell, t_token *token, t_token *new_tkn);
+void				expander(t_shell *shell, t_token *token, t_token *new_tkn, \
+					char *expanded);
 char				*ft_join(char *tmp, char *value);
 char				*after_dollar(t_shell *shell, char *str, char *tmp, int i);
+void				question_mark(char **tmp2, char **tmp, t_shell *shell);
 //Expander.utils
 char				*expand_after_dollar(t_shell *shell, char *str, int *i);
 char				*expand_in_dquote(t_token **token, t_shell *shell,
@@ -201,6 +204,17 @@ char				*expand_in_dquote(t_token **token, t_shell *shell,
 char				*expand_in_squote(t_token **token);
 void				skip_spaces(t_token **token, t_token **new_tkn, char **tmp);
 void				alloc_error(void);
+char				*expand_cmd(t_token **token, t_shell *shell, \
+					t_token **new_tkn);
+void				quotes_after_cmd(t_token **token, t_shell *shell, \
+					t_token **new_tkn, char **expanded);
+void				join_quotes(t_token **new_tkn, t_shell *shell, \
+					char **expanded, int join);
+void				join_cmd(t_shell *shell, t_token **token, \
+					t_token **new_tkn, char **expanded);
+void				free_in_expander(t_shell *shell, t_token **new_tkn);
+void				add_wc_tokens(char *tmp, t_token **new_tkn);
+char				*expand_wildcard(t_token **new_tkn);
 // env
 void				init_env(t_shell *shell);
 void				add_env(t_shell *shell, char *key, char *value);

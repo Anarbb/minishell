@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:24:25 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/21 11:58:39 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/21 14:55:05 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,12 @@ int	open_herd(t_exec *exec)
 	return (SUCCESS);
 }
 
-char	*find_exec(t_shell *shell, char *cmd)
+char	*find_exec(t_shell *shell, char *cmd, int i)
 {
 	DIR				*dirp;
 	struct dirent	*dp;
 	char			*path;
-	int				i;
 
-	i = 0;
 	while (shell->path[i] && shell->path[i][0] != '\0')
 	{
 		dirp = opendir(shell->path[i]);
@@ -64,14 +62,13 @@ char	*run_minishell(char *cmd, t_shell *shell)
 		return (path);
 	}
 	else
-		path = find_exec(shell, cmd);
+		path = find_exec(shell, cmd, 0);
 	return (path);
 }
 
-int	execute(t_shell *shell, t_exec *exec, int j)
+int	execute(t_shell *shell, t_exec *exec, int j, char *path)
 {
 	pid_t	pid;
-	char	*path;
 
 	path = run_minishell(exec->cmd, shell);
 	if (open_herd(exec) == FAILURE)
@@ -84,7 +81,7 @@ int	execute(t_shell *shell, t_exec *exec, int j)
 	if (pid == 0)
 	{
 		g_sigflag = 0;
-		if (find_exec(shell, exec->cmd) != NULL)
+		if (find_exec(shell, exec->cmd, 0) != NULL)
 		{
 			if (exec->fd_in != 0)
 				dup2(exec->fd_in, 0);
@@ -95,8 +92,7 @@ int	execute(t_shell *shell, t_exec *exec, int j)
 			execute_command(shell, exec, path);
 		exit(EXIT_FAILURE);
 	}
-	free(path);
-	return (g_sigflag = 1, SUCCESS);
+	return (free(path), g_sigflag = 1, SUCCESS);
 }
 
 void	run(t_shell *shell, int j, t_exec *tmp)
@@ -110,7 +106,7 @@ void	run(t_shell *shell, int j, t_exec *tmp)
 			return ;
 		if (execute_builtins(tmp, shell) != SUCCESS)
 		{
-			if (execute(shell, tmp, j) == 3)
+			if (execute(shell, tmp, j, NULL) == 3)
 			{
 				printf("fork: Resource temporarily unavailable\n");
 				return ;

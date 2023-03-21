@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/20 22:26:52 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/21 14:36:44 by lsabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,11 @@ int	ft_lexer(t_shell *shell)
 	control_d(shell->line);
 	if (shell->line && *shell->line)
 	{
-		
 		add_history(shell->line);
 		parse_ops(shell);
 		if (!validate_syntax(shell, shell->token, prev_tkn))
 		{
-			expander(shell, shell->token, NULL);
+			expander(shell, shell->token, NULL, NULL);
 			return (SUCCESS);
 		}
 	}
