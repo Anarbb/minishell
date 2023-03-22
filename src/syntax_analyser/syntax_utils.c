@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsabik <lsabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 21:18:52 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/19 18:20:21 by lsabik           ###   ########.fr       */
+/*   Updated: 2023/03/22 00:09:58 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	redir_err(t_shell *shell, t_token *token)
 {
 	skip_space(&token);
 	if (!token)
-		ft_putstr("minishell: syntax error near unexpected" \
+		ft_putstr("minishell: syntax error near unexpected " \
 			"token `newline'\n", STDERR_FILENO);
 	else if (token->type != CMD && token->type != DOLLAR
 		&& token->type != DQUOTE && token->type != SQUOTE
