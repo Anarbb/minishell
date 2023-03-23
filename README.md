@@ -104,7 +104,6 @@ interpreting the meta-characters in the quoted sequence.
 interpreting the meta-characters in the quoted sequence except for \$
 (dollar sign).
 
-5
 
 Minishell As beautiful as a shell
 
@@ -154,7 +153,6 @@ have memory leaks**.
 
 > If you have any doubt about a requirement, take as a reference.
 
-6
 
 **Chapter IV**
 
@@ -171,7 +169,6 @@ Your program has to implement:
 > works without malfunctioning. If you have not passed ALL the mandatory
 > requirements, your bonus part will not be evaluated at all.
 
-7
 
 **Chapter V**\
 **Submission and peer-evaluation**
@@ -180,5 +177,3 @@ Turn in your assignment in your Git repository as usual. Only the work
 inside your repository will be evaluated during the defense. Don't
 hesitate to double check the names of your files to ensure they are
 correct.
-
-8
