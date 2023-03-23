@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 10:18:36 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/21 23:34:57 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:38:43 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*after_dollar(t_shell *shell, char *str, char *tmp, int i)
 		{
 			value = expand_after_dollar(shell, str, &i);
 			tmp = ft_join(tmp, value);
-			free(value);
 		}
 		else
 			join_and_free(&tmp, &tmp2, str, &i);
