@@ -1,6 +1,6 @@
 NAME        := minishell
 CC        := cc
-FLAGS    := -I inc -g -Wall -Wextra -Werror
+FLAGS    := -I inc
 HEADERS    := inc/minishell.h inc/libft.h
 ifeq ($(USER), aarbaoui)
 	LDFLAGS="-L/Volumes/Untitled/opt/readline/lib"
