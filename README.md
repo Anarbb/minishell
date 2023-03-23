@@ -28,7 +28,6 @@ commands in a language somewhat close to the human language.
 Thanks to Minishell, you'll be able to travel through time and come back
 to problems people faced when *Windows* didn't exist.
 
-2
 
 **Chapter II**
 
@@ -76,52 +75,12 @@ to problems people faced when *Windows* didn't exist.
 > the git reposi-tory will be graded. If Deepthought is assigned to
 > grade your work, it will be done
 
-3
-+-----------------------------------+-----------------------------------+
-| > Minishell                       | As beautiful as a shell           |
-+===================================+===================================+
-+-----------------------------------+-----------------------------------+
-
 > after your peer-evaluations. If an error happens in any section of
 > your work during Deepthought's grading, the evaluation will stop.
 
-4
 **Chapter III**
 
 **Mandatory part**
-
-+-----------------------------------+-----------------------------------+
-| > **Program name**                | > minishell                       |
-+===================================+===================================+
-| > **Turn in files**               | > Makefile, \*.h, \*.c            |
-+-----------------------------------+-----------------------------------+
-| > **Makefile**                    | > NAME, all, clean, fclean, re    |
-+-----------------------------------+-----------------------------------+
-| > **Arguments**                   |                                   |
-+-----------------------------------+-----------------------------------+
-| > **External functs.**            | > readline, rl_clear_history,     |
-|                                   | > rl_on_new_line,\                |
-|                                   | > rl_replace_line, rl_redisplay,  |
-|                                   | > add_history,\                   |
-|                                   | > printf, malloc, free, write,    |
-|                                   | > access, open, read, close,      |
-|                                   | > fork, wait, waitpid, wait3,     |
-|                                   | > wait4, signal, sigaction,       |
-|                                   | > sigemptyset, sigaddset, kill,   |
-|                                   | > exit, getcwd, chdir, stat,      |
-|                                   | > lstat, fstat, unlink, execve,   |
-|                                   | > dup, dup2, pipe, opendir,       |
-|                                   | > readdir, closedir,\             |
-|                                   | > strerror, perror, isatty,       |
-|                                   | > ttyname, ttyslot, ioctl,        |
-|                                   | > getenv, tcsetattr, tcgetattr,   |
-|                                   | > tgetent, tgetflag, tgetnum,     |
-|                                   | > tgetstr, tgoto, tputs           |
-+-----------------------------------+-----------------------------------+
-| > **Libft authorized**            | > Yes                             |
-+-----------------------------------+-----------------------------------+
-| > **Description**                 | > Write a shell                   |
-+-----------------------------------+-----------------------------------+
 
 > Your shell should:
 >
@@ -192,13 +151,6 @@ Minishell As beautiful as a shell
 The readline() function can cause memory leaks. You don't have to fix
 them. But that **doesn't mean your own code, yes the code you wrote, can
 have memory leaks**.
-
-+-----------------------------------+-----------------------------------+
-| > You should limit yourself to    | > Anything that                   |
-| > the subject description. is not |                                   |
-| > asked is not required.          |                                   |
-+===================================+===================================+
-+-----------------------------------+-----------------------------------+
 
 > If you have any doubt about a requirement, take as a reference.
 
