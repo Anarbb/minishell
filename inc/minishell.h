@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/21 20:17:49 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:48:11 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@
 # define SUCCESS 0
 # define FAILURE 1
 
-int					g_sigflag;
+extern int					g_sigflag;
 
 typedef struct s_token
 {

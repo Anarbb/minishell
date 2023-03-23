@@ -6,11 +6,13 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:35:46 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/20 21:15:36 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:48:56 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+g_sigflag = 0;
 
 int	main(int ac, char **av, char **env)
 {
