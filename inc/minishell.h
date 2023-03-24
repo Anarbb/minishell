@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/23 14:48:11 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/24 16:52:03 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@
 # define SPACE_MS 4096
 # define SUCCESS 0
 # define FAILURE 1
+# define CWD getcwd(NULL, 0)
 
 extern int					g_sigflag;
 
