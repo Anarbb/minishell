@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/24 16:52:03 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/25 20:52:04 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,8 @@
 # define SPACE_MS 4096
 # define SUCCESS 0
 # define FAILURE 1
-# define CWD getcwd(NULL, 0)
 
-extern int					g_sigflag;
+extern int			g_sigflag;
 
 typedef struct s_token
 {
@@ -194,8 +193,8 @@ void				exec_clear(t_exec **exec);
 int					count_commands(t_exec *exec);
 void				close_all(int **fd, int nbr, t_exec *exec);
 //Expander
-void				expander(t_shell *shell, t_token *token, t_token *new_tkn, \
-					char *expanded);
+void				expander(t_shell *shell, t_token *token, t_token *new_tkn,
+						char *expanded);
 char				*ft_join(char *tmp, char *value);
 char				*after_dollar(t_shell *shell, char *str, char *tmp, int i);
 void				question_mark(char **tmp2, char **tmp, t_shell *shell);
@@ -207,14 +206,14 @@ char				*expand_in_dquote(t_token **token, t_shell *shell,
 char				*expand_in_squote(t_token **token);
 void				skip_spaces(t_token **token, t_token **new_tkn, char **tmp);
 void				alloc_error(void);
-char				*expand_cmd(t_token **token, t_shell *shell, \
-					t_token **new_tkn);
-void				quotes_after_cmd(t_token **token, t_shell *shell, \
-					t_token **new_tkn, char **expanded);
-void				join_quotes(t_token **new_tkn, t_shell *shell, \
-					char **expanded, int join);
-void				join_cmd(t_shell *shell, t_token **token, \
-					t_token **new_tkn, char **expanded);
+char				*expand_cmd(t_token **token, t_shell *shell,
+						t_token **new_tkn);
+void				quotes_after_cmd(t_token **token, t_shell *shell,
+						t_token **new_tkn, char **expanded);
+void				join_quotes(t_token **new_tkn, t_shell *shell,
+						char **expanded, int join);
+void				join_cmd(t_shell *shell, t_token **token, t_token **new_tkn,
+						char **expanded);
 void				free_in_expander(t_shell *shell, t_token **new_tkn);
 void				add_wc_tokens(char *tmp, t_token **new_tkn);
 char				*expand_wildcard(t_token **new_tkn);
