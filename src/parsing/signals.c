@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 16:00:54 by lsabik            #+#    #+#             */
-/*   Updated: 2023/03/21 20:25:53 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/25 20:55:51 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,13 @@ void	sig_handl(int signum)
 		write(1, "Quit: 3\n", 8);
 }
 
-void	control_d(char *line)
+void	control_d(char *line, t_shell *shell)
 {
 	if (!line)
 	{
 		ft_putstr(CLEAR_LINE, 1);
-		ft_putstr(GREEN "minishell[^,^]~>" RESET " exit\n", 1);
+		ft_putstr(prompt(shell), 1);
+		ft_putstr("exit\n", 1);
 		exit(EXIT_SUCCESS);
 	}
 }

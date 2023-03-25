@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:00:25 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/22 00:02:46 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/25 20:55:11 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_lexer(t_shell *shell)
 	t_token	*prev_tkn;
 
 	prev_tkn = shell->token;
-	control_d(shell->line);
+	control_d(shell->line, shell);
 	if (shell->line && *shell->line)
 	{
 		add_history(shell->line);

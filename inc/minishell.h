@@ -6,7 +6,7 @@
 /*   By: aarbaoui <aarbaoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:33:09 by aarbaoui          #+#    #+#             */
-/*   Updated: 2023/03/25 20:52:04 by aarbaoui         ###   ########.fr       */
+/*   Updated: 2023/03/25 20:55:21 by aarbaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ typedef struct s_shell
 }					t_shell;
 
 // parsing.init
+char				*prompt(t_shell *shell);
 void				init_shell(t_shell *shell, char **env);
 int					find_path(t_shell *shell, int flaunch, int i);
 //parsing.utilis
@@ -160,7 +161,7 @@ int					is_special_char(char c);
 int					ft_strfind(char *str, char c);
 //Signals
 void				init_signals(void);
-void				control_d(char *line);
+void				control_d(char *line, t_shell *shell);
 void				sig_handl(int signum);
 void				sig_herdoc(int signum);
 //Syntax.analyser
