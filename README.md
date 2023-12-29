@@ -1,179 +1,83 @@
-Minishell
 
-As beautiful as a shell
+# Minishell - Your Personal Minimal Unix Shell Experience
 
-> *Summary:*\
-> *This project is about creating a simple shell.*
+## Introduction
 
-*Yes, your own little bash.*
+Welcome to Minishell, an interactive shell program designed to emulate the classic Unix shell environment. This project is a journey through the essentials of shell operations, offering insights into system processes, file descriptors, and command-line interactivity. Minishell is perfect for those who wish to explore the foundational aspects of Unix-like systems.
 
-*You will learn a lot about processes and file descriptors.*
+----------
 
-*Version: 6*
+## Installation
 
+### Prerequisites
 
-**Chapter I**
+-   GCC compiler
+-   Make
+-   Git (for cloning the repository)
 
-**Introduction**
+### Steps to Install
 
-The existence of shells is linked to the very existence of IT.
+1.  Clone the repository:
+    
+```bash
+git clone https://github.com/Anarbb/minishell.git
+```
+-   Navigate to the cloned directory:
+```bash    
+cd minishell
+``` 
+-   Compile the project:
+```bash
+make
+```
+    
 
-At the time, all developers agreed that *communicating with a computer
-using aligned 1/0 switches was seriously irritating*.
+----------
 
-It was only logical that they came up with the idea of creating a
-software to com-municate with a computer using interactive lines of
-commands in a language somewhat close to the human language.
+## Usage
 
-Thanks to Minishell, you'll be able to travel through time and come back
-to problems people faced when *Windows* didn't exist.
+After installation, you can start using Minishell by running the following command in the terminal:
 
+```bash
+./minishell
+```
+### Basic Command Execution
+![vid1-trim](https://github.com/Anarbb/minishell/assets/65725801/632c6ae9-8314-4755-ad52-b19c3d50c47a)
 
-**Chapter II**
+### Advanced Features
 
-**Common Instructions**
+-   **Command History Navigation**
+   
+    ![vid2](https://github.com/Anarbb/minishell/assets/65725801/d9462e61-61ef-458d-9943-ba2278955b81)
 
-> *•* Your project must be written in C.
->
-> *•* Your project must be written in accordance with the Norm. If you
-> have bonus files/functions, they are included in the norm check and
-> you will receive a 0 if there is a norm error inside.
->
-> *•* Your functions should not quit unexpectedly (segmentation fault,
-> bus error, double free, etc) apart from undefined behaviors. If this
-> happens, your project will be considered non functional and will
-> receive a 0 during the evaluation.
->
-> will be tolerated.*•* All heap allocated memory space must be properly
-> freed when necessary. No leaks*•* If the subject requires it, you must
-> submit a Makefile which will compile your source files to the required
-> output with the flags -Wall, -Wextra and -Werror, use cc, and your
-> Makefile must not relink.
->
-> *•* Your Makefile must at least contain the rules \$(NAME), all,
-> clean, fclean and re.
->
-> *•* To turn in bonuses to your project, you must include a rule bonus
-> to your Makefile, which will add all the various headers, librairies
-> or functions that are forbidden on the main part of the project.
-> Bonuses must be in a different file \_bonus.{c/h} if the subject does
-> not specify anything else. Mandatory and bonus part evaluation is done
-> separately.
->
-> *•* If your project allows you to use your libft, you must copy its
-> sources and its associated Makefile in a libft folder with its
-> associated Makefile. Your project's Makefile must compile the library
-> by using its Makefile, then compile the project.*•* We encourage you
-> to create test programs for your project even though this work **won't
-> have to be submitted and won't be graded**. It will give you a chance
-> to easily test your work and your peers' work. You will find those
-> tests especially useful during your defence. Indeed, during defence,
-> you are free to use your tests and/or the tests of the peer you are
-> evaluating.
->
-> *•* Submit your work to your assigned git repository. Only the work in
-> the git reposi-tory will be graded. If Deepthought is assigned to
-> grade your work, it will be done
+-   **File Redirection and Piping**
+  ![NewVideo2](https://github.com/Anarbb/minishell/assets/65725801/be89b896-9ccf-4484-846c-f74018069512)
 
-> after your peer-evaluations. If an error happens in any section of
-> your work during Deepthought's grading, the evaluation will stop.
+    
+-   **Handling Environment Variables**
 
-**Chapter III**
-
-**Mandatory part**
-
-> Your shell should:
->
-> *•* Display a **prompt** when waiting for a new command.
->
-> *•* Have a working **history**.
-
-*•* Search and launch the right executable (based on the PATH variable
-or using a relative or an absolute path).
-
-*•* Not use more than **one global variable**. Think about it. You will
-have to explain its purpose.
-
-*•* Not interpret unclosed quotes or special characters which are not
-required by the subject such as \\ (backslash) or ; (semicolon).
-
-*•* Handle ' (single quote) which should prevent the shell from
-interpreting the meta-characters in the quoted sequence.
-
-*•* Handle \" (double quote) which should prevent the shell from
-interpreting the meta-characters in the quoted sequence except for \$
-(dollar sign).
+    ![last](https://github.com/Anarbb/minishell/assets/65725801/bceb6fdf-0a25-4e8c-bb71-04ff7707ccd1)
 
 
-Minishell As beautiful as a shell
+----------
 
-> *•* Implement **redirections**:
->
-> *◦* \< should redirect input.
->
-> *◦* \> should redirect output.
->
-> *◦* \<\< should be given a delimiter, then read the input until a line
-> containing the delimiter is seen. However, it doesn't have to update
-> the history!
->
-> *◦* \>\> should redirect output in append mode.
->
-> *•* Implement **pipes** (\| character). The output of each command in
-> the pipeline is connected to the input of the next command via a pipe.
->
-> *•* Handle **environment variables** (\$ followed by a sequence of
-> characters) which should expand to their values.
->
-> *•* Handle \$? which should expand to the exit status of the most
-> recently executed foreground pipeline.
->
-> *•* Handle ctrl-C, ctrl-D and ctrl-\\ which should behave like in
-> bash.
->
-> *•* In interactive mode:
->
-> *◦* ctrl-C displays a new prompt on a new line.*◦* ctrl-D exits the
-> shell.\
-> *◦* ctrl-\\ does nothing.
->
-> *•* Your shell must implement the following **builtins**:
->
-> *◦* echo with option -n\
-> *◦* cd with only a relative or absolute path\
-> *◦* pwd with no options\
-> *◦* export with no options\
-> *◦* unset with no options\
-> *◦* env with no options or arguments\
-> *◦* exit with no options
+## Features
 
-The readline() function can cause memory leaks. You don't have to fix
-them. But that **doesn't mean your own code, yes the code you wrote, can
-have memory leaks**.
+-   Customizable command prompt
+-   Command history
+-   Executable search based on PATH variable
+-   Handling of single and double quotes
+-   Redirections (`>`, `<`, `>>`, `<<`) and pipes (`|`)
+-   Environment variable support
+-   Built-in commands: `echo`, `cd`, `pwd`, `export`, `unset`, `env`, `exit`
+-   Signal handling (`ctrl-C`, `ctrl-D`, `ctrl-\`)
 
-> If you have any doubt about a requirement, take as a reference.
+----------
+
+## Credits and Acknowledgments
+
+-   https://github.com/Anarbb
+-   https://github.com/linasbk
+-   Special thanks to 1337 and our peers for guidance and support.
 
 
-**Chapter IV**
-
-**Bonus part**
-
-Your program has to implement:
-
-> *•* && and \|\| with parenthesis for priorities.
->
-> *•* Wildcards \* should work for the current working directory.
->
-> The bonus part will only be assessed if the mandatory part is\
-> PERFECT. Perfect means the mandatory part has been integrally done and
-> works without malfunctioning. If you have not passed ALL the mandatory
-> requirements, your bonus part will not be evaluated at all.
-
-
-**Chapter V**\
-**Submission and peer-evaluation**
-
-Turn in your assignment in your Git repository as usual. Only the work
-inside your repository will be evaluated during the defense. Don't
-hesitate to double check the names of your files to ensure they are
-correct.
